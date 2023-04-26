@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="/js/lodash.min.js"></script>
+    <script src="/js/moment.js"></script>
+    <script src="/js/moment-duration-format.js"></script>
+</head>
+<body>
+<div id="time"></div>
+</body>
+<script>
+    const $time = document.getElementById('time')
+    const endValue  = '2023-04-25 18:00:00'
+
+    let timer = null
+    const getTime = ()=>{
+        const duration = moment(endValue).diff(moment())
+        if(duration<=0){
+            cancelAnimationFrame(timer)
+            timer = null
+        }
+        $time.textContent = moment.duration(duration,'millisecond').format('HH:mm:ss',{
+            trim: false
+        })
+        requestAnimationFrame(getTime)
+    }
+    getTime()
+</script>
+</html>

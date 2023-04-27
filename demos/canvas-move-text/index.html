@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas"/>
+</body>
+<script>
+    const canvas = document.getElementById('canvas')
+    const cvs = canvas.getContext('2d')
+    const {clientWidth: stageWidth, clientHeight: stageHeight} = document.body
+    const textArr = ['h', 'e', 'l', 'l', 'o']
+    const textInstanceArr = []
+    const mouseData = {
+        x: 0,
+        y: 0
+    }
+    const generateTextInstance = function (text) {
+        this.text = text
+        this.x = 100
+        this.y = 100
+        this.fontSize = 30
+        this.color = '#00ffff'
+    }
+    const drawText = (textInstance) => {
+        cvs.font = `${textInstance.fontSize}px sans-serif`
+        cvs.fillStyle = textInstance.color
+        cvs.fillText(textInstance.text, textInstance.x, textInstance.y)
+    }
+    const initStage = () => {
+        canvas.width = stageWidth
+        canvas.height = stageHeight
+    }
+    const initTextInstanceArr = () => {
+        textArr.forEach(text => {
+            textInstanceArr.push(new generateTextInstance(text))
+        })
+    }
+    const resetStage = () => {
+        cvs.clearRect(0, 0, stageWidth, stageHeight)
+    }
+    const realTimeRendering = () => {
+        resetStage()
+        textInstanceArr.forEach((textInstance, index) => {
+            textInstance.x = mouseData.x + 30 * index
+            textInstance.y = mouseData.y
+            drawText(textInstance)
+        })
+        window.requestAnimationFrame(realTimeRendering)
+    }
+    const mouseCallBack = ({x, y}) => {
+        mouseData.x = x
+        mouseData.y = y
+    }
+    const onListener = () => {
+        canvas.addEventListener('mousemove', mouseCallBack)
+    }
+    const render = () => {
+        initStage()
+        initTextInstanceArr()
+        onListener()
+        realTimeRendering()
+    }
+    render()
+</script>
+</html>

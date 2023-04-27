@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    const tree = {
+        val: "a",
+        children: [
+            {
+                val: "b",
+                children: [
+                    {
+                        val: "d",
+                        children: [],
+                    },
+                    {
+                        val: "e",
+                        children: [],
+                    },
+                ],
+            },
+            {
+                val: "c",
+                children: [
+                    {
+                        val: "f",
+                        children: [],
+                    },
+                    {
+                        val: "g",
+                        children: [],
+                    },
+                ],
+            },
+        ],
+    };
+    // 递归法
+    const f1 = (node)=>{
+        // 1、先遍历子节点
+        // 2、依次对子节点执行f1
+        node.children.forEach(child=>{
+            console.log(child)
+        })
+        node.children.forEach(child=>{
+            f1(child)
+        })
+    }
+    // 非递归法
+    const f2 = (root)=>{
+        const queue = []
+        queue.push(root)
+        while (queue.length){
+            // 只取第一个
+            const firstItem = queue[0]
+            // 对第一个的children进行遍历，然后追加到队列
+            firstItem.children.forEach(item=>{
+                queue.push(item)
+            })
+            // 把第一个删除
+            queue.shift()
+        }
+    }
+    f2(tree)
+</script>
+</html>

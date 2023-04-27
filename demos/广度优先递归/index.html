@@ -57,7 +57,7 @@
         while (queue.length){
             // 只取第一个
             const firstItem = queue[0]
-            // 对第一个的children进行遍历，然后追加到队列
+            // 对第一个的children数组进行遍历，然后追加到队列
             firstItem.children.forEach(item=>{
                 queue.push(item)
             })

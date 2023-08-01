@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    const f = async ()=>{
+        console.log('开始导入')
+        const result = await import('./user.js')
+        console.log('导入结果:',result)
+        result.sayName()
+        console.log('导入结束')
+    }
+    f()
+</script>
+</html>

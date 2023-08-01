@@ -14,9 +14,12 @@
     <script src="js/moment-duration-format.js"></script>
 </head>
 <body>
-<div id="time"></div>
 </body>
 <script>
-
+const ms = moment('1900-01-01 03:00')
+// const me = moment('1900-01-01 08:00')
+const meEndOf = moment('1990-01-01').endOf('day')
+const m = moment('1900-01-01 04:00')
+console.log(m.isBetween(ms,meEndOf))
 </script>
 </html>

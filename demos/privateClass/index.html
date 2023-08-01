@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    class User {
+        static userName = 'zhangsan' // 静态变量
+
+        #age = 18 // 私有属性。只能在类的内部使用。即便是在外部通过实例调用，也会报错。可以在类中声明一个公开方法或公开属性，在该方法中使用该私有属性。
+
+        #sayHello() { // 私有方法。只能在类的内部使用。即便是在外部通过实例调用，也会报错。可以在类中声明一个公开方法，在该方法中使用该私有方法。
+            console.log('hello')
+        }
+
+        get publicAge() { // 公开属性
+            return this.#age;
+        }
+
+        set publicAge(v) { // 公开属性
+            this.#age = v;
+        }
+
+        get #privateAge() { // 私有属性
+            return this.#age;
+        }
+
+        set #privateAge(v) { // 私有属性
+            this.#age = v;
+        }
+
+        sayHi() {
+            console.log(this.#age)
+            // 或者把变量返回
+            // return this.#age
+        }
+
+        static F() { // 静态方法
+
+        }
+
+        static getPrivateAge(user) {
+            console.log(user.#age); // 读取类的私有变量。user是外部传过来的。
+            // 特别说明：
+            // 如果在外部声明一个const user = new User()，然后调用user.#age会报错。（因为在类的外部引用了私有变量）
+            // 但是在这里，user.#age是在类的静态方法中调用的，其声明也在类的内部，所以可以正常调用。
+        }
+    }
+
+    // console.log(User.userName) // 读取静态类的变量
+    const user = new User()
+    // console.log(user.#age) // 访问私有变量，报错
+    // user.sayHi() // 通过方法使用私有变量
+    // user.publicAge // 通过公开属性访问私有变量
+    // user.#privateAge  // 访问私有属性，报错
+    // User.getPrivateAge(user) // 在类的静态方法中调用外部声明的类实例对象的私有变量
+
+</script>
+</html>

@@ -12,6 +12,9 @@
         static userName = 'zhangsan' // 静态变量
 
         #age = 18 // 私有属性。只能在类的内部使用。即便是在外部通过实例调用，也会报错。可以在类中声明一个公开方法或公开属性，在该方法中使用该私有属性。
+        // 私有属性和方法都可以被继承
+
+        address = 'Beijing'
 
         #sayHello() { // 私有方法。只能在类的内部使用。即便是在外部通过实例调用，也会报错。可以在类中声明一个公开方法，在该方法中使用该私有方法。
             console.log('hello')
@@ -49,6 +52,35 @@
             // 如果在外部声明一个const user = new User()，然后调用user.#age会报错。（因为在类的外部引用了私有变量）
             // 但是在这里，user.#age是在类的静态方法中调用的，其声明也在类的内部，所以可以正常调用。
         }
+
+        checkPropIn() {
+            //在判断所针对的私有属性，一定要先声明，否则会报错
+            // 注意，in运算符对于Object.create()、Object.setPrototypeOf形成的继承，是无效的，因为这种继承不会传递私有属性。
+            console.log(#age in this) //true； 通过in 判断实例中是否包含私有属性。
+            console.log('#age' in this) // false；
+            console.log('address' in this) // true；非私有变量。
+        }
+
+        checkHasProp(user) {
+            console.log(#age in user)
+        }
+
+        static {
+            // 静态块,主要作用是对静态属性进行初始化。以后，新建类的实例时，这个块就不运行了
+            // 每个类允许有多个静态块，每个静态块中只能访问之前声明的静态属性。另外，静态块的内部不能有return语句。
+            this.a = 'aaaaa'
+            this.b = 'bbbbb'
+        }
+    }
+
+    class User2 extends User {
+        // User2会从User继承私有属性。
+        // 但是从User继承的私有属性在User2中不能使用
+        // 可以通过父类的方法使用或者重写私有属性
+        constructor() {
+            super();
+        }
+
     }
 
     // console.log(User.userName) // 读取静态类的变量
@@ -58,6 +90,12 @@
     // user.publicAge // 通过公开属性访问私有变量
     // user.#privateAge  // 访问私有属性，报错
     // User.getPrivateAge(user) // 在类的静态方法中调用外部声明的类实例对象的私有变量
+    // user.checkPropIn() // 通过in 修饰符判断是否包含私有属性
+    // console.log(User.a) // 访问类的静态块中的静态变量
 
+    const user2 = new User2()
+    // user2.#age // 使用父类继承来的私有属性会报错。可以通过继承过来的父类的方法引用父类的私有变量
+    // user2.sayHi() // 通过继承过来的父类的方法引用父类的私有变量
+    // user.checkHasProp(user2) // true；说明子类会继承父类的私有变量，值不能在子类中使用父类的私有变量
 </script>
 </html>

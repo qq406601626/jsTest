@@ -8,13 +8,19 @@
 
 </body>
 <script>
-    const f = async ()=>{
+    // 如果导入的模块中包含代码片段，那么会自动执行里面的代码片段
+    // 多次导入同一个模块时，模块里的代码片段不会重复执行
+    const f = async () => {
         console.log('开始导入')
         const result = await import('./user.js')
-        console.log('导入结果:',result)
+        console.log('导入结果:', result)
         result.sayName()
         console.log('导入结束')
     }
-    f()
+    const f2 = async () => {
+        await f()
+        await f()
+    }
+    f2()
 </script>
 </html>

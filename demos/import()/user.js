@@ -1,3 +1,4 @@
+console.log('this is user module content')
 const user = {
     name:'zhangsan'
 }

@@ -17,10 +17,17 @@
     // 创建一个TypedArray视图实例并指定内存块。Int8Array代表每个元素为8位.
     // new Int8Array(memory) 表示这个数组有32个字节即32个元素,每个元素都是8位,即这个数组总共有32*8位.
     // const int8 = new Int8Array(memory)
-    // const int8_2 = new Int8Array([1,2]) // 创建视图实例时，也可以传入一个普通数组，表示直接分配内存生成底层的ArrayBuffer实例，并同时完成对这段内存的赋值。
+    // const int8_2 = new Int8Array([1,2,3,4,5]) // 创建视图实例时，也可以传入一个普通数组，表示直接分配内存生成底层的ArrayBuffer实例，并同时完成对这段内存的赋值。传入的数组为五个元素,所以length为5.每个元素为1个字节,所以byteLength为5*1.
+    // const i32 = new Int32Array(['a','b','c','d','e']) // 传入的数组为五个元素,所以length为5.每个元素为4个字节,所以byteLength为5*4.
+    // 总结:当传入的为参数为arrayBuffer时,参数为字节.当传入的为普通数组时,参数为元素.
     // const copyMemory = memory.slice(0,4) // ArrayBuffer实例的slice方法可以复制内存。单位为字节。
     // const int8 = new Int8Array(memory) // byteLength为32,length为32*8/8 = 32.可以理解为int8为8进制,每个8进制元素占一个字节,所以结果为32
     // const int16 = new Int16Array(memory) // byteLength为32,length为32*8/16 = 16.可以理解为int16为16进制,每个16进制元素占两个字节,所以结果为16
-    // const int32 = new Int32Array(memory) // byteLength为32,length为32*8/32 = 8.可以理解为int32为32进制,每个32进制元素占四个字节,所以结果为8
+    // const int32 = new It32Array(memory) // byteLength为32,length为32*8/32 = 8.可以理解为int32为32进制,每个32进制元素占四个字节,所以结果为8
+
+    // const int8 = new Int32Array(memory,2,2) // 创建TypedArray实例并传入ArrayBuffer,然后指定开始[字节]序号(默认为0)和包含的数据个数(默认直到本段内存区域结束)
+
+    // const buffer = new ArrayBuffer(8);
+    // const i16 = new Int16Array(buffer, 1); // 报错.新生成一个 8 个字节的ArrayBuffer对象，然后在这个对象的第一个字节，建立带符号的 16 位整数视图，结果报错。因为，带符号的 16 位整数需要两个字节，所以byteOffset参数必须能够被 2 整除。
 </script>
 </html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<img src="./qrcode.png" id="img">
+</body>
+<script>
+    if (!("BarcodeDetector" in window)) {
+        console.log("Barcode Detector is not supported by this browser.");
+    } else {
+        console.log("Barcode Detector supported!");
+    }
+    // const img = document.getElementById('img')
+    // const barcodeDetector = new BarcodeDetector({
+    //     formats: ['qr_code'],
+    // });
+    // barcodeDetector.detect(img)
+    //     .then((barcodes) => {
+    //         barcodes.forEach((barcode) => console.log(barcode.rawValue));
+    //     })
+</script>
+</html>

@@ -14,7 +14,7 @@
     // 因为字节和进制是等价的,所以可以把TypedArray理解为进制.
     // 则关键在于，ASCII码目的在于，使用1个字节的大小对字符进行编码，因而存在一个字符与一个整型数的唯一映射（在ASCII编码中，由于最高位用作校验位，因而其范围表示在0-127，可表示128个字符）。
     // 选择十六进制，是因为8位二进制的数字可以方便的转换为2个十六进制的数字。一个字节能且只能由一对十六进制来表示，比如10110110可以表示为B6。如果使用4进制的话则需要使用4个数字来表示一个字节，不够简洁；使用8进制的话，最靠左的8进制数是由2位二进制数字来表示的，相比于使用16进制有些美中不足。
-    // 二进制'10110110'转化位16进制位b2:parseInt('10110110',2).toString(16).因为parseInt('1011',2).toString(16)为b,parseInt('0110',2).toString(16)为2.
+    // 二进制'10110010'转化位16进制位b2:parseInt('10110010',2).toString(16).因为parseInt('1011',2).toString(16)为b,parseInt('0010',2).toString(16)为2.
     // 总结就是：8进制总共有Math.pow(2,8) = 256种可能，一个16进制可以代表16种可能性，16*16 =256，所以一个8进制可以由两个16进制数字代替。
     // 赋值时，值都是十进制的，js会自动把其转换为2进制。赋值时，跟数组的进制没关系。值范围区间可参考图片说明。
     const memory = new ArrayBuffer(32) // 32代表这块内存有32个字节。一个字节就是一个文字。默认为8进制,即8*32位.一个文字在不同的进制下占用不同的位。Int8Array表示8位，Int16Array表示16位。
@@ -40,22 +40,22 @@
     // const i16 = new Int16Array(buffer, 1); // 报错.新生成一个 8 个字节的ArrayBuffer对象，然后在这个对象的第一个字节，建立带符号的 16 位整数视图，结果报错。因为，带符号的 16 位整数需要两个字节，所以byteOffset参数必须能够被 2 整除。
 
     // 字节序：
-    const buffer = new ArrayBuffer(16); // 16个字节
-    const int32View = new Int32Array(buffer); // 每个元素占四个字节，一共有四个元素
-    for (let i = 0; i < int32View.length; i++) {
-        int32View[i] = i * 2;
-    }
+    // const buffer = new ArrayBuffer(16); // 16个字节
+    // const int32View = new Int32Array(buffer); // 每个元素占四个字节，一共有四个元素
+    // for (let i = 0; i < int32View.length; i++) {
+    //     int32View[i] = i * 2;
+    // }
     // int32View[0] =  0
     // int32View[1] =  2
     // int32View[2] =  4
     // int32View[3] =  6
-    const int16View = new Int16Array(buffer);
+    // const int16View = new Int16Array(buffer);
     // 由于每个 16 位整数占据 2 个字节，所以整个ArrayBuffer对象现在分成 8 段。
     // 然后，由于 x86 体系的计算机都采用小端字节序，相对重要的字节排在后面的内存地址，相对不重要字节排在前面的内存地址
     // 所以在分段的时候会把内存转化为0 0 2 0 4 0 6 0，即地位数据在前面，高位数据在后面。
-    for (let i = 0; i < int16View.length; i++) {
-        console.log("Entry " + i + ": " + int16View[i]);
-    }
+    // for (let i = 0; i < int16View.length; i++) {
+    //     console.log("Entry " + i + ": " + int16View[i]);
+    // }
     // Entry 0: 0
     // Entry 1: 0
     // Entry 2: 2
@@ -64,5 +64,18 @@
     // Entry 5: 0
     // Entry 6: 6
     // Entry 7: 0
+
+    const buffer = new ArrayBuffer(16)
+    const int32 = new Int32Array(buffer)
+    int32[0] = 1
+    int32[1] = 2
+    int32[2] = 4
+    int32[3] = 500
+    const int8 = new Int8Array(buffer)
+    console.log([...int8])
+    // [1, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0, 8, 0, 0, 0]
+    // const int16View = new Int16Array(buffer);
+    // console.log([...int16View])
+    // [1, 0, 2, 0, 4, 0, 8, 0]
 </script>
 </html>

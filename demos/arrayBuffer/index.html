@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ch">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -58,5 +58,26 @@
     // const int8 = new Int8Array([97]) // 把a的字节码作为typedArray的值
     // const decode = new TextDecoder() // 生成一个解码器
     // console.log(decode.decode(int8)) // 结果为a
+
+
+    // const int8 = new Int8Array([97,98,99,100])
+    // const blob = new Blob([int8]) // 传入一个typedArray。
+    // 注意，当传入typedArray或者arraybuffer时，一定要把参数写在数组中，然后传入一个数组
+    // // 读取数据
+    // blob.text().then(res=>{
+    //     console.log(res) // abcd
+    // })
+    // // 或者：// 读取数据
+    // const reader = new FileReader()
+    // reader.onload = function (evt) {
+    //     console.log(evt.target.result); // abcd
+    // };
+    // reader.readAsText(blob);
+
+
+    // const blob = new Blob(['abcd']) // 传入一个DomString
+    // blob.text().then(res=>{
+    //     console.log(res) // abcd
+    // })
 </script>
 </html>

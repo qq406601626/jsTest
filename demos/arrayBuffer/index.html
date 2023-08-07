@@ -38,7 +38,7 @@
 
     // const buffer = new ArrayBuffer(8);
     // const i16 = new Int16Array(buffer, 1); // 报错.新生成一个 8 个字节的ArrayBuffer对象，然后在这个对象的第一个字节，建立带符号的 16 位整数视图，结果报错。因为，带符号的 16 位整数需要两个字节，所以byteOffset参数必须能够被 2 整除。
-    // 在对typeArray中的元素赋值时，默认赋值的都是十进制的数，计算机会把其转换为二进制保存在内存中。
+    // 在对typeArray中，赋值和读取默认都是十进制，计算机会自动把其转化为二进制。
 
     // 字节序：
     const buffer = new ArrayBuffer(4);

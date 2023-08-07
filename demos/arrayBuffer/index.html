@@ -41,16 +41,22 @@
     // 在对typeArray中，赋值和读取默认都是十进制，计算机会自动把其转化为二进制。
 
     // 字节序：
-    const buffer = new ArrayBuffer(4);
-    const v1 = new Uint8Array(buffer);
-    v1[0] = 2;
-    v1[1] = 1;
-    v1[2] = 3;
-    v1[3] = 7;
-    const uInt16View = new Uint16Array(buffer);
+    // const buffer = new ArrayBuffer(4);
+    // const v1 = new Uint8Array(buffer);
+    // v1[0] = 2;
+    // v1[1] = 1;
+    // v1[2] = 3;
+    // v1[3] = 7;
+    // const uInt16View = new Uint16Array(buffer);
     // 计算机采用小端字节序
     // 所以头两个字节等于258
-    uInt16View[0] === 258 // true。参考不同typedArray转换.png
+    // uInt16View[0] === 258 // true。参考不同typedArray转换.png
 
+    // 文字解码
+    // 在上面的赋值过程中，值只能为数字，是因为其代表的是字符的charCode或者charPointCode
+    // 比如：('a').charCodeAt()：97
+    // const int8 = new Int8Array([97]) // 把a的字节码作为typedArray的值
+    // const decode = new TextDecoder() // 生成一个解码器
+    // console.log(decode.decode(int8)) // 结果为a
 </script>
 </html>

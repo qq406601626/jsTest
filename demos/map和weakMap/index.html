@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  // const map = new Map()
+  // const user = {
+  //     name:'zhangsan'
+  // }
+  // map.set(user,'A') // 设置值
+  // map.has(user) // 判断是否有key
+  // [...map] // map实例可以被遍历，因此可以使用for of和forEach
+
+  // const map2 = new Map([ [{name:'lisi'},'B'], [{name:'zhaoliu'},'C'] ]) // 通过构建函数声明实例，参数为二维数组，第一项代表key，第二项代表value
+  // map实例除了有基本的操作方法外，还包含entries、keys、values方法，有点像Object
+
+  // WeakMap和WeakSet很相似，只不过WeakMap的键会检查变量的引用，只要其中任意一个引用被释放，该键值对就会被删除。
+  // 也就是说，一旦不再需要，WeakMap 里面的键名对象和所对应的键值对会自动消失，不用手动删除引用。
+  // 以下三点是Map和WeakMap的主要区别：
+  // 1.Map对象的键可以是任何类型，但WeakMap对象中的键只能是对象（不能是null）和 Symbol 值作为键名。
+  // 2.WeakMap不能包含无引用的对象，否则会被自动清除出集合（垃圾回收机制）。
+  // 3.WeakSet对象是不可枚举的，无法获取大小。
+  // 4.Map有size属性，WeakMap没有size属性。
+
+  // 总结：
+  // 一个对象，如果不存在对它的引用，那么垃圾会回收，如果存在对它的引用，那么垃圾不会回收。
+  // let a = {name:'test'} // 变量a对{name:'test'}对象建立引用关系
+  // const map = new Map()
+  // map.set(a,'A') // map实例对a变量也就是对{name:'test'}对象建立引用关系。
+  // a =null // 清除了变量a对{name:'test'}对象的引用关系，但是map实例对{name:'test'}对象依然存在引用关系，所以垃圾不会回收{name:'test'}对象。
+
+
+  // let a = {name:'test'} // 变量a对{name:'test'}对象建立引用关系
+  // const weakmap = new WeakMap()
+  // weakmap.set(a,'A') // weakmap实例不会对a变量也就是对{name:'test'}对象建立引用关系。
+  // a =null // 清除了变量a对{name:'test'}对象的引用关系，这时{name:'test'}对象不存在对它的引用，所以垃圾会回收{name:'test'}对象。
+  // 当垃圾回收完{name:'test'}对象后，weakmap实例对自动删除key为a的键。
+
+
+
+</script>
+</html>

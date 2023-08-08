@@ -20,9 +20,8 @@
     const file = document.getElementById('file')
     file.onchange=function (e){
         const result = e.target.files[0]
-        const url = URL.createObjectURL(result)
-        console.log(url)
-
+        const url = URL.createObjectURL(result) // 得到blob临时文件地址
+        // 如果页面刷新或关闭了（即document卸载了），那么得到的blob临时文件的地址也将不能用
     }
 </script>
 </html>

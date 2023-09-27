@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<img src="test.gif" alt=""  id="img">
+</body>
+<script>
+    const renderGif = function (dom) {
+        if (!dom || !dom.src) {
+            return;
+        }
+
+        // gif图片的url地址
+        const src = dom.src;
+
+        // 创建的用来播放gif的canvas元素
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext("2d");
+
+        // 一些与GIF播放有关的变量
+        let imageDecoder = null;
+        let imageIndex = 0;
+        let paused = false;
+
+        // 绘制方法
+        const renderImage = function (result) {
+            context.drawImage(result.image, 0, 0);
+
+            const track = imageDecoder.tracks.selectedTrack;
+            // imageDecoder.tracks获取到的是ImageTrackList对象,即所有的帧列表
+            // ImageTrackList对象的selectedTrack属性获取到的是ImageTrack对象,即当前播放的帧
+
+            // 如果播放结束，从头开始循环
+            // imageDecoder.complete判断是否播放完毕
+            if (imageDecoder.complete) {
+                if (track.frameCount === 1) {
+                    return;
+                }
+
+                if (imageIndex + 1 >= track.frameCount) {
+                    imageIndex = 0;
+                }
+            }
+
+            // 绘制下一帧内容
+            imageDecoder
+                .decode({ frameIndex: ++imageIndex })
+                .then((nextResult) => {
+                    if (paused === false) {
+                        setTimeout(() => {
+                            renderImage(nextResult);
+                        }, result.image.duration / 1000.0);
+                    } else {
+                        canvas.nextResult = nextResult;
+                    }
+                })
+                .catch((e) => {
+                    // imageIndex可能超出的容错处理
+                    if (e instanceof RangeError) {
+                        imageIndex = 0;
+                        imageDecoder.decode({ frameIndex: imageIndex }).then(renderImage);
+                    } else {
+                        throw e;
+                    }
+                });
+        };
+
+        // 判断地址能够请求
+        fetch(src).then((response) => {
+            // 可以请求，进行样式处理
+            // 设置canvas尺寸
+            canvas.width = dom.naturalWidth;
+            canvas.height = dom.naturalHeight;
+            // 实际显示尺寸
+            canvas.style.width = dom.clientWidth + 'px';
+            canvas.style.height = dom.clientHeight + 'px';
+            // 隐藏图片，显示画布
+            dom.after(canvas);
+            dom.style.position = 'absolute';
+            dom.style.opacity = '0';
+
+            // 将GIF绘制在canvas上
+            imageDecoder = new ImageDecoder({
+                data: response.body,
+                type: "image/gif"
+            });
+            // 解析第一帧并绘制
+            imageDecoder.decode({
+                frameIndex: imageIndex
+            }).then(renderImage);
+        });
+
+        // 事件绑定处理
+        dom.addEventListener('click', function () {
+            if (paused) {
+                paused = false;
+                renderImage(canvas.nextResult);
+            } else {
+                paused = true;
+            }
+        });
+        canvas.addEventListener('click', function () {
+            if (paused) {
+                paused = false;
+                renderImage(canvas.nextResult);
+            } else {
+                paused = true;
+            }
+        });
+    };
+
+    // 重绘gif
+    renderGif(img);
+</script>
+</html>

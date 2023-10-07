@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  <script src="/js/lodash.min.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+  // 返回限制在 lower 和 upper 之间的值。
+  // _.clamp(number, [lower], upper)
+  // 是Math.min(Math.max(min,value),Math.min(value,max))的简写
+  const a = _.clamp(1,3,5)
+  // a=>3
+
+  // 产生一个包括 lower 与 upper 之间的数。
+  // 如果只提供一个参数返回一个0到提供数之间的数。
+  // 如果 floating 设为 true，或者 lower 或 upper 是浮点数，结果返回浮点数。
+  // _.random([lower=0], [upper=1], [floating])
+  const b = _.random(1,10)
+  // b=>包含1和10
+</script>
+</html>

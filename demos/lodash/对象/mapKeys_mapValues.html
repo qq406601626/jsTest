@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="/js/lodash.min.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+    // mapKeys:
+    // 这个方法创建一个对象，对象的值与object相同,只是key不同
+    const a = { 'a': 1, 'b': 2 }
+    const b = _.mapKeys(a, function(value, key) {
+        return key+'qqq'
+    });
+    // => { 'aqqq': 1, 'bqqq': 2 }
+
+    // mapValues:
+    // 这个方法创建一个对象，对象的key与object相同,只是value不同
+    const users = {
+        'fred':    { 'user': 'fred',    'age': 40 },
+        'pebbles': { 'user': 'pebbles', 'age': 1 }
+    };
+    _.mapValues(users, function(o) { return o.age; });
+    // => { 'fred': 40, 'pebbles': 1 }
+
+    // _.property的快捷方式
+    _.mapValues(users, 'age');
+    // => { 'fred': 40, 'pebbles': 1 } (iteration order is not guaranteed)
+</script>
+</html>

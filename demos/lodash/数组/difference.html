@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="/js/lodash.min.js"></script>
+</head>
+<body>
+</body>
+<script>
+    const oldArr = [1, 2, 3]
+    const nowArr = [0, 2, 4, 6]
+    // 新增：新的（现存的）数据中排除老的数据
+    const newAdd = _.difference(nowArr, oldArr)
+    // 删除：老的数据中排除新的（现存的）数据
+    const deleted = _.difference(oldArr, nowArr)
+    // 说明：
+    // _.pull(array, a,b,c)，与_.difference不同之处在于_.pull会改变原数组，且第二个参数为逗号分割。
+    // _.without(array, a,b,c): 这个方法的作用和_.difference相同，只是传参方式不同。
+
+</script>
+</html>

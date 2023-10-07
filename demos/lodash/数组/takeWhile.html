@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="/js/lodash.min.js"></script>
+</head>
+<body>
+</body>
+<script>
+    // 从array数组的起始元素开始提取元素，直到 predicate 返回假值。predicate 会传入三个参数： (value, index, array)。
+    // 是findIndex()和slice()的简写
+    const users = [
+        {'user': 'barney', 'active': false},
+        {'user': 'barney', 'active': false},
+        {'user': 'barney', 'active': true}
+    ];
+    // _.matches的快捷方式
+    // const a = _.takeWhile(users, {'user': 'barney', 'active': false});
+    // a=>[{'user': 'barney', 'active': false},{'user': 'barney', 'active': false}]
+
+    // _.matchesProperty的快捷方式
+    const b = _.takeWhile(users, ['user', 'barney']);
+    // b=>[{'user': 'barney', 'active': false},{'user': 'barney', 'active': false},{'user': 'barney', 'active': true}]
+
+    // _.property的快捷方式
+    const c = _.takeWhile(users, 'active');
+    // c=>[],因为第一个元素的active为false
+</script>
+</html>

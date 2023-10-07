@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  <script src="/js/lodash.min.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+  // 判断一个对象/数组/map/set是否为空
+  // 对象如果被认为为空，那么他们没有自己的可枚举属性的对象。
+  // 类数组值，比如arguments对象，array，buffer，string或者类jQuery集合的length 为 0，被认为是空。类似的，map（映射）和set 的size 为 0，被认为是空。
+  _.isEmpty(null);
+  // => true
+
+  _.isEmpty(true);
+  // => true
+
+  _.isEmpty(1);
+  // => true
+
+  _.isEmpty([1, 2, 3]);
+  // => false
+
+  _.isEmpty({ 'a': 1 });
+  // => false
+</script>
+</html>

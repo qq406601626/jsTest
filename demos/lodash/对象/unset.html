@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="/js/lodash.min.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+    // 移除object对象 path 路径上的属性。
+    // 如果移除成功，那么返回 true ，否则返回 false。
+    // 使用delete如果在访问a.b.c的时候，发现没有b属性就会报错，而_.unset不会报错
+    const object = { 'a': [{ 'b': { 'c': 7 } }] };
+    _.unset(object, 'a[0].b.c'); // 通过字符串方式
+    _.unset(object, ['a', '0', 'b', 'c']); // 通过数组方式
+</script>
+</html>

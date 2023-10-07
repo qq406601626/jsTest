@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  <script src="/js/lodash.min.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+  // 支持深度比较两者的值是否相等.
+  const obj = { a: [{ b: 2 }] }
+  const obj1 = { a: [{ b: 2 }] }
+  const res = _.isEqual(obj, obj1)
+  // => true
+  // 使用场景:比较form表单前后的数据是否发生了变化，再也不用自己循环两次+递归去手动比较了。
+</script>
+</html>

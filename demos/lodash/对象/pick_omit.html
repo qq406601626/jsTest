@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="/js/lodash.min.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+    // pick:
+    const obj = { a: 1, b: 2, c: 3 };
+    const res = _.pick(obj, ['a', 'b'])
+    // =>  { a: 1, b: 2 }
+
+    // pickBy:
+    // 与_.pick类似，只是第二个参数是一个函数，当返回为真时才会被pick
+    const res = _.pickBy(obj, (val, key) => val === 2)
+    // => { b: 2 }
+
+    // omit:
+    // _.pick的反向版，忽略掉某些属性后，剩下的属性组成一个新对象
+    const res = _.omit(obj, ['b'])
+    // => { a: 1, c: 3 }
+
+    // omitBy:
+    // _.omit的增强版，第二个参数是一个函数，当返回为真时才会被omit
+    const res = _.omitBy(obj, (val, key) => {
+        return key.includes('c');
+    } )
+    // => { a: 1, b: 2 }
+</script>
+</html>

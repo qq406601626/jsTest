@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="/js/lodash.min.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+    // 设置 object对象中对应 path 属性路径上的值，如果path不存在，则创建。
+    // 缺少的索引属性会创建为数组，而缺少的属性会创建为对象。
+    const a = {}
+    _.set(object, 'a[0].b.c', 4); // 通过字符串方式
+    _.set(object, ['x', '0', 'y', 'z'], 5); // 通过数组方式
+</script>
+</html>

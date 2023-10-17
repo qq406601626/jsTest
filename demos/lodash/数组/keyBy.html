@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="/js/lodash.min.js"></script>
+</head>
+<body>
+</body>
+<script>
+    // 类似listToObj函数
+    // 创建一个对象组成， key（键） 是 collection（集合）中的每个元素经过 iteratee（迭代函数） 处理后返回的结果。 每个 key（键）对应的值是生成key（键）的最后一个元素。iteratee（迭代函数）调用1个参数：(value)。
+    // _.keyBy(collection, [iteratee=_.identity])
+    // collection：(Array|Object): 用来迭代的集合。
+    // [iteratee=_.identity] ：(Array|Function|Object|string): 这个迭代函数用来转换key。
+
+    // const arr = [
+    //     {name:'zhangan'},
+    //     {name:'lisi'},
+    //     {name:'wangwu'}
+    // ]
+    // const obj = _.keyBy(arr,'name')
+    // {
+    //     "zhangan": { "name": "zhangan"  },
+    //     "lisi": {  "name": "lisi" },
+    //     "wangwu": {  "name": "wangwu" }
+    // }
+
+    // const arr = [1, 2, 3, 4, 5]
+    // const obj = _.keyBy(arr)
+    // {
+    //     "1": 1,
+    //     "2": 2,
+    //     "3": 3,
+    //     "4": 4,
+    //     "5": 5
+    // }
+
+</script>
+</html>

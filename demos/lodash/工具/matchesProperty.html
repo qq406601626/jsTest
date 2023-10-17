@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="/js/lodash.min.js"></script>
+</head>
+<body>
+</body>
+<script>
+    // 创建一个深比较的方法来比较给定对象的 path 的值是否是 srcValue 。 如果是返回 true ，否则返回 false 。
+    // _.matchesProperty(path, srcValue)
+    // 这个函数会返回一个新的函数,该函数接收一个对比的参数
+    const obj = { 'a': 1, 'b': 2, 'c': 3 }
+    const compareIsMarchFn = _.matchesProperty('a',1)
+    console.log(compareIsMarchFn(obj))
+</script>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="/js/lodash.min.js"></script>
+</head>
+<body>
+</body>
+<script>
+    // matches方法创建一个函数，该函数在给定对象和源之间执行部分深度比较，如果给定对象具有相等的属性值，则返回true，否则返回false。
+    // _.matches(source)
+    // 返回一个函数，该函数接收一个对比的参数
+    // const compareIsMarchFn = _.matches({name:'zhangsan'})
+    // const obj = {name:'zhangsan',age:18}
+    // console.log(compareIsMarchFn(obj))
+    // true
+
+    // 匹配数组
+    // const compareIsMarchFn = _.matches([2,3]) // false
+    // const compareIsMarchFn = _.matches([1,2,3]) // true,需要从第一项开始
+    const compareIsMarchFn = _.matches({0:1,5:6}) // true
+    const arr = [1,2,3,4,5,6]
+    console.log(compareIsMarchFn(arr))
+</script>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  <script src="/js/lodash.min.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+  // 创建一个返回给定对象的 path 的值的函数。
+  // _.property(path)
+  // path:(Array|string): 要得到值的属性路径。
+  // 返回新的函数。
+  const obj =  { 'a': { 'b': 2 } }
+  // const fn = _.property('a.b')
+  // 或者：
+  const fn = _.property(['a','b'])
+  console.log(fn(obj))
+</script>
+</html>

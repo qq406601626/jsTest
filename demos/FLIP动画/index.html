@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/lodash.min.js"></script>
+    <script src="js/moment.js"></script>
+    <script src="js/moment-duration-format.js"></script>
+    <script src="js/echarts.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .item {
+            width: 200px;
+            height: 50px;
+            border-radius: 25px;
+            background: #13ce66;
+            box-sizing: border-box;
+            border: 4px solid #5daf34;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<button id="btn">change</button>
+<div class="container">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+    <div class="item">4</div>
+    <div class="item">5</div>
+</div>
+</body>
+<script>
+    window.btn.addEventListener('click', () => {
+        const container = document.querySelector('.container')
+        const firstItem = document.querySelector('.item')
+        const oldTop = firstItem.getBoundingClientRect().top
+        container.insertBefore(firstItem, null)
+        const newTop = firstItem.getBoundingClientRect().top
+        firstItem.style.transform = `translateY(${oldTop - newTop}px)`
+        window.requestAnimationFrame(() => {
+            firstItem.style.transition = `transform 2s linear`
+            firstItem.style.transform = ''
+        })
+    })
+</script>
+</html>

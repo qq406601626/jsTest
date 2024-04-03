@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="js/lodash.min.js"></script>
-    <script src="js/moment.js"></script>
-    <script src="js/moment-duration-format.js"></script>
-    <script src="js/echarts.min.js"></script>
+    <script src="/js/lodash.min.js"></script>
+    <script src="/js/moment.js"></script>
+    <script src="/js/moment-duration-format.js"></script>
+    <script src="/js/echarts.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -43,13 +43,17 @@
 </div>
 </body>
 <script>
+    // FLIP就是先使用同步transform把元素平移到指定位置，然后使用异步清除transform,但是清除异步之前先加上transition。
     window.btn.addEventListener('click', () => {
         const container = document.querySelector('.container')
         const firstItem = document.querySelector('.item')
+
         const oldTop = firstItem.getBoundingClientRect().top
         container.insertBefore(firstItem, null)
         const newTop = firstItem.getBoundingClientRect().top
+
         firstItem.style.transform = `translateY(${oldTop - newTop}px)`
+        firstItem.style.transition = `transform 2s linear`
         window.requestAnimationFrame(() => {
             firstItem.style.transition = `transform 2s linear`
             firstItem.style.transform = ''

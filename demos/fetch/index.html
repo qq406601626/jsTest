@@ -11,26 +11,26 @@
     // 1、fetch返回的是一个Response对象，该对象为一个Stream对象。
     // 2、Response对象有json()和一些其它异步方法。
     // 3、Response对象有以下属性：
-    // ok（返回一个布尔值，true对应 HTTP 请求的状态码 200 到 299，false对应其他的状态码。）、
-    // .status（状态码）、
-    // .statusText（OK或其它字符串）、
-    // .url、
-    // .type、
-    // .redirected
-    // .headers（是一个Headers对象，可以使用for...of循环进行遍历。有get()、has()。。。等同步方法）
-    // .body（是一个ReadableStream 对象，供用户操作，它可以用来分块读取内容，应用之一就是显示下载的进度。）
-    // .body使用示例：
-    //      const response = await fetch('flower.jpg');
-    //      const reader = response.body.getReader();
-    //      while(true) {
-    //          const {done, value} = await reader.read();
-    //          if (done) {
-    //              break;
-    //          }
-    //          console.log(`Received ${value.length} bytes`)
-    //      }
-    //      上面示例中，response.body.getReader()方法返回一个遍历器。这个遍历器的read()方法每次返回一个对象，表示本次读取的内容块。
-    //      这个对象的done属性是一个布尔值，用来判断有没有读完；value属性是一个 arrayBuffer 数组，表示内容块的内容，而value.length属性是当前块的大小。
+    //      .ok（返回一个布尔值，true对应 HTTP 请求的状态码 200 到 299，false对应其他的状态码。）、
+    //      .status（状态码）、
+    //      .statusText（OK或其它字符串）、
+    //      .url、
+    //      .type、
+    //      .redirected
+    //      .headers（是一个Headers对象，可以使用for...of循环进行遍历。有get()、has()。。。等同步方法）
+    //      .body（是一个ReadableStream 对象，供用户操作，它可以用来分块读取内容，应用之一就是显示下载的进度。）
+    //      .body使用示例：
+    //           const response = await fetch('flower.jpg');
+    //           const reader = response.body.getReader();
+    //           while(true) {
+    //               const {done, value} = await reader.read();
+    //               if (done) {
+    //                   break;
+    //               }
+    //               console.log(`Received ${value.length} bytes`)
+    //           }
+    //           上面示例中，response.body.getReader()方法返回一个遍历器。这个遍历器的read()方法每次返回一个对象，表示本次读取的内容块。
+    //           这个对象的done属性是一个布尔值，用来判断有没有读完；value属性是一个 arrayBuffer 数组，表示内容块的内容，而value.length属性是当前块的大小。
     //  等同步属性。
     // 4、fetch()发出请求以后，有一个很重要的注意点：
     //      4.1:只有网络错误，或者无法连接时，fetch()才会报错，其他情况都不会报错，而是认为请求成功。
@@ -62,6 +62,53 @@
     //              method: 'POST',
     //              body: new FormData(form)
     //          })
-
+    // 6、其它配置参数说明:
+    //      6.1:cache:cache属性指定如何处理缓存。可能的取值如下：
+    //              default：默认值，先在缓存里面寻找匹配的请求。
+    //              no-store：直接请求远程服务器，并且不更新缓存。
+    //              reload：直接请求远程服务器，并且更新缓存。
+    //              no-cache：将服务器资源跟本地缓存进行比较，有新的版本才使用服务器资源，否则使用缓存。
+    //              force-cache：缓存优先，只有不存在缓存的情况下，才请求远程服务器。
+    //              only-if-cached：只检查缓存，如果缓存里面不存在，将返回504错误。
+    //      6.2:mode:mode属性指定请求的模式。可能的取值如下:
+    //              cors：默认值，允许跨域请求。
+    //              same-origin：只允许同源请求。
+    //              no-cors：请求方法只限于 GET、POST 和 HEAD，并且只能使用有限的几个简单标头，不能添加跨域的复杂标头，相当于提交表单所能发出的请求。
+    //      6.3:credentials:credentials属性指定是否发送 Cookie。跨域请求发送 Cookie，需要将credentials属性设为include。可能的取值如下:
+    //              same-origin：默认值，同源请求时发送 Cookie，跨域请求时不发送。
+    //              include：不管同源请求，还是跨域请求，一律发送 Cookie。
+    //              omit：一律不发送。
+    //      6.4:signal
+    //      6.5:keepalive:keepalive属性用于页面卸载时，告诉浏览器在后台保持连接，继续发送数据。一个典型的场景就是，用户离开网页时，脚本向服务器提交一些用户行为的统计信息。这时，如果不用keepalive属性，数据可能无法发送，因为浏览器已经把页面卸载了。
+    //      6.6:redirect:redirect属性指定 HTTP 跳转的处理方法。可能的取值如下：
+    //              follow：默认值，fetch()跟随 HTTP 跳转。
+    //              error：如果发生跳转，fetch()就报错。
+    //              manual：fetch()不跟随 HTTP 跳转，但是response.url属性会指向新的 URL，response.redirected属性会变为true，由开发者自己决定后续如何处理跳转。
+    //      6.7:integrity
+    //      6.8:referrer:referrer属性用于设定fetch()请求的referer标头。这个属性可以为任意字符串，也可以设为空字符串（即不发送referer标头）。
+    //      6.9:referrerPolicy:referrerPolicy属性用于设定Referer标头的规则。可能的取值如下：
+    //              no-referrer-when-downgrade：默认值，总是发送Referer标头，除非从 HTTPS 页面请求 HTTP 资源时不发送。
+    //              no-referrer：不发送Referer标头。
+    //              origin：Referer标头只包含域名，不包含完整的路径。
+    //              origin-when-cross-origin：同源请求Referer标头包含完整的路径，跨域请求只包含域名。
+    //              same-origin：跨域请求不发送Referer，同源请求发送。
+    //              strict-origin：Referer标头只包含域名，HTTPS 页面请求 HTTP 资源时不发送Referer标头。
+    //              strict-origin-when-cross-origin：同源请求时Referer标头包含完整路径，跨域请求时只包含域名，HTTPS 页面请求 HTTP 资源时不发送该标头。
+    //              unsafe-url：不管什么情况，总是发送Referer标头。
+    // 7、取消接口请求:取消接口请求的原理是把fetch配置参数的signal指向一个AbortController实例对象的signal属性,
+    //    当调用该AbortController实例对象的abort()方法时,接口请求就会自动取消。
+    //      7.1:取消接口请求示例:下面是一个1秒后自动取消请求的例子:
+    //          let controller = new AbortController();
+    //              setTimeout(() => controller.abort(), 1000);
+    //          try {
+    //              let response = await fetch('/long-operation', {
+    //                  signal: controller.signal
+    //              });
+    //          } catch(err) {
+    //              if (err.name == 'AbortError') {
+    //                  console.log('Aborted!');
+    //              } else {
+    //              throw err;
+    //          }
 </script>
 </html>

@@ -8,29 +8,60 @@
 
 </body>
 <script>
-    async function fetchData(){
-        const user =  { name:  'John', surname:  'Smith'  };
-        const response = await fetch('./1.webp',{
-            method: 'POST',
-            headers: {
-                // 'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(user)
-            // body:'111111'
-        })
-        const reader = response.body.getReader()
-        // Response.body属性是 Response 对象暴露出的底层接口，返回一个 ReadableStream 对象
-        // Response.body.getReader()方法返回一个遍历器
-        // 遍历器的read()方法每次返回一个对象，表示本次读取的内容块
-        // 这个对象的done属性是一个布尔值，用来判断有没有读完；value属性是一个 arrayBuffer 数组，表示内容块的内容，而value.length属性是当前块的大小。
-        while(true) {
-            const {done, value} = await reader.read();
-            if (done) {
-                break;
-            }
-            console.log(`Received ${value.length} bytes`)
-        }
-    }
-    fetchData()
+    // 1、fetch返回的是一个Response对象，该对象为一个Stream对象。
+    // 2、Response对象有json()和一些其它异步方法。
+    // 3、Response对象有以下属性：
+    // ok（返回一个布尔值，true对应 HTTP 请求的状态码 200 到 299，false对应其他的状态码。）、
+    // .status（状态码）、
+    // .statusText（OK或其它字符串）、
+    // .url、
+    // .type、
+    // .redirected
+    // .headers（是一个Headers对象，可以使用for...of循环进行遍历。有get()、has()。。。等同步方法）
+    // .body（是一个ReadableStream 对象，供用户操作，它可以用来分块读取内容，应用之一就是显示下载的进度。）
+    // .body使用示例：
+    //      const response = await fetch('flower.jpg');
+    //      const reader = response.body.getReader();
+    //      while(true) {
+    //          const {done, value} = await reader.read();
+    //          if (done) {
+    //              break;
+    //          }
+    //          console.log(`Received ${value.length} bytes`)
+    //      }
+    //      上面示例中，response.body.getReader()方法返回一个遍历器。这个遍历器的read()方法每次返回一个对象，表示本次读取的内容块。
+    //      这个对象的done属性是一个布尔值，用来判断有没有读完；value属性是一个 arrayBuffer 数组，表示内容块的内容，而value.length属性是当前块的大小。
+    //  等同步属性。
+    // 4、fetch()发出请求以后，有一个很重要的注意点：
+    //      4.1:只有网络错误，或者无法连接时，fetch()才会报错，其他情况都不会报错，而是认为请求成功。
+    //      这就是说，即使服务器返回的状态码是 4xx 或 5xx，fetch()也不会报错（即 Promise 不会变为 rejected状态）。
+    //      4.2:不用考虑网址跳转（状态码为 3xx），因为fetch()会将跳转的状态码自动转为 200。
+    //      4.3:只有通过Response.status属性，得到 HTTP 回应的真实状态码，才能判断请求是否成功或者使用response.ok是否为true判断。
+    // 5、fetch请求设置:
+    //      5.1:使用示例:提交x-www-form-urlencoded数据
+    //          const response = await fetch(url, {
+    //              method: 'POST',
+    //              headers: {
+    //                  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+    //              },
+    //              body: 'foo=bar&lorem=ipsum',
+    //          });
+    //          const json = await response.json();
+    //      5.2:使用示例:提交json数据
+    //          const user =  { name:  'John', surname:  'Smith'  };
+    //          const response = await fetch('/article/fetch/post/user', {
+    //              method: 'POST',
+    //              headers: {
+    //                  'Content-Type': 'application/json;charset=utf-8'
+    //              },
+    //              body: JSON.stringify(user) // *****注意这里要stringify一下
+    //          });
+    //      5.3:使用示例:提交其它格式数据formData或者Blob或arrayBuffer (上传其它格式数据时，不用修改标头的Content-Type，浏览器会自动设置。)
+    //          const form = document.querySelector('form');
+    //          const response = await fetch('/users', {
+    //              method: 'POST',
+    //              body: new FormData(form)
+    //          })
+
 </script>
 </html>

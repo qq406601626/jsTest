@@ -8,17 +8,38 @@
     <script src="js/moment-duration-format.js"></script>
     <script src="js/dayjs.min.js"></script>
     <script src="js/echarts.min.js"></script>
+    <script src="js/uploader.js"></script>
     <style>
         body {
             margin: 0;
             padding: 0;
         }
+
     </style>
 </head>
 <body>
-
+<button id="browseButton">select</button>
+<div id="dropTarget" draggable="true" style="width: 500px;height: 500px;background: darkgreen"></div>
+<button id="upload">upload</button>
 </body>
-
 <script>
+    // const uploader = new Uploader({
+    //     target: '/api/photo/redeem-upload-token',
+    //     query: { upload_token: 'my_token' },
+    //     chunkSize:1024*100
+    // })
+    // uploader.assignBrowse(document.getElementById('browseButton'),false,false)
+    // uploader.assignDrop(document.getElementById('dropTarget'))
+    // uploader.on('fileAdded', function (file, event) {
+    //     console.log(file, event)
+    // })
+    //
+    // const $upload = document.getElementById('upload')
+    // $upload.addEventListener('click',()=>{
+    //     uploader.upload()
+    // })
+
+    const f64a = new Float64Array(8);
+    console.log(f64a.byteLength)
 </script>
 </html>

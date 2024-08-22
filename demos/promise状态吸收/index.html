@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    const p1 = new Promise(r=>r())
+    const p2 = new Promise(r=>r(p1))
+
+
+    p2.then(()=>{
+        console.log('aaaa')
+    }).then(()=>{
+        console.log('bbbb')
+    }).then(()=>{
+        console.log('cccc')
+    })
+
+    p1.then(()=>{
+        console.log('1111')
+    }).then(()=>{
+        console.log('2222')
+    }).then(()=>{
+        console.log('3333')
+    })
+</script>
+</html>

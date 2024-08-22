@@ -8,6 +8,29 @@
 
 </body>
 <script>
+    // arrayBuffer代表一块内存,所以构造参数为字节数。
+    // TypedArray代表视图，所以构造参数为数组长度。
+    // TypedArray构造函数可以接受另一个TypedArray实例作为参数,此时生成的新数组，只是复制了参数数组的值，对应的底层内存是不一样的.
+    // TypedArray构造函数也可以是一个普通数组,这时TypedArray视图会重新开辟内存，不会在原数组的内存上建立视图。
+    // TypedArray转普通数组：[...typedArray]或者 Array.from(typedArray)
+    // 普通数组的操作方法和属性，对 TypedArray 数组完全适用。
+    // TypedArray 数组没有concat方法（因为TypedArray的长度一旦声明就是固定的，而concat会改变长度，所以需要重新声明一个新的长度数组）。如果想要合并多个 TypedArray 数组，可以用下面这个函数
+    // function concatenate(resultConstructor, ...arrays) {
+    //     let totalLength = 0;
+    //     for (let arr of arrays) {
+    //         totalLength += arr.length;
+    //     }
+    //     let result = new resultConstructor(totalLength);
+    //     let offset = 0;
+    //     for (let arr of arrays) {
+    //         result.set(arr, offset);
+    //         offset += arr.length;
+    //     }
+    //     return result;
+    // }
+    //
+    // concatenate(Uint8Array, Uint8Array.of(1, 2), Uint8Array.of(3, 4))
+    //------------------------------------------------
     // arrayBuffer实例代表一块内存。不可以直接操作（因为不允许直接操作内存），可以通过视图进行操作。
     // 试图包括TypedArray和DataView，区别是TypedArray每个元素的类型都一样，DataView可以包含不同类型的元素
     // ArrayBuffer、TypedArray、DataView都是二进制数组，二进制数组并不是真正的数组，而是类似数组的对象。

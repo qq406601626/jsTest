@@ -1,77 +1,176 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ch">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="js/lodash.min.js"></script>
+    <script src="js/moment.js"></script>
+    <script src="js/moment-duration-format.js"></script>
+    <script src="js/dayjs.min.js"></script>
+    <script src="js/echarts.min.js"></script>
     <style>
         body {
             margin: 0;
             padding: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
         }
     </style>
 </head>
 <body>
-<canvas id="canvas"/>
+<canvas id="cvs"></canvas>
 </body>
+
 <script>
-    const canvas = document.getElementById('canvas')
-    const cvs = canvas.getContext('2d')
-    const {clientWidth: stageWidth, clientHeight: stageHeight} = document.body
-    const textArr = ['h', 'e', 'l', 'l', 'o']
-    const textInstanceArr = []
-    const mouseData = {
-        x: 0,
-        y: 0
+    const rafTimeout = (fn, delay = 0, interval = false) => {
+        let start = null
+        const timeElapse = (timestamp) => {
+            if (!start) {
+                start = timestamp
+            }
+            const elapsed = timestamp - start
+            if (elapsed >= delay) {
+                fn()
+                if (interval) {
+                    start = null
+                    raf.id = window.requestAnimationFrame(timeElapse)
+                }
+            } else {
+                raf.id = window.requestAnimationFrame(timeElapse)
+            }
+        }
+
+        const raf = {
+            id: window.requestAnimationFrame(timeElapse)
+        }
+        return raf
     }
-    const generateTextInstance = function (text) {
-        this.text = text
-        this.x = 100
-        this.y = 100
-        this.fontSize = 30
-        this.color = '#00ffff'
+
+    const cancelRaf = (raf) => {
+        if (raf && raf.id) {
+            window.cancelAnimationFrame(raf.id)
+        }
     }
-    const drawText = (textInstance) => {
-        cvs.font = `${textInstance.fontSize}px sans-serif`
-        cvs.fillStyle = textInstance.color
-        cvs.fillText(textInstance.text, textInstance.x, textInstance.y)
+
+    // 1.每个文字都是一个单位
+    // 2.鼠标移动更改鼠标位置，每个单位体分别延迟一定时间移动
+    // 3.单位体的结束位置的y坐标一致，x坐标分别往后错位
+    // 4.每次渲染，都从当前位置向鼠标位置移动
+
+    const cvs = document.getElementById('cvs')
+    cvs.width = 300
+    cvs.height = 300
+    const ctx = cvs.getContext('2d')
+
+    class Stage {
+        constructor() {
+            this.cvs = document.getElementById('cvs')
+            this.ctx = this.cvs.getContext('2d')
+            this.w = 2000
+            this.h = 2000
+            this.mousePosition = null
+            this.font = 20
+            this.stoper = null
+            this.wordList = [
+                {
+                    label: '狗',
+                    list: []
+                },
+                {
+                    label: '藤',
+                    list: []
+                },
+                {
+                    label: '大',
+                    list: []
+                },
+                {
+                    label: 'S',
+                    list: []
+                },
+                {
+                    label: 'B',
+                    list: []
+                },
+            ]
+            this.initSize()
+            this.on()
+        }
+
+        initSize() {
+            this.cvs.width = this.w
+            this.cvs.height = this.h
+            this.ctx.font = `bold  ${this.font}px serif`
+        }
+
+        createTween(newPosition, oldPosition, wordIndex) {
+            // console.log('a',this.wordList[0].list.length)
+            if (wordIndex > 0 && this.wordList[0].list.length<=1) {
+                const tweenCount = 10*wordIndex
+                const stepX = (newPosition.x - oldPosition.x) / tweenCount
+                const stepY = (newPosition.y - oldPosition.y) / tweenCount
+                for (let i = 0; i <= tweenCount - 1; i++) {
+                    this.wordList[wordIndex].list.push({
+                        x: oldPosition.x + stepX * i,
+                        y: oldPosition.y + stepY * i,
+                    })
+                }
+            }
+        }
+
+        clearStage() {
+            this.ctx.clearRect(0, 0, this.w, this.h)
+        }
+
+        drawText() {
+            this.wordList.forEach(item => {
+                if (item.list.length) {
+                    const position = item.list.length > 1 ? item.list.shift() : item.list[0]
+                    this.ctx.fillText(item.label, position.x, position.y)
+                }
+            })
+        }
+
+        on() {
+            this.cvs.addEventListener('mousemove', e => {
+                if (!this.mousePosition) {
+                    this.mousePosition = {
+                        x: e.x,
+                        y: e.y
+                    }
+                } else {
+                    // 判断是否重新移动
+                    for (let i = 0; i <= this.wordList.length - 1; i++) {
+                        const newPosition = {
+                            x: e.x + this.font * i,
+                            y: e.y
+                        }
+                        const oldPosition = {
+                            x:this.mousePosition.x+this.font*i,
+                            y:this.mousePosition.y
+                        }
+                        this.createTween(newPosition, oldPosition, i)
+                        this.wordList[i].list.push({
+                            x: newPosition.x,
+                            y: newPosition.y
+                        })
+                    }
+                    this.mousePosition.x = e.x
+                    this.mousePosition.y = e.y
+                }
+            })
+        }
+
+        render() {
+            this.clearStage()
+            this.drawText()
+            this.stoper = window.requestAnimationFrame(() => {
+                this.render()
+            })
+        }
     }
-    const initStage = () => {
-        canvas.width = stageWidth
-        canvas.height = stageHeight
-    }
-    const initTextInstanceArr = () => {
-        textArr.forEach(text => {
-            textInstanceArr.push(new generateTextInstance(text))
-        })
-    }
-    const resetStage = () => {
-        cvs.clearRect(0, 0, stageWidth, stageHeight)
-    }
-    const realTimeRendering = () => {
-        resetStage()
-        textInstanceArr.forEach((textInstance, index) => {
-            textInstance.x = mouseData.x + 30 * index
-            textInstance.y = mouseData.y
-            drawText(textInstance)
-        })
-        window.requestAnimationFrame(realTimeRendering)
-    }
-    const mouseCallBack = ({x, y}) => {
-        mouseData.x = x
-        mouseData.y = y
-    }
-    const onListener = () => {
-        canvas.addEventListener('mousemove', mouseCallBack)
-    }
-    const render = () => {
-        initStage()
-        initTextInstanceArr()
-        onListener()
-        realTimeRendering()
-    }
-    render()
+
+    const stage = new Stage()
+    stage.render()
+
+
 </script>
 </html>

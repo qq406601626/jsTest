@@ -8,6 +8,13 @@
 
 </body>
 <script>
+
+
+
+
+
+
+
     // arrayBuffer代表一块内存,所以构造参数为字节数。
     // TypedArray代表视图，所以构造参数为数组长度。
     // TypedArray构造函数可以接受另一个TypedArray实例作为参数,此时生成的新数组，只是复制了参数数组的值，对应的底层内存是不一样的.
@@ -30,6 +37,20 @@
     // }
     //
     // concatenate(Uint8Array, Uint8Array.of(1, 2), Uint8Array.of(3, 4))
+
+    // 字符串转TypeArray
+    // const str = 'hello world'
+    // const encoder = new TextEncoder()
+    // console.log(encoder.encode(str)) // 得到其实就是每个字符的charCodeAt的值
+
+    // TypeArray转字符串
+    // const decoder = new TextDecoder('utf8')
+    // console.log(decoder.decode(ArrayBuffer | TypeArray)) // 其实就是把charCodeAt的值用String.fromCharCode()转换成字符串
+
+
+    // 8 位视图只能容纳一个 8 位的二进制值，如果放入一个 9 位的值，就会溢出：8位二进制所能代表的数字转换成十进制最大为255，一般常用的字符的charCode都小于255
+
+
     //------------------------------------------------
     // arrayBuffer实例代表一块内存。不可以直接操作（因为不允许直接操作内存），可以通过视图进行操作。
     // 试图包括TypedArray和DataView，区别是TypedArray每个元素的类型都一样，DataView可以包含不同类型的元素
@@ -40,7 +61,7 @@
     // 二进制'10110010'转化位16进制位b2:parseInt('10110010',2).toString(16).因为parseInt('1011',2).toString(16)为b,parseInt('0010',2).toString(16)为2.
     // 总结就是：8进制总共有Math.pow(2,8) = 256种可能，一个16进制可以代表16种可能性，16*16 =256，所以一个8进制可以由两个16进制数字代替。
     // 赋值时，值都是十进制的，js会自动把其转换为2进制。赋值时，跟数组的进制没关系。值范围区间可参考图片说明。
-    const memory = new ArrayBuffer(32) // 32代表这块内存有32个字节。一个字节就是一个文字。默认为8进制,即8*32位.一个文字在不同的进制下占用不同的位。Int8Array表示8位，Int16Array表示16位。
+    // const memory = new ArrayBuffer(32) // 32代表这块内存有32个字节。一个字节就是一个文字。默认为8进制,即8*32位.一个文字在不同的进制下占用不同的位。Int8Array表示8位，Int16Array表示16位。
     // memory.byteLength // arrayBuffer实例的byteLength表示内存的字节长度,而非位数.
     // 创建一个TypedArray视图实例并指定内存块。Int8Array代表每个元素为8位.
     // new Int8Array(memory) 表示这个数组有32个字节即32个元素,每个元素都是8位,即这个数组总共有32*8位.

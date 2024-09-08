@@ -12,7 +12,7 @@
     <style>
         body {
             margin: 0;
-            padding: 0;
+            padding: 200px;
         }
 
     </style>
@@ -22,7 +22,13 @@
 <!--<div id="dropTarget" draggable="true" style="width: 500px;height: 500px;background: darkgreen"></div>-->
 <!--<button id="upload">upload</button>-->
 <!--<input type="text" id="ipt"/>-->
-<div id="ipt" style="width: 300px;height: 300px;background: gray"></div>
+<!--<div id="ipt" style="width: 300px;height: 300px;background: blue" ></div>-->
+
+<!--<input type="text"/>-->
+<div style="width: 300px;word-break: break-all">
+    ddsfddsdfdffdsfdsfdsfdsfdflkdlfdsfldsfklfjklfsdjfklsfjksdljsdklfjsdlkfjdslsdjf
+    <span style="background: red">fkjdfkjdkljklfjdkjfjdkfhkjdslfdkfjd</span>
+</div>
 </body>
 <script>
     // const uploader = new Uploader({
@@ -39,6 +45,136 @@
     // const $upload = document.getElementById('upload')
     // $upload.addEventListener('click',()=>{
     //     uploader.upload()
+    // })
+
+
+    // const getCursorPosition = (element, options = {
+    //     debug: false,
+    //     useSelectionEnd: false,
+    // }) => {
+    //     const selectionStart = element.selectionStart !== null ? element.selectionStart : 0
+    //     const selectionEnd = element.selectionEnd !== null ? element.selectionEnd : 0
+    //     const position = selectionStart
+    //     const properties = [
+    //         'direction', // RTL support
+    //         'boxSizing',
+    //         'width', // on Chrome and IE, exclude the scrollbar, so the mirror div wraps exactly as the textarea does
+    //         'height',
+    //         'overflowX',
+    //         'overflowY', // copy the scrollbar for IE
+    //         'borderTopWidth',
+    //         'borderRightWidth',
+    //         'borderBottomWidth',
+    //         'borderLeftWidth',
+    //         'borderStyle',
+    //         'paddingTop',
+    //         'paddingRight',
+    //         'paddingBottom',
+    //         'paddingLeft',
+    //         // https://developer.mozilla.org/en-US/docs/Web/CSS/font
+    //         'fontStyle',
+    //         'fontVariant',
+    //         'fontWeight',
+    //         'fontStretch',
+    //         'fontSize',
+    //         'fontSizeAdjust',
+    //         'lineHeight',
+    //         'fontFamily',
+    //         'textAlign',
+    //         'textTransform',
+    //         'textIndent',
+    //         'textDecoration', // might not make a difference, but better be safe
+    //         'letterSpacing',
+    //         'wordSpacing',
+    //         'tabSize',
+    //         'MozTabSize',
+    //     ]
+    //     const div = document.createElement('div')
+    //     div.id = 'input-textarea-caret-position-mirror-div'
+    //     document.body.appendChild(div)
+    //     const style = div.style
+    //     const computed = window.getComputedStyle(element)
+    //     const isInput = element.nodeName === 'INPUT'
+    //     style.whiteSpace = isInput ? 'nowrap' : 'pre-wrap'
+    //     style.position = 'absolute'
+    //     if (!options.debug) style.visibility = 'hidden'
+    //     properties.forEach((prop) => {
+    //         if (isInput && prop === 'lineHeight') {
+    //             // Special case for <input>s because text is rendered centered and line height may be != height
+    //             if (computed.boxSizing === 'border-box') {
+    //                 const height = Number.parseInt(computed.height)
+    //                 const outerHeight =
+    //                     Number.parseInt(computed.paddingTop) +
+    //                     Number.parseInt(computed.paddingBottom) +
+    //                     Number.parseInt(computed.borderTopWidth) +
+    //                     Number.parseInt(computed.borderBottomWidth)
+    //                 const targetHeight =
+    //                     outerHeight + Number.parseInt(computed.lineHeight)
+    //                 if (height > targetHeight) {
+    //                     style.lineHeight = `${height - outerHeight}px`
+    //                 } else if (height === targetHeight) {
+    //                     style.lineHeight = computed.lineHeight
+    //                 } else {
+    //                     style.lineHeight = '0'
+    //                 }
+    //             } else {
+    //                 style.lineHeight = computed.height
+    //             }
+    //         } else {
+    //             style[prop] = computed[prop]
+    //         }
+    //     })
+    //     div.textContent = element.value.slice(0, Math.max(0, position))
+    //     if (isInput && div.textContent) {
+    //         div.textContent = div.textContent.replace(/\s/g, '\u00A0')
+    //     }
+    //     const span = document.createElement('span')
+    //     span.textContent = element.value.slice(Math.max(0, position)) || '.' // || because a completely empty faux span doesn't render at all
+    //     span.style.position = 'relative'
+    //     span.style.left = `${-element.scrollLeft}px`
+    //     span.style.top = `${-element.scrollTop}px`
+    //     div.appendChild(span)
+    //     const relativePosition = {
+    //         top: span.offsetTop + Number.parseInt(computed.borderTopWidth),
+    //         left: span.offsetLeft + Number.parseInt(computed.borderLeftWidth),
+    //         // We don't use line-height since it may be too large for position. Eg. 34px
+    //         // for input
+    //         height: Number.parseInt(computed.fontSize) * 1.5,
+    //     }
+    //     if (relativePosition.left >= element.clientWidth) {
+    //         relativePosition.left = element.clientWidth
+    //     }
+    //     return relativePosition
+    // }
+
+    // const p1 = new Promise(r=>{
+    //     r()
+    // })
+    //
+    // const p2 = new Promise(r=>{
+    //     r(p1)
+    // })
+    //
+    // p2.then(()=>{console.log(1)}).then(()=>{console.log(2)}).then(()=>{console.log(3)})
+    // p1.then(()=>{console.log(4)}).then(()=>{console.log(5)}).then(()=>{console.log(6)})
+
+    // async function async1() {
+    //     console.log(1)
+    //     await async2()
+    //     console.log('AAA')
+    // }
+    //
+    //  function async2() {
+    //     return Promise.resolve(2)
+    // }
+    //
+    // async1()
+    // Promise.resolve().then(() => {
+    //     console.log(3)
+    // }).then(() => {
+    //     console.log(4)
+    // }).then(() => {
+    //     console.log(5)
     // })
 
 

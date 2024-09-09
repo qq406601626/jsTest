@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    const listObj = list => {
+        const obj = {}
+        const reg = /\d{11}/
+        list.forEach(str => {
+            const matchResult = str.match(reg)
+            matchResult && (obj[matchResult] = str)
+        })
+        return obj
+    }
+    const compareObj = (oldObj, newObj) => {
+        const deleteList = []
+        const newAddList = []
+        const mergeKeyList = Object.keys(oldObj).concat(Object.keys(newObj))
+        mergeKeyList.forEach(key => {
+            if (key in oldObj && !(key in newObj)) {
+                deleteList.push(key)
+            }
+            if (!(key in oldObj) && key in newObj) {
+                newAddList.push(key)
+            }
+        })
+        return {
+            deleteList,
+            newAddList
+        }
+    }
+
+    const list1 = []
+
+    const list2 = []
+
+    const print = (oldList,newList)=>{
+        const oldListObj = listObj(oldList)
+        const newListObj = listObj(newList)
+        const {deleteList,newAddList} = compareObj(oldListObj,newListObj)
+        const deleteMapList = deleteList.map(key=>oldListObj[key])
+        const newAddMapList = newAddList.map(key=>newListObj[key])
+        return {deleteMapList,newAddMapList}
+    }
+
+    console.log(print(list1,list2))
+</script>
+</html>

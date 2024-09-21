@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="startBtn">start</button>
+<button id="stopBtn">stop</button>
+</body>
+<script>
+    // WebWorker中的settimeout和setInterval在网页失去焦点时不会丢失精度
+    const startBtn = document.getElementById('startBtn')
+    const stopBtn = document.getElementById('stopBtn')
+    startBtn.addEventListener('click',()=>{
+        worker.postMessage('start')
+    })
+    stopBtn.addEventListener('click',()=>{
+        worker.postMessage('stop')
+    })
+    const worker = new Worker('worker.js')
+    worker.addEventListener('message',msg=>{
+        console.log('receive msg from worker:',msg.data)
+    })
+
+</script>
+</html>

@@ -15,5 +15,153 @@
      * 4、await右边的函数体为同步任务，相当于一个promise构造函数
      * 5、await下面的函数体为微任务，相当于promise.then
      * */
+
+
+    /**
+     * 1、async函数的await命令后面，可以是 Promise 对象和原始类型的值（数值、字符串和布尔值，但这时会自动转成立即 resolved 的 Promise 对象）。
+     * 2、await命令就是内部then命令的语法糖。
+     * 3、async函数返回一个 Promise 对象。
+     * 4、async函数内部return语句返回的值，会成为then方法回调函数的参数。
+     * 5、async 函数可以保留运行堆栈，promise的then方法不保留堆栈。
+     *
+     *
+     * const a = () => {
+     *   b().then(() => c());
+     * };
+     * 上面代码中，函数a内部运行了一个异步任务b()。当b()运行的时候，函数a()不会中断，而是继续执行。等到b()运行结束，可能a()早就运行结束了，b()所在的上下文环境已经消失了。如果b()或c()报错，错误堆栈将不包括a()。
+     *
+     *
+     *
+     * const a = async () => {
+     *   await b();
+     *   c();
+     * };
+     * 上面代码中，b()运行的时候，a()是暂停执行，上下文环境都保存着。一旦b()或c()报错，错误堆栈将包括a()。
+     *
+     */
+
+
+
+
+    function spawn(genF) {
+        // 返回promise
+        // await后面的函数体会被放入到then方法中
+        // Generator函数在return时的done是true
+
+        // async test(){
+        //     console.log('111')
+        //     await new Promise()
+        //     console.log('222')
+        //     await new Promise()
+        //     console.log('333')
+        //     await new Promise()
+        //     return 'hello world'
+        // }
+
+
+        return new Promise((resolve, reject) => {
+            const gen = genF()
+
+            function step(nextF) {
+                let next
+                try {
+                    next = nextF();
+                } catch (e) {
+                    return reject(e);
+                }
+                if (next.done) {
+                    return resolve(next.value);
+                }
+                Promise.resolve(next.value).then(function (v) {
+                    step(function () {
+                        return gen.next(v);
+                    });
+                }, function (e) {
+                    step(function () {
+                        return gen.throw(e);
+                    });
+                });
+            }
+
+            step(function () {
+                return gen.next(undefined);
+            });
+        })
+    }
+
+    // ------------------------------------
+
+    // async function async1() {
+    //     console.log(1)
+    //     await async2()
+    //     console.log('AAA')
+    // }
+
+    // async function async2() {
+    //     console.log('BBB')
+    //     return Promise.resolve(2)
+    // }
+
+    // =>转译为↓
+
+    // function async1(){
+    //     console.log(1)
+    //     Promise.resolve(new Promise(resolve=>{
+    //         console.log('BBB')
+    //         resolve(Promise.resolve(2))
+    //     })).then(()=>{console.log('AAA')})
+    // }
+
+    // ------------------------------------
+
+    // async function async1() {
+    //     console.log(1)
+    //     await async2()
+    //     console.log('AAA')
+    // }
+
+
+    // async function async2() {
+    //     console.log('BBB')
+    //     return 2
+    // }
+
+    // =>转译为↓
+
+    // function async1() {
+    //     console.log(1)
+    //     Promise.resolve(new Promise(resolve => {
+    //         console.log('BBB')
+    //         resolve(2)
+    //     })).then(() => {
+    //         console.log('AAA')
+    //     })
+    // }
+
+
+    // ------------------------------------
+
+    async function async1() {
+        console.log(1)
+        await async2()
+        console.log('AAA')
+    }
+
+    async function async2() {
+        console.log('BBB')
+        return Promise.resolve(2)
+    }
+
+
+    async1()
+    Promise.resolve().then(() => {
+        console.log(3)
+    }).then(() => {
+        console.log(4)
+    }).then(() => {
+        console.log(5)
+    })
+
+
 </script>
 </html>

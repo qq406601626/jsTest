@@ -182,9 +182,29 @@
 
 
 
-
-
-
+    // function sayHello() {
+    //     //添加一个宏任务
+    //     setTimeout(() => {
+    //         console.log('timeout')
+    //         new Promise((resolve, reject) => {
+    //             resolve('hello world3')
+    //         }).then(value => {
+    //             console.log('第三个微任务回调', value)//异步执行
+    //         })
+    //     })
+    //     new Promise((resolve, reject) => {
+    //         console.log('before resolve')//同步执行
+    //         resolve('hello world')
+    //     }).then(value => {
+    //         console.log('第一个微任务回调', value)//异步执行
+    //         return 'hello world2'
+    //     }).then(value => {
+    //         console.log('第二个微任务回调', value)//异步执行
+    //     })
+    //     console.log('sayHello end')//同步执行
+    // }
+    //
+    // sayHello()
 
 </script>
 </html>

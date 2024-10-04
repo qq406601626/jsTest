@@ -102,6 +102,23 @@
     //     return Promise.resolve(2)
     // }
 
+    // 解析：
+    // 1、await之后运行的代码都会被包裹在Promise.resolve(上一步的执行结果).then()的回调中运行，所以console.log('AAA')会转译为Promise.resolve(上一步的执行结果).then(()=>{console.log('AAA')})
+    // 2、上一步的执行结果为async函数，async函数返回的是一个Promise对象，该Promise对象的resolve的值为async函数的return值，如果没有return，则resolve undefined。所以Promise.resolve().then(()=>{console.log('AAA')})的进一步转化结果为：
+    // Promise.resolve(new Promise(r=>{console.log('BBB'); r(Promise.resolve(2))})).then(()=>{console.log('AAA')})
+    // 总结：
+    // 1、先把await语法整体放入到Promise.resolve()的中作为形参,把await放入Promise.resolve().then()中作为形参。
+    // 2、把async函数转化为Promise对象，然后resolve该函数的返回结果
+
+
+    // =>
+    // 1
+    // BBB
+    // 3
+    // 4
+    // AAA
+    // 5
+
     // =>转译为↓
 
     // function async1(){
@@ -111,6 +128,7 @@
     //         resolve(Promise.resolve(2))
     //     })).then(()=>{console.log('AAA')})
     // }
+
 
     // ------------------------------------
 
@@ -125,6 +143,14 @@
     //     console.log('BBB')
     //     return 2
     // }
+
+    // =>
+    // 1
+    // BBB
+    // AAA
+    // 3
+    // 4
+    // 5
 
     // =>转译为↓
 
@@ -141,19 +167,40 @@
 
     // ------------------------------------
 
-    async function async1() {
-        console.log(1)
-        await async2()
-        console.log('AAA')
-    }
+    // async function async1() {
+    //     console.log(1)
+    //     await async2()
+    //     console.log('AAA')
+    // }
+    //
+    //
+    // function async2() {
+    //     console.log('BBB')
+    //     // return 2
+    //     return Promise.resolve(2)
+    //     // return 2 或者 return Promise.resolve(2)，都输出一样的结果
+    // }
 
-    async function async2() {
-        console.log('BBB')
-        return Promise.resolve(2)
-    }
+    // =>
+    // 1
+    // BBB
+    // AAA
+    // 3
+    // 4
+    // 5
 
+    // async function async1(){
+    //     console.log(1)
+    //     const async2 = ()=>{ // async2不需要转义成new Promise,因为async2不是async函数，所以就直接运行async2函数，然后把返回的值(Promise.resolve(2))作为Promise.resolve().then(()=>{console.log('AAA')})代码中Promise.resolve()的形参。
+    //         console.log('BBB')
+    //         return Promise.resolve(2)
+    //     }
+    //     Promise.resolve(async2()).then(()=>{console.log('AAA')})
+    // }
 
-    async1()
+    // ------------------------------------
+
+    // async1()
     Promise.resolve().then(() => {
         console.log(3)
     }).then(() => {

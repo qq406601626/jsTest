@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="clear">clear</div>
+<div id="print">print</div>
+</body>
+<script>
+    const $clear = document.getElementById('clear')
+    const $print = document.getElementById('print')
+    let obj = {}
+    const registry = new FinalizationRegistry(heldValue => {
+        console.log('heldValue:',heldValue)
+    })
+    registry.register(obj,'aaaaa')
+    const map = new WeakMap()
+    map.set(obj,'zhangsan')
+    $clear.addEventListener('click',()=>{
+        console.log('clear')
+        obj = null
+    })
+    $print.addEventListener('click',()=>{
+        console.log('print')
+        console.log('map',map)
+    })
+</script>
+</html>

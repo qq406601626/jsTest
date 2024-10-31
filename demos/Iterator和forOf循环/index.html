@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+1、for...of是es6
+2、具有Symbol.iterator方法的,就可以认为是“可遍历的”
+3、ES6 的有些数据结构原生具备 Iterator 接口（比如数组），即不用任何处理，就可以被for...of循环遍历。原因在于，这些数据结构原生部署了Symbol.iterator属性
+原生具备 Iterator 接口的数据结构如下。
+    ---Array
+    ---Map
+    ---Set
+    ---String
+    ---TypedArray
+    ---函数的 arguments 对象
+    ---NodeList 对象(querySelectorAll返回的对象,该对象是类似数组的对象，本来就具有遍历接口，可以直接遍历。)
+4、具有Symbol.iterator方法的就可以被for...of遍历
+5、调用 Iterator 接口的场合:
+    ---解构赋值:对数组和 Set 结构进行解构赋值时，会默认调用Symbol.iterator方法。
+        -eg:let [x,y] = array | set
+    ---扩展运算符
+    ---yield*
+    ---其他场合:由于数组的遍历会调用遍历器接口，所以任何接受数组作为参数的场合，其实都调用了遍历器接口。下面是一些例子。
+        -for...of
+        -Array.from()
+        -Map(), Set(), WeakMap(), WeakSet()（比如new Map([['a',1],['b',2]])）
+        -Promise.all()
+        -Promise.race()
+</body>
+</html>

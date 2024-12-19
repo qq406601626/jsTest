@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container{
+            width: 800px;
+            height: 400px;
+        }
+    </style>
+    <script src="/js/echarts.min.js"></script>
+</head>
+<body>
+<div class="container" id="container"></div>
+</body>
+<script>
+    var option = {
+        dataset: [
+            {
+                // 序号为 0 的 dataset。
+                source: []
+            },
+            {
+                // 序号为 1 的 dataset。
+                source: []
+            },
+            {
+                // 序号为 2 的 dataset。
+                source: []
+            }
+        ],
+        series: [
+            {
+                // 使用序号为 2 的 dataset。
+                datasetIndex: 2
+            },
+            {
+                // 使用序号为 1 的 dataset。
+                datasetIndex: 1
+            }
+        ]
+    };
+</script>
+</html>

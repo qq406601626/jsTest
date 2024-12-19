@@ -16,6 +16,8 @@
 </body>
 <script>
 /**
+    一些特殊的非 table 格式的图表，如 treemap、graph、lines 等，现在仍不支持在 dataset 中设置，仍然需要使用 series.data。
+    另外，对于巨大数据量的渲染（如百万以上的数据量），需要使用 appendData 进行增量加载，这种情况不支持使用 dataset。
     const option = {
         dataset: {
             // source: [

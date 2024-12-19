@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container {
+            width: 800px;
+            height: 400px;
+        }
+    </style>
+    <script src="/js/echarts.min.js"></script>
+</head>
+<body>
+<div class="container" id="container"></div>
+</body>
+<script>
+    // 设置seriesLayoutBy为row
+    // 使用二维数组
+    // 类似表头在表格左侧的表格。数据集第一列是表格的表头。
+    const option = {
+        legend: {},
+        tooltip: {},
+        dataset: {
+            // 格式
+            // source:[
+            //     [seriesGroupName/productName,		coffee,	    tea,	    milk ],
+            //     [series1Name,					    100,		200,		300	 ],
+            //     [series2Name,					    1000,		2000,		3000 ],
+            //     [series3Name,					    10000,		20000,		30000]
+            // ]
+            source: [
+                ['product', '2012', '2013', '2014', '2015'],
+                ['Matcha Latte', 41.1, 30.4, 65.1, 53.3],
+                ['Milk Tea', 86.5, 92.1, 85.7, 83.1],
+                ['Cheese Cocoa', 24.1, 67.2, 79.5, 86.4]
+            ]
+        },
+        xAxis: {
+            type: 'category'
+        },
+        yAxis: {},
+        series: [
+            {type: 'bar', seriesLayoutBy: 'row', xAxisIndex: 0, yAxisIndex: 0},
+            {type: 'bar', seriesLayoutBy: 'row', xAxisIndex: 0, yAxisIndex: 0},
+            {type: 'bar', seriesLayoutBy: 'row', xAxisIndex: 0, yAxisIndex: 0},
+        ]
+    };
+    var myChart = echarts.init(document.getElementById('container'));
+    myChart.setOption(option);
+</script>
+</html>

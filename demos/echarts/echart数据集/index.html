@@ -29,7 +29,7 @@
             //     ['Walnut Brownie', 72.4, 53.9, 39.1]
             // ]
 
-            // 1、使用二维数组，数据类似表格，第一行是表格的表头。
+            // 1、使用二维数组，类似表头在表格上方的表格。数据集第一行是表格的表头。
             //    使用二维数组格式时，不需要明确指定dimensions，如果没有显式声明dimensions，默认使用第一行作为映射字段。
             // source:[
             //     [seriesGroupName/productName,		series1Name,	series2Name,	series3Name],
@@ -49,26 +49,5 @@
         },
     }
  */
-const option = {
-    legend: {},
-    tooltip: {},
-    dataset: {
-        dimensions:['product', '2015', '2016', '2017'],
-        source: [
-            ['Matcha Latte', 43.3, 85.8, 93.7],
-            ['Milk Tea', 83.1, 73.4, 55.1],
-            ['Cheese Cocoa', 86.4, 65.2, 82.5],
-            ['Walnut Brownie', 72.4, 53.9, 39.1]
-        ]
-    },
-    // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
-    xAxis: { type: 'category' },
-    // 声明一个 Y 轴，数值轴。
-    yAxis: {},
-    // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
-    series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }]
-};
-var myChart = echarts.init(document.getElementById('container'));
-myChart.setOption(option);
 </script>
 </html>

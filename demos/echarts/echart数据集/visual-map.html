@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container{
+            width: 800px;
+            height: 400px;
+        }
+    </style>
+    <script src="/js/echarts.min.js"></script>
+</head>
+<body>
+<div class="container" id="container"></div>
+</body>
+<script>
+    const option = {
+        visualMap:[
+            {
+                type: 'continuous',
+                min: 0, // 设置control的最小值
+                max: 3000, // 设置control的最小大值
+                range:[900,2000], // 设置匹配区间
+                inRange: { // 只有设置了range，该配置项才生效
+                    color: ['yellow', 'red'],
+                    // 数据最小值映射到'yellow'上，
+                    // 最大值映射到'red'上，
+                    // 其余自动线性计算。
+                    symbol:'rect',
+                    symbolSize: [30, 100]
+                    // 数据最小值映射到30上，
+                    // 最大值映射到100上，
+                    // 其余自动线性计算。
+                },
+                outOfRange: { // 只有设置了range，该配置项才生效
+                    symbol:'circle',
+                    color: ['blue', 'pink'],
+                    // 数据最小值映射到'blue'上，
+                    // 最大值映射到'pink'上，
+                    // 其余自动线性计算。
+                    symbolSize: [30, 100]
+                    // 数据最小值映射到30上，
+                    // 最大值映射到100上，
+                    // 其余自动线性计算。
+                }
+            }
+        ],
+        xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                data: [800, 900, 1000, 1100, 2000, 1300, 1400],
+                type: 'line',
+                smooth: true
+            }
+        ]
+    };
+    const instance = echarts.init(document.getElementById('container'));
+    instance.setOption(option)
+</script>
+</html>

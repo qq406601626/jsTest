@@ -22,6 +22,7 @@
     // 使用\p{property=value}语法时，property必须为Table 65: Non-binary Unicode property aliases and their canonical property names中的一个。value必须为对应的property的可枚举值中的一个。
     // 要组合多个属性，请使用v标志启用的字符集交集语法，或参见模式减法和交集。
     // General_Category：通用类别用于对Unicode字符进行分类，子类别可用于定义更精确的分类。
+    // 10、x*?， x+?， x??， x{n}?， x{n,}?，x{n,m}?。默认情况下，像 * 和 + 这样的量词是“贪婪的”，这意味着它们试图匹配尽可能多的字符串。量词后面的字符 ? 使量词“不贪婪”：它一旦找到匹配就会停止。
     const str = `
      bbb
      ccc

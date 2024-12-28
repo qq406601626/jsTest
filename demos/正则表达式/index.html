@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    // 1、开始断言符^和结束断言符$在多行模式下，每行都可以适用。
+    // 2、先行断言x(?=y)和x(?!y):匹配后面是y或者后面不是y的x。先行和后行针对的是要匹配的x而言的。
+    // 3、后行断言(?<=y)x和(?<!y)x:匹配前面是y或者前面不是y的x。先行和后行针对的是要匹配的x而言的。
+    // 4、\s匹配的是空白字符。空白字符包括： [\f\n\r\t\v\u0020\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]。
+    // 5、.匹配除了终止符以外的任意字符。终止符包括：\n,\r,\u2028 or \u2029。需要注意的是，m multiline 标志不会改变点的行为。因此，要跨多行匹配一个模式，可以使用字符集[^]—它将匹配任何字符，包括新行。\s模式“dotAll”标志允许点也匹配行终止符。
+    // 6、\xhh匹配两个十六进制数字对应的字符。可以使用区间。
+    // 7、\uhhhh匹配四个十六进制数字对应的字符。可以使用区间，eg：/([\u0000-\u0019\u0021-\uFFFF])+/gu;
+    // 8、\u{hhhh} 或 \u{hhhhh}匹配四个十六进制数字或者五个十六进制数字对应的字符。需要设置了\u模式。可以使用区间，eg：/([\u{0000}-\u{0019}\u{0021}-\u{FFFF}])+/gu;
+    // 9、\p{UnicodeProperty}：根据Unicode属性进行匹配：
+    // 语法：\p{loneProperty} 或者 \p{property=value}。属性文档链接：https://tc39.es/ecma262/multipage/text-processing.html#table-binary-unicode-properties
+    // 使用\p{loneProperty}语法时，loneProperty的值直接写Unicode属性名（Table 66: Binary Unicode property aliases and their canonical property names）或者Unicode properties of strings（Table 67: Binary Unicode properties of strings）或者value为General_Category的属性的值（因为General_Category属性名是可选的）。
+    // 使用\p{property=value}语法时，property必须为Table 65: Non-binary Unicode property aliases and their canonical property names中的一个。value必须为对应的property的可枚举值中的一个。
+    // 要组合多个属性，请使用v标志启用的字符集交集语法，或参见模式减法和交集。
+    // General_Category：通用类别用于对Unicode字符进行分类，子类别可用于定义更精确的分类。
+    const str = `
+     bbb
+     ccc
+     `
+    const reg = /.+/gs
+    console.log(str.match(reg))
+</script>
+</html>

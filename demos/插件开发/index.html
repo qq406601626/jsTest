@@ -7,4 +7,10 @@
 <body>
 插件功能开发
 </body>
+<script>
+    // service worker在30秒内如果没有交互，会失活，一旦触发任何chrome的事件监听都会使其激活。
+    // 经测试，service worker中的全局变量在失活后会释放，但是因为在触发事件监听后会激活，其全局变量依然可以使用，所以在事件监听中使用全局变量不会有影响。
+    // 官网的demo中把变量都存在storage中是因为要存储用户交互产生的数据，所以要数据持久化。
+    // 点开service worker的控制台，service worker会一直处于激活状态。
+</script>
 </html>

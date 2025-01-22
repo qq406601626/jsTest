@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<canvas id="cvs" width="600" height="200"></canvas>
+</body>
+
+<script type="module">
+    const cvs = document.getElementById('cvs')
+    const ctx = cvs.getContext('2d')
+    const {width: canvasWidth, height: canvasHeight} = cvs
+    const angel_a = 30
+    const getRadianByAngle = angle => angle * Math.PI / 180
+
+    const getAngleByRadian = radian => radian * 180 / Math.PI
+
+    const getScaleRate = () => {
+        const r1 = canvasWidth
+        const r2 = canvasHeight
+        const l_a = Math.sqrt(Math.pow(r1, 2) + Math.pow(r2, 2))
+        const angel_b = 90 - angel_a - getAngleByRadian(Math.atan(r2 / r1))
+        const h_angel_b = getRadianByAngle(angel_b)
+        const l_b = r2 / Math.cos(h_angel_b)
+        return l_a / l_b
+    }
+
+    const scaleRate = getScaleRate()
+    const newCanvasRect = {
+        width: canvasWidth * scaleRate,
+        height: canvasHeight * scaleRate
+    }
+    ctx.scale(scaleRate, scaleRate)
+    ctx.translate(canvasWidth / 2, canvasHeight / 2)
+    ctx.rotate(getRadianByAngle(-angel_a))
+    ctx.translate(-newCanvasRect.width / 2, -newCanvasRect.height / 2)
+
+    const renderText = () => {
+        let fontSize = 30
+        fontSize = fontSize / scaleRate
+        ctx.font = `${fontSize}px serif`
+        const str = 'Element'
+        const hGap = 30 / scaleRate
+        const vGap = 60 / scaleRate
+        const textRect = ctx.measureText(str)
+        const hRepeatWidth = textRect.width + hGap
+        const vRepeatWidth = textRect.actualBoundingBoxAscent + textRect.actualBoundingBoxDescent + vGap
+        const hCount = newCanvasRect.width / hRepeatWidth
+        const vCount = newCanvasRect.height / vRepeatWidth
+        for (let i = 0; i < hCount; i++) {
+            const y = i * vRepeatWidth
+            for (let j = 0; j < vCount; j++) {
+                const x = j * hRepeatWidth
+                ctx.fillText(str, x, y)
+            }
+        }
+    }
+    renderText()
+
+
+</script>
+</html>

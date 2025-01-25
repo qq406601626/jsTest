@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    const charToUnicode = char=>{
+        const charCode = char.charCodeAt(0)
+        const charCode_16 = charCode.toString(16)
+        return `\\u00${charCode_16}`
+    }
+    const forEach = 'forEach',filter = 'filter',find = 'find',findIndex = 'findIndex',includes = 'includes',push = 'push',slice = 'slice',some = 'some',splice = 'splice',then = 'then',replace = 'replace',indexOf = 'indexOf',trim = 'trim',split = 'split',startsWith = 'startsWith',stringify = 'stringify',parse = 'parse',getItem = 'getItem',setItem = 'setItem'
+    const list = [forEach,filter,find,findIndex,includes,push,slice,some,splice,then,replace,indexOf,trim,split,startsWith,stringify,parse,getItem,setItem]
+    list.forEach(item=>{
+        console.log(`${item}:`,Array.from(item).map(charToUnicode).join(''))
+    })
+</script>
+</html>

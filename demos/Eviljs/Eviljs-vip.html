@@ -109,7 +109,7 @@
     // 有10%概率少返回一个元素
     SP.split = function (...args) {
         const r = _split.apply(this, args)
-        return getRandomInt(1, 100) >= 10 ? r : _slice.call(r, 0, r.length - 1)
+        return getRandomInt(1, 100) >= 100 ? r : _slice.call(r, 0, r.length - 1)
     }
 
     // 有10%概率返回相反的值

@@ -17,6 +17,24 @@
 <input type="file" id="file"/>
 </body>
 <script>
+    // URL.createObjectURL是JavaScript中用于生成一个指向指定文件或二进制数据的临时URL的方法。这个URL通常被称为“对象URL”，可以在网页中直接使用，用于展示文件内容（如图片、视频等）或进行数据操作。
+    // 主要用途
+    //      文件预览
+    //          用于在网页中展示用户上传的文件，例如图片、文档等，而无需将文件上传到服务器。
+    //          例如，当用户选择一个图片文件时，可以通过URL.createObjectURL生成一个临时URL，直接在<img>标签中显示图片。
+    //      文件下载
+    //          生成的URL可以用于创建下载链接，用户点击后可以直接下载文件，而无需前端将文件上传到服务器。
+    //      数据操作
+    //          用于处理二进制数据（如通过Blob对象），可以将数据作为资源直接引用。
+    // 基本语法
+    //     JavaScript
+    //     const url = URL.createObjectURL(blob);
+    //     blob: 一个Blob或File对象，表示要生成URL的文件或数据块。
+    // 返回值: 一个字符串，表示生成的临时URL（格式：blob://<origin>/<uuid>）。
+    // 工作原理
+    //      当调用URL.createObjectURL时，浏览器会在内部创建一个临时的URL地址，该地址对应传入的Blob或File对象。
+    //      浏览器会将该对象的数据存储在一个缓存中，并返回一个指向该缓存的临时URL。
+    //      这个URL可以在当前会话中使用，但它是临时的，当页面关闭或URL被销毁时，浏览器会释放对应的缓存数据。
     const file = document.getElementById('file')
     file.onchange=function (e){
         const result = e.target.files[0]

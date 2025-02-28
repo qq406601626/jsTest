@@ -13,8 +13,16 @@
 
 
 
-
-
+    // arrayBuffer存储的都是二进制数据，比如二进制数据0000 1111，转化为十进制后是15，所以在使用视图赋值时，只需要使用dataView[0] = 15就可以使内存数据为0000 1111。
+    // 因为二进制数据是最底层的数据，所以二进制数据可以和任何类型的数据进行转化。比如blob和其它类型的数据之间。
+    // arrayBuffer和字符之间的关系：计算机会把二进制数据转化为十进制数据，然后去编码表中找到对应的字符，然后显示出来。
+    // example：
+    //     const buffer = new Buffer(8)
+    //     const arrayView = new Uint8Array(buffer)
+    //     arrayView[0] = 65 // 0100 0001
+    //     const decoder = new TextDecoder('utf8')
+    //     decoder.decode(arrayView) // => A，因为字符串A的ascii码为65。其实就是把二进制转化为10进制然后去匹配字符码。
+    //-----------------------------------
     // arrayBuffer代表一块内存,所以构造参数为字节数。
     // TypedArray代表视图，所以构造参数为数组长度。
     // TypedArray构造函数可以接受另一个TypedArray实例作为参数,此时生成的新数组，只是复制了参数数组的值，对应的底层内存是不一样的.

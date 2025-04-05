@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+structuredClone和JSON.parse(JSON.stringify(obj))的区别：
+1、structuredClone可以递归复制包含循环引用的对象，JSON.parse(JSON.stringify)如果包含了循环引用的，则会报错。
+2、对象中如果包含Date, Set, Map, Error, RegExp, ArrayBuffer, Blob, File, ImageData等对象，JSON.parse(JSON.stringify)会转为字符串，而structuredClone可以保留原对象。
+3、structuredClone支持transfer转移，即如果有一个大对象，正常情况下会对该对象进行深拷贝，但如果把该对象添加到transfer中，那么就不会对该对象进行深拷贝而是直接转移到新的对象中。
+相同点：
+1、都不能复制对象中的函数。
+2、都不能复制对象的原型。
+
+
+</body>
+</html>

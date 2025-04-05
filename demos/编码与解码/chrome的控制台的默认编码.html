@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Chrome控制台的默认编码与浏览器解析网页内容的编码机制不同，其核心逻辑如下：
+
+---
+
+### 1. **控制台编码的本质**
+Chrome控制台（Console）的输入/输出**始终基于JavaScript的字符串处理**，而JavaScript字符串内部使用**UTF-16编码**（Unicode标准）。因此：
+- **输入**：无论用户输入何种字符（如中文、Emoji等），均会被转换为UTF-16格式处理。
+- **输出**：控制台显示的文本（如`console.log`结果）也以UTF-16渲染，与页面编码无关。
+
+---
+
+### 2. **与网页编码的关系**
+控制台可以**动态解析当前网页的编码**（如UTF-8、GBK等），但仅影响对网页内容的操作：
+- **调试网页时**：若网页编码为GBK，控制台能正确解析并显示该编码下的DOM文本（如`document.body.innerText`），但内部仍以UTF-16处理。
+- **网络请求响应**：在Network面板中，Chrome会根据响应头（如`Content-Type: text/html; charset=gbk`）自动解码内容，但控制台输出时仍统一为UTF-16。
+
+---
+
+### 3. **用户可配置项**
+虽然控制台内部编码不可更改，但以下设置可能影响显示行为：
+- **语言切换**：通过DevTools设置（F12 → ⚙ → Language）可切换控制台界面语言（如中英文），但不影响编码逻辑。
+- **字体设置**：若控制台显示乱码，可能是字体不支持某些Unicode字符，需调整字体（Settings → Appearance → Font Family）。
+
+---
+
+### 4. **常见误解澄清**
+- **“默认编码为GBK”**：此说法仅适用于部分旧版Chrome对**网页内容**的自动检测（如无`<meta charset>`时），而非控制台本身。
+- **编码强制转换**：若需处理非UTF-8网页内容，需在代码中显式转换（如`new TextDecoder('gbk').decode(buffer)`）。
+
+---
+
+### 总结
+Chrome控制台的输入/输出始终基于**UTF-16编码**，与网页编码无关。其显示兼容性依赖于Unicode标准，无需用户手动配置编码格式。若遇到乱码，请检查网页源码的字符集声明或网络响应的`Content-Type`头。
+</body>
+</html>

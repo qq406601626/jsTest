@@ -22,5 +22,17 @@ js中几种表示字符的方式：
 '\x7A' === 'z' // true ==> 用十六进制的方式表示（对应Ascii码，所以只能表达基础字符）。一个\x后面只能个一个字节，语法：\x65\x7A。
 '\u007A' === 'z' // true ==> 用十六进制的方式表示。
 '\u{7A}' === 'z' // true ==> 用十六进制的方式表示。
+
+js中，在处理Unicode码点大于U+FFFF的字符时，会有几种特殊问题：
+1、字符.length返回值为2。
+2、for (let i = 0; i < text.length; i++){console.log(text[i]);}循环中不能正确打印出字符内容。
+
+js中对字符串扩展了for...of循环，该循环可以正确识别大于0xFFFF的码点：
+例如：for (let i of '𠮷') {console.log(i);} // 因为该循环没有使用到str.length
+
+
+Array.from(str)或者[...str]可以正确获得一个字符串的长度，即便该字符串中有码点大于U+FFFF的字符。
+即便Array.from(str)或者[...str]可以正确获得一个字符串的长度，但是配合普通for循环使用时，还是不能正确打印字符内容。
+
 </body>
 </html>

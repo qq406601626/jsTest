@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container{
+            height: 800px;
+            overflow-y: auto;
+            border: 1px solid green;
+            padding: 5px;
+        }
+        .box{
+            height: 2000px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+<!--之前处理滚动行为的时候，由于滚动事件的触发太频繁，所有，都会用setTimeout优化处理。-->
+<!--现在，浏览器支持了scrollend事件，就不需要那么麻烦了。-->
+<!--可以在普通DOM元素上，也可以设置在全局的window的窗体对象上-->
+<!--scrollend事件会在每次滚动结束大概一秒左右后触发-->
+<div class="container">
+    <div class="box"></div>
+</div>
+</body>
+<script>
+    const container = document.querySelector('.container')
+    container.addEventListener('scrollend',function (e) {
+        console.log('1111')
+    })
+</script>
+</html>

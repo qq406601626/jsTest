@@ -16,12 +16,15 @@
     // 6、\xhh匹配两个十六进制数字对应的字符。可以使用区间。
     // 7、\uhhhh匹配四个十六进制数字对应的字符。可以使用区间，eg：/([\u0000-\u0019\u0021-\uFFFF])+/gu;
     // 8、\u{hhhh} 或 \u{hhhhh}匹配四个十六进制数字或者五个十六进制数字对应的字符。需要设置了\u模式。可以使用区间，eg：/([\u{0000}-\u{0019}\u{0021}-\u{FFFF}])+/gu;
-    // 9、\p{UnicodeProperty}：根据Unicode属性进行匹配：
-    // 语法：\p{loneProperty} 或者 \p{property=value}。属性文档链接：https://tc39.es/ecma262/multipage/text-processing.html#table-binary-unicode-properties
-    // 使用\p{loneProperty}语法时，loneProperty的值直接写Unicode属性名（Table 66: Binary Unicode property aliases and their canonical property names）或者Unicode properties of strings（Table 67: Binary Unicode properties of strings）或者value为General_Category的属性的值（因为General_Category属性名是可选的）。
-    // 使用\p{property=value}语法时，property必须为Table 65: Non-binary Unicode property aliases and their canonical property names中的一个。value必须为对应的property的可枚举值中的一个。
+    /**
+     * 9、\p：根据Unicode属性进行匹配（使用\p功能进行匹配时，必须使用\u模式）。
+     * 语法：
+     *      1、\p{独立属性值}：
+     *          独立属性列表：['ASCII', 'ASCII_Hex_Digit', 'AHex', 'Alphabetic', 'Alpha', 'Any', 'Assigned', 'Bidi_Control', 'Bidi_C', 'Bidi_Mirrored', 'Bidi_M', 'Case_Ignorable', 'CI', 'Cased', 'Changes_When_Casefolded', 'CWCF', 'Changes_When_Casemapped', 'CWCM', 'Changes_When_Lowercased', 'CWL', 'Changes_When_NFKC_Casefolded', 'CWKCF', 'Changes_When_Titlecased', 'CWT', 'Changes_When_Uppercased', 'CWU', 'Dash', 'Default_Ignorable_Code_Point', 'DI', 'Deprecated', 'Dep', 'Diacritic', 'Dia', 'Emoji', 'Emoji_Component', 'EComp', 'Emoji_Modifier', 'EMod', 'Emoji_Modifier_Base', 'EBase', 'Emoji_Presentation', 'EPres', 'Extended_Pictographic', 'ExtPict', 'Extender', 'Ext', 'Grapheme_Base', 'Gr_Base', 'Grapheme_Extend', 'Gr_Ext', 'Hex_Digit', 'Hex', 'IDS_Binary_Operator', 'IDSB', 'IDS_Trinary_Operator', 'IDST', 'ID_Continue', 'IDC', 'ID_Start', 'IDS', 'Ideographic', 'Ideo', 'Join_Control', 'Join_C', 'Logical_Order_Exception', 'LOE', 'Lowercase', 'Lower', 'Math', 'Noncharacter_Code_Point', 'NChar', 'Pattern_Syntax', 'Pat_Syn', 'Pattern_White_Space', 'Pat_WS', 'Quotation_Mark', 'QMark', 'Radical', 'Regional_Indicator', 'RI', 'Sentence_Terminal', 'STerm', 'Soft_Dotted', 'SD', 'Terminal_Punctuation', 'Term', 'Unified_Ideograph', 'UIdeo', 'Uppercase', 'Upper', 'Variation_Selector', 'VS', 'White_Space', 'space', 'XID_Continue', 'XIDC', 'XID_Start', 'XIDS', Basic_Emoji', 'Emoji_Keycap_Sequence', 'RGI_Emoji_Modifier_Sequence', 'RGI_Emoji_Flag_Sequence', 'RGI_Emoji_Tag_Sequence', 'RGI_Emoji_ZWJ_Sequence', 'RGI_Emoji']。
+     *      2、\p{属性名=属性值}：参考PropertyValueAliases.txt。
+     *      格外说明：当使用\p{General_Category=属性值}时，可以省略General_Category=，直接写属性值。eg：\p{Lu}
+     * */
     // 要组合多个属性，请使用v标志启用的字符集交集语法，或参见模式减法和交集。
-    // General_Category：通用类别用于对Unicode字符进行分类，子类别可用于定义更精确的分类。
     // 10、x*?， x+?， x??， x{n}?， x{n,}?，x{n,m}?。默认情况下，像 * 和 + 这样的量词是“贪婪的”，这意味着它们试图匹配尽可能多的字符串。量词后面的字符 ? 使量词“不贪婪”：它一旦找到匹配就会停止。
     // 11、(x)捕获组。正则表达式可以有多个捕获组。匹配结果通常在数组中，该数组的成员与捕获组中左括号的顺序相同。这通常只是捕获组本身的顺序。使用结果元素的索引 ([1], ..., [n]) 或从预定义的 RegExp 对象的属性 ($1, ..., $9)。
     // 正常情况下，如果不设置\g标志，String.match()会返回组信息。但是如果设置了\g标志，String.match() 不会返回组信息。但是可以使用 String.matchAll() 获取匹配组信息。

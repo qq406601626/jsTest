@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Promise.all：所有promise都resolve时，整个promise才resolve，否则任何一个promise reject，整个promise立马结束并reject。
+Promise.allSettled：所有promise都完成时，整个promise才结束。该方法只会返回resolve状态不会返回reject状态。
+Promise.any：任何一个promise resolve时，整个promise立马结束并resolve。如果所有promise都reject，那么整个promise也返回reject状态。
+Promise.race：返回最先resolve或者最先reject的状态。
+</body>
+</html>

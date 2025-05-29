@@ -24,70 +24,85 @@
      *      2、\p{属性名=属性值}：参考PropertyValueAliases.txt（列表中的目前只有General_Category，Script，Script_Extensions三个二元属性和所有布尔属性可以使用。）
      *      格外说明：当使用\p{General_Category=属性值}时，可以省略General_Category=，直接写属性值。eg：\p{Lu}
      * */
-    // 要组合多个属性，请使用v标志启用的字符集交集语法，或参见模式减法和交集。
-    // 10、x*?， x+?， x??， x{n}?， x{n,}?，x{n,m}?。默认情况下，像 * 和 + 这样的量词是“贪婪的”，这意味着它们试图匹配尽可能多的字符串。量词后面的字符 ? 使量词“不贪婪”：它一旦找到匹配就会停止。
-    // 11、(x)捕获组。正则表达式可以有多个捕获组。匹配结果通常在数组中，该数组的成员与捕获组中左括号的顺序相同。这通常只是捕获组本身的顺序。使用结果元素的索引 ([1], ..., [n]) 或从预定义的 RegExp 对象的属性 ($1, ..., $9)。
-    // 正常情况下，如果不设置\g标志，String.match()会返回组信息。但是如果设置了\g标志，String.match() 不会返回组信息。但是可以使用 String.matchAll() 获取匹配组信息。
-    // 12、\n：表示对正则组的匹配结果的引用。注意是匹配结果而不是组的表达式。
-    // eg：
-    // const str = `aaabbbcccddd`
-    // const reg = /aaa(\w{3})ccc\1/g // \1是bbb而不是\w{3}
-    // 13、(?<Name>x)设置组名
-    // 14、(?:x)：非捕获组
-    // 15、\v模式：
-    // 差集（--）：想要所有数字，但不要 6 和 9
-    // const notSixNine = /^[\p{Number}--[69]]$/v;
-    // console.log(notSixNine.test('5')); // true
-    // console.log(notSixNine.test('6')); // false
-    //
-    // // 交集（&&）：只要英文字母
-    // const asciiLetters = /[\p{ASCII}&&\p{Letter}]/v;
-    // console.log(asciiLetters.test('A')); // true
-    // console.log(asciiLetters.test('1')); // false
-    //
-    // // 并集：字母或数字
-    // const lettersOrNumbers = /[\p{Letter}\p{Number}]/v;
-    // console.log(lettersOrNumbers.test('A')); // true
-    // console.log(lettersOrNumbers.test('1')); // true
-    // 16、\q 转义符：有时候我们需要匹配特定的字符序列，\q 就是为此而生：
-    // // 匹配换行符或特定文本
-    // const lineEndings = /[\q{\r\n|END_OF_LINE}]/v; // 之前匹配\r\n或者END_OF_LINE需要写成(\r\n|END_OF_LINE),但是在[]中括号只代表字符串(),所以需要\q转义符.
-    // console.log(lineEndings.test('\r\n')); // true
-    // console.log(lineEndings.test('END_OF_LINE')); // true
-    // --------------------------------------------------------
-    // *?
-    // +?
-    // {}?
-    // ??
-    // a?
-    // -----------
-    // (?:)
-    // (?<Name>)
-    // (?=)
-    // (?!)
-    // (?<=)
-    // (?<!)
-    // -------------
-    // .：1、匹配除行终止符之外的任何单个字符：\n, \r, \u2028 or \u2029。
-    // 2、在字符集内，点失去了它的特殊意义，并与文字点匹配。
-    // 3、需要注意的是，m multiline 标志不会改变点的行为。因此，要跨多行匹配一个模式，可以使用字符集[^]—它将匹配任何字符，包括新行。
-    // 4、s“dotAll”标志允许点也匹配行终止符。
-    // \s匹配空白字符，包括空格、制表符、换页符和换行符。等价于 [\f\n\r\t\v\u0020\u00a0\u1680\u180e\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]。
-    // 即：“.”不匹配终止符，\s匹配空格和终止符。[^]终止符和非终止符。
-    // -------------
-    // 正则中的"|"，如果不加括号（即组），那么"|"前面的整个区域为一部分，"|"后面的为一部分。
-    // \b匹配字符边界。一般放在正则的最前面或者正则的最后面。匹配中不包括匹配的字边界。换句话说，一个匹配的词的边界的内容的长度是 0。
-    // \1用于匹配阶段
-    // $1用于替换阶段
-    // -------------
-    // 正则表达式可以被用于 RegExp 的 exec 和 test 方法以及 String 的 match、replace、search 和 split 方法。
+        // 要组合多个属性，请使用v标志启用的字符集交集语法，或参见模式减法和交集。
+        // 10、x*?， x+?， x??， x{n}?， x{n,}?，x{n,m}?。默认情况下，像 * 和 + 这样的量词是“贪婪的”，这意味着它们试图匹配尽可能多的字符串。量词后面的字符 ? 使量词“不贪婪”：它一旦找到匹配就会停止。
+        // 11、(x)捕获组。正则表达式可以有多个捕获组。匹配结果通常在数组中，该数组的成员与捕获组中左括号的顺序相同。这通常只是捕获组本身的顺序。使用结果元素的索引 ([1], ..., [n]) 或从预定义的 RegExp 对象的属性 ($1, ..., $9)。
+        // 正常情况下，如果不设置\g标志，String.match()会返回组信息。但是如果设置了\g标志，String.match() 不会返回组信息。但是可以使用 String.matchAll() 获取匹配组信息。
+        // 12、\n：表示对正则组的匹配结果的引用。注意是匹配结果而不是组的表达式。
+        // eg：
+        // const str = `aaabbbcccddd`
+        // const reg = /aaa(\w{3})ccc\1/g // \1是bbb而不是\w{3}
+        // 13、(?<Name>x)设置组名
+        // 14、(?:x)：非捕获组
+        // 15、\v模式：
+        // 差集（--）：想要所有数字，但不要 6 和 9
+        // const notSixNine = /^[\p{Number}--[69]]$/v;
+        // console.log(notSixNine.test('5')); // true
+        // console.log(notSixNine.test('6')); // false
+        //
+        // // 交集（&&）：只要英文字母
+        // const asciiLetters = /[\p{ASCII}&&\p{Letter}]/v;
+        // console.log(asciiLetters.test('A')); // true
+        // console.log(asciiLetters.test('1')); // false
+        //
+        // // 并集：字母或数字
+        // const lettersOrNumbers = /[\p{Letter}\p{Number}]/v;
+        // console.log(lettersOrNumbers.test('A')); // true
+        // console.log(lettersOrNumbers.test('1')); // true
+        // 16、\q 转义符：有时候我们需要匹配特定的字符序列，\q 就是为此而生：
+        // // 匹配换行符或特定文本
+        // const lineEndings = /[\q{\r\n|END_OF_LINE}]/v; // 之前匹配\r\n或者END_OF_LINE需要写成(\r\n|END_OF_LINE),但是在[]中括号只代表字符串(),所以需要\q转义符.
+        // console.log(lineEndings.test('\r\n')); // true
+        // console.log(lineEndings.test('END_OF_LINE')); // true
+        // --------------------------------------------------------
+        // *?
+        // +?
+        // {}?
+        // ??
+        // a?
+        // -----------
+        // (?:)
+        // (?<Name>)
+        // (?=)
+        // (?!)
+        // (?<=)
+        // (?<!)
+        // -------------
+        // .：1、匹配除行终止符之外的任何单个字符：\n, \r, \u2028 or \u2029。
+        // 2、在字符集内，点失去了它的特殊意义，并与文字点匹配。
+        // 3、需要注意的是，m multiline 标志不会改变点的行为。因此，要跨多行匹配一个模式，可以使用字符集[^]—它将匹配任何字符，包括新行。
+        // 4、s“dotAll”标志允许点也匹配行终止符。
+        // \s匹配空白字符，包括空格、制表符、换页符和换行符。等价于 [\f\n\r\t\v\u0020\u00a0\u1680\u180e\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]。
+        // 即：“.”不匹配终止符，\s匹配空格和终止符。[^]终止符和非终止符。
+        // -------------
+        // 正则中的"|"，如果不加括号（即组），那么"|"前面的整个区域为一部分，"|"后面的为一部分。
+        // \b匹配字符边界。一般放在正则的最前面或者正则的最后面。匹配中不包括匹配的字边界。换句话说，一个匹配的词的边界的内容的长度是 0。
+        // \1用于匹配阶段
+        // $1用于替换阶段
+        // -------------
+        // 正则表达式可以被用于 RegExp 的 exec 和 test 方法以及 String 的 match、replace、search 和 split 方法。
+        // 是否找到匹配和获得匹配信息，正则和字符串都有对应的方法：
+        //      是否找到匹配：正则：test(),字符串:search()。
+        //      获得匹配信息：正则：exec(),字符串:match()。
+        // -------------
+        // exec：方法返回一个数组，如果没匹配到，返回null。如果匹配到，则数组第一项为匹配到的内容，之后每一项都为匹配到的捕获组（包括已命名组）。
+        //       该数组还有静态属性：groups，index，input。其中groups为已命名组匹配到的内容。
+        // exec的/g模式和非/g模式区别：/g模式会存储index的值，该值保存在reg对象上，可以手动修改。以后每次执行都会从上次匹配的位置开始匹配。非/g模式每次匹配都会从字符串的开头开始匹配。
+        // exec的/g模式和test及replace的/g模式的区别：exec的/g模式不会连续执行匹配（只会更新lastIndex），而test及replace的/g模式会连续的执行匹配，直到匹配到最后。
 
-    // const str = 'abc123def456'
-    // const reg = /[a-z]+/g
-    // console.log(reg.exec(str))
-    // console.log(reg.exec(str))
-    console.log(/\s/.test(' '))
+
+        // const str = 'abc123def456'
+        // const reg = /[a-z]+/g
+        // console.log(reg.exec(str))
+        // console.log(reg.exec(str))
 
 
+    const re = /(quick)(?<color>aaa)/i;
+    const str = 'qqqquickaaaqqqquickaaa'
+    const result = re.exec(str);
+    console.log(result)
+    const result2 = re.exec(str);
+    console.log(result2)
+    console.log(re.lastIndex)
 </script>
 </html>

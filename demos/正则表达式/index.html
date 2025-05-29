@@ -85,24 +85,20 @@
         //      是否找到匹配：正则：test(),字符串:search()。
         //      获得匹配信息：正则：exec(),字符串:match()。
         // -------------
-        // exec：方法返回一个数组，如果没匹配到，返回null。如果匹配到，则数组第一项为匹配到的内容，之后每一项都为匹配到的捕获组（包括已命名组）。
-        //       该数组还有静态属性：groups，index，input。其中groups为已命名组匹配到的内容。
+        // exec：方法返回一个【数组】，如果没匹配到，返回null。如果匹配到，则数组第一项为匹配到的内容，之后每一项都为匹配到的捕获组（包括已命名组）。 该数组还有静态属性：groups，index，input。其中groups为已命名组匹配到的内容。
         // exec的/g模式和非/g模式区别：/g模式会存储index的值，该值保存在reg对象上，可以手动修改。以后每次执行都会从上次匹配的位置开始匹配。非/g模式每次匹配都会从字符串的开头开始匹配。
-        // exec的/g模式和test及replace的/g模式的区别：exec的/g模式不会连续执行匹配（只会更新lastIndex），而test及replace的/g模式会连续的执行匹配，直到匹配到最后。
+        // exec的/g模式和test及replace及match的/g模式的区别：exec的/g模式不会连续执行匹配（只会更新lastIndex），而test及replace及match的/g模式会连续的执行匹配，直到匹配到最后。
+
+        // match：返回一个【数组】，如果没匹配到，返回null。
+        // match/g模式和非/g模式区别：非/g模式下，如果匹配到，返回的结果和reg.exec的结果一致。/g模式下，返回与完整正则表达式匹配的所有结果（会连续执行匹配，直到结尾），但不会返回捕获组，且该数组没有别的静态属性。
+        // -------------
+        // 如果你需要知道一个字符串是否与一个正则表达式 RegExp 匹配，请使用test()。
+        // 如果你只想获取第一个匹配项，你可能需要使用 exec()或者非/g模式的match()。
+        // 如果你想要获取捕获组，并且全局标志已设置，你需要使用 exec() 或 matchAll()。
 
 
-        // const str = 'abc123def456'
-        // const reg = /[a-z]+/g
-        // console.log(reg.exec(str))
-        // console.log(reg.exec(str))
-
-
-    const re = /(quick)(?<color>aaa)/i;
+    const re = /(quick)(?<color>aaa)/ig;
     const str = 'qqqquickaaaqqqquickaaa'
-    const result = re.exec(str);
-    console.log(result)
-    const result2 = re.exec(str);
-    console.log(result2)
-    console.log(re.lastIndex)
+    console.log(str.match(re))
 </script>
 </html>

@@ -93,14 +93,23 @@
         // match/g模式和非/g模式区别：非/g模式下，如果匹配到，返回的结果和reg.exec的结果一致。/g模式下，返回与完整正则表达式匹配的所有结果（会连续执行匹配，直到结尾），但不会返回捕获组，且该数组没有别的静态属性。
 
         // search:如果匹配成功，则返回正则表达式在字符串中首次匹配的索引；否则，返回 -1。regexp 的 g 标志对 search() 方法的结果没有影响，搜索总是以正则表达式的 lastIndex 为 0 进行。
+
+        // replace：一个新的字符串。字符串模式只会被替换一次。要执行全局搜索和替换，请使用带有 g 标志的正则表达式或使用 replaceAll()。
+        // 指定字符串作为替换项：
+        // $$	替换成"$"。
+        // $&	匹配的字符串。
+        // $`	匹配子字符串之前的字符串片段。
+        // $'	匹配子字符串之后的字符串片段。
+        // $n	第 n（索引从 1 开始）个捕获组，其中 n 是小于 100 的正整数。
+        // $<Name>	名称为 Name 的命名捕获组。
         // -------------
         // 如果你需要知道一个字符串是否与一个正则表达式 RegExp 匹配，请使用test()。
         // 如果你只想获取第一个匹配项，你可能需要使用 exec()或者非/g模式的match()。
         // 如果你想要获取捕获组，并且全局标志已设置，你需要使用 exec() 或 matchAll()。
 
 
-    const re = /(quick)(?<color>aaa)/ig;
-    const str = 'qqqquickaaaqqqquickaaa'
-    console.log(str.match(re))
+    const re = /abc/;
+    const str = '123abc123'
+    console.log(str.replace(re,'qwe$&asd'))
 </script>
 </html>

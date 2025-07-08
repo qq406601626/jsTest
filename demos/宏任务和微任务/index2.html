@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  /**
+   * 宏任务：setTimeout等，任务队列是单独的队列池。
+   * 微任务：是单独的ArrayList控制的队列池。
+   *
+   *
+   * new Promise(callback)的callback会立即执行。
+   * .then(callback)的then方法会立即执行，然后把callback添加到队列中。
+   * 当执行new Promise的resolve方法时，会把队列中的任务全部执行。
+   * 下面示例1和示例2的结果不一样，是因为示例1的promise callback是同步任务，在执行r()时，队列中没有任务。
+   * */
+
+  /**
+   *    示例1：
+   *    new Promise((r)=>{
+   *         console.log('1111')
+   *         r()
+   *     }).then(()=>{
+   *         console.log('22222')
+   *     }).then(()=>{
+   *         console.log('333')
+   *     })
+   *
+   *     new Promise((r)=>{
+   *         console.log('444')
+   *         r()
+   *     }).then(()=>{
+   *         console.log('555')
+   *     }).then(()=>{
+   *         console.log('666')
+   *     })
+   *     console.log('777')
+   *
+   *     new Promise((r)=>{
+   *         console.log('888')
+   *         r()
+   *     }).then(()=>{
+   *         console.log('999')
+   *     }).then(()=>{
+   *         console.log('000')
+   *     })
+   * */
+
+
+  /**
+   *     示例2：
+   *     new Promise((r)=>{
+   *         console.log('1111')
+   *         setTimeout(r,200)
+   *     }).then(()=>{
+   *         console.log('22222')
+   *     }).then(()=>{
+   *         console.log('333')
+   *     })
+   *
+   *     new Promise((r)=>{
+   *         console.log('444')
+   *         setTimeout(r,200)
+   *     }).then(()=>{
+   *         console.log('555')
+   *     }).then(()=>{
+   *         console.log('666')
+   *     })
+   *     console.log('777')
+   *
+   *     new Promise((r)=>{
+   *         console.log('888')
+   *         setTimeout(r,200)
+   *     }).then(()=>{
+   *         console.log('999')
+   *     }).then(()=>{
+   *         console.log('000')
+   *     })
+   * */
+</script>
+</html>

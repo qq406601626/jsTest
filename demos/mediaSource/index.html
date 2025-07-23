@@ -7,24 +7,57 @@
 <body>
 <video controls id="video" muted></video>
 <script>
+// const $video = document.getElementById('video')
+// const mediaSource = new MediaSource()
+// var mimeCodec = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"';
+// mediaSource.addEventListener('sourceopen',()=>{
+//   var sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
+//   var xhr = new XMLHttpRequest;
+//   xhr.open('get', '/demos/mediaSource/screenshot_2025-06-03_09-20-00.mp4');
+//   xhr.responseType = 'arraybuffer';
+//   xhr.onload = function () {
+//     sourceBuffer.addEventListener('updateend', function (_) {
+//       mediaSource.endOfStream();
+//       $video.play();
+//     });
+//     sourceBuffer.appendBuffer(xhr.response);
+//   };
+//   xhr.send()
+// })
+// $video.src =  URL.createObjectURL(mediaSource)
+
+
+
+
 const $video = document.getElementById('video')
 const mediaSource = new MediaSource()
-var mimeCodec = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"';
-mediaSource.addEventListener('sourceopen',()=>{
-  var sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
-  var xhr = new XMLHttpRequest;
-  xhr.open('get', '/demos/mediaSource/screenshot_2025-06-03_09-20-00.mp4');
-  xhr.responseType = 'arraybuffer';
-  xhr.onload = function () {
-    sourceBuffer.addEventListener('updateend', function (_) {
+$video.src = URL.createObjectURL(mediaSource)
+
+mediaSource.addEventListener('sourceopen',async ()=>{
+  const videoBuffer = mediaSource.addSourceBuffer('video/mp4;codecs="av01.0.00M.10.0.110.01.01.01.0"');
+  const audioBuffer = mediaSource.addSourceBuffer('audio/mp4;codecs="mp4a.40.2"');
+  const videoResponse = await fetch('/demos/mediaSource/e029c0d8-fdc3-4f48-945e-72aa0f35f2bd.mp4');
+  const videoData = await videoResponse.arrayBuffer();
+  // 获取音频数据
+  const audioResponse = await fetch('/demos/mediaSource/758490dd-a4a0-4b61-a72d-5a875b895465.mp4');
+  const audioData = await audioResponse.arrayBuffer();
+  videoBuffer.appendBuffer(videoData)
+  // audioBuffer.appendBuffer(audioData)
+  // 视频数据加载完成后添加音频数据
+  videoBuffer.addEventListener('updateend', () => {
+    if (!videoBuffer.updating && mediaSource.readyState === 'open') {
+      audioBuffer.appendBuffer(audioData);
+    }
+  });
+
+  // 音频数据加载完成后准备播放
+  audioBuffer.addEventListener('updateend', () => {
+    if (!audioBuffer.updating && mediaSource.readyState === 'open') {
       mediaSource.endOfStream();
-      $video.play();
-    });
-    sourceBuffer.appendBuffer(xhr.response);
-  };
-  xhr.send()
+      $video.play().catch(e => console.error('播放失败:', e));
+    }
+  });
 })
-$video.src =  URL.createObjectURL(mediaSource)
 </script>
 </body>
 </html>

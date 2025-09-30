@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    // 当tab失焦后,浏览器会自动把setInterval的最小执行间隔变为1s
+    setInterval(() => {
+        const date = new Date()
+        console.log(`${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`)
+    }, 300)
+
+</script>
+</html>

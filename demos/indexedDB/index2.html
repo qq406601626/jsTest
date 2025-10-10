@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+  <meta charset="UTF-8">
+  <title>Title2</title>
+</head>
+<body>
+
+</body>
+<script>
+
+  const dbName = "the_name";
+  const request = indexedDB.open(dbName, 2);
+
+  request.onerror = (event) => {
+    // 错误处理
+    console.log('eeeeeee')
+  };
+  request.onupgradeneeded = (event) => {
+    // console.log('11111111111111',event.oldVersion)
+    // const db = event.target.result;
+    // const objectStore = db.createObjectStore('customers', {keyPath: 'ssn'})
+    // objectStore.createIndex('name', 'name', {unique: false})
+    // objectStore.createIndex("email", "email", {unique: true});
+    // objectStore.transaction.oncomplete = (event) => {
+    //     // 将数据保存到新创建的对象存储中。
+    //     const customerObjectStore = db.transaction(['customers'], "readwrite").objectStore("customers");
+    //     customerData.forEach((customer) => {
+    //         customerObjectStore.add(customer);
+    //     });
+    // };
+    // const objectStore = db.createObjectStore("names", { autoIncrement: true });
+    // objectStore.transaction.oncomplete = (event) => {
+    //     // 将数据保存到新创建的对象存储中。
+    //     const customerObjectStore = db.transaction("names", "readwrite").objectStore("names");
+    //     customerData.forEach((customer) => {
+    //         customerObjectStore.add(customer);
+    //     });
+    // };
+
+  }
+  request.onsuccess = (event) => {
+
+  }
+  request.onblocked = ()=>{
+    console.log('其它页面打开了该标签页')
+  }
+</script>
+</html>

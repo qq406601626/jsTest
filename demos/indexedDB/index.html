@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    const customerData = [
+        {ssn: "444-44-4444", name: "Bill", age: 35, email: "bill@company.com"},
+        {ssn: "555-55-5555", name: "Donna", age: 32, email: "donna@home.org"},
+    ];
+    const dbName = "the_name";
+    const request = indexedDB.open(dbName, 1);
+
+    request.onerror = (event) => {
+        // 错误处理
+        console.log('eeeeeee')
+    };
+    request.onupgradeneeded = (event) => {
+        // console.log('11111111111111',event.oldVersion)
+        const db = event.target.result;
+        // const objectStore = db.createObjectStore('customers', {keyPath: 'ssn'})
+        // objectStore.createIndex('name', 'name', {unique: false})
+        // objectStore.createIndex("email", "email", {unique: true});
+        // objectStore.transaction.oncomplete = (event) => {
+        //     // 将数据保存到新创建的对象存储中。
+        //     const customerObjectStore = db.transaction(['customers'], "readwrite").objectStore("customers");
+        //     customerData.forEach((customer) => {
+        //         customerObjectStore.add(customer);
+        //     });
+        // };
+        // const objectStore = db.createObjectStore("names", { autoIncrement: true });
+        // objectStore.transaction.oncomplete = (event) => {
+        //     // 将数据保存到新创建的对象存储中。
+        //     const customerObjectStore = db.transaction("names", "readwrite").objectStore("names");
+        //     customerData.forEach((customer) => {
+        //         customerObjectStore.add(customer);
+        //     });
+        // };
+
+        db.onversionchange = (event) => {
+            db.close();
+            console.log("此页面的新版本已准备就绪。请重新加载或关闭此标签页！");
+        };
+    }
+    request.onsuccess = (event) => {
+        // const db = event.target.result
+        // const transaction = db.transaction(['customers'], 'readwrite')
+        // const objectStore = transaction.objectStore('customers')
+        // const request = objectStore.get('444-44-4444')
+        // request.onsuccess = (event)=>{
+        //    const data = event.target.result
+        //     data.age = 52
+        //     const putRequest = objectStore.put(data)
+        //     putRequest.onsuccess = ()=>{
+        //         console.log('修改成功')
+        //     }
+        // }
+        // const putRequest = objectStore.put({
+        //     age: 18,
+        //     email: "tim@company.com",
+        //     name: "Tim",
+        //     ssn: "666-66-6666"
+        // })
+        // putRequest.onsuccess = () => {
+        //     console.log('修改成功')
+        // }
+    }
+</script>
+</html>

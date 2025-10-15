@@ -37,6 +37,9 @@
     <div class="box box2"></div>
     <div class="box box3"></div>
     <div class="box box4"></div>
+    <button id="start">start</button>
+    <button id="end">end</button>
+
 </div>
 
 </body>
@@ -53,18 +56,26 @@
 <script type="module">
     import {gsap} from 'gsap'
 
+
     document.addEventListener("DOMContentLoaded", () => {
 
-        const t1 = gsap.timeline()
-        const t2 = gsap.timeline()
-        t1.to('.box1', {
+        gsap.from('.box4',{
             duration: 2,
-            x: 100
+            x: 500,
+            paused:true,
+            immediateRender:false
         })
-        t1.to('.box2', {
-            duration: 2,
-            x: 100,
-        })
+
+        // const t1 = gsap.timeline()
+        // const t2 = gsap.timeline()
+        // t1.to('.box1', {
+        //     duration: 2,
+        //     x: 100
+        // })
+        // t1.to('.box2', {
+        //     duration: 2,
+        //     x: 100,
+        // })
         // gsap.to('.box3', {
         //     duration: 2,
         //     x: 100,
@@ -75,6 +86,29 @@
         //     x: 100,
         // })
         // console.log(gsap.globalTimeline.getChildren())
+
+
+        // let ctx = gsap.context((self) => {
+        //     self.add("onClick", (e) => {
+        //         gsap.to('.box4', {
+        //             duration: 2,
+        //             x: 100,
+        //         })
+        //     });
+        //
+        //     start.addEventListener("click",()=>{
+        //         gsap.to('.box4', {
+        //             duration: 2,
+        //             x: 100,
+        //         })
+        //     });
+        //
+        // }, '.container');
+        //
+        // // start.addEventListener("click", (e) => ctx.onClick(e));
+        // end.addEventListener("click",()=>{
+        //     ctx.revert()
+        // })
 
     })
 

@@ -28,20 +28,75 @@
 
         .box4 {
             background: rebeccapurple;
+            margin-left: 300px;
         }
+
+       .box{
+           font-size: 20px;
+           color: rebeccapurple;
+           overflow: hidden;
+           background: plum;
+       }
+
+       .aaa{
+           width: 100px;
+           height: 100px;
+           background: red;
+           transform: perspective(500px) ;
+           transition: transform 0.5s ease;
+       }
+       .aaa:hover{
+           transform: perspective(50px) ;
+       }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="box box1"></div>
-    <div class="box box2"></div>
-    <div class="box box3"></div>
-    <div class="box box4"></div>
-    <button id="start">start</button>
-    <button id="end">end</button>
-
+<!--<div class="container">-->
+<!--    <div class="box box1"></div>-->
+<!--    <div class="box box2"></div>-->
+<!--    <div class="box box3"></div>-->
+<!--    <div class="box box4"></div>-->
+<!--    <button id="start">start</button>-->
+<!--    <button id="end">end</button>-->
+<!--    <div>-->
+<!--        <span>value:</span>-->
+<!--        <span id="value"></span>-->
+<!--    </div>-->
+<!--</div>-->
+<div class="aaa"></div>
+<div class="box">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
 </div>
-
+<div id="change">change</div>
 </body>
 <script type="importmap">
     {
@@ -58,13 +113,53 @@
 
 
     document.addEventListener("DOMContentLoaded", () => {
-
-        gsap.from('.box4',{
-            duration: 2,
-            x: 500,
-            paused:true,
-            immediateRender:false
+        gsap.set('.box',{
+            height:'100'
         })
+        gsap.set('.box div',{
+            textContent(index,target,targets){
+                return String(index+1)
+            }
+        })
+        document.querySelector('#change').addEventListener('click',()=>{
+            gsap.to('.box',{
+                height:'auto',
+                duration:3
+            })
+        })
+        // const mm = gsap.matchMedia()
+        // mm.add('(max-width:1500px)', () => {
+        //     gsap.fromTo('.box4',
+        //         {
+        //             x: '-=100',
+        //             y: '-100'
+        //         },
+        //         {
+        //             duration: 5,
+        //             x: '+=500',
+        //             y: '0',
+        //             paused: false,
+        //             immediateRender: false,
+        //             delay: 1
+        //         })
+        // })
+
+
+        // const $value = document.getElementById('value')
+        // const obj = {value:undefined}
+        // gsap.fromTo(obj,
+        //     {
+        //         value: 0,
+        //     },
+        //     {
+        //         id:'aaa',
+        //         duration: 5,
+        //         value: 100,
+        //         onUpdate(){
+        //             $value.textContent = obj.value
+        //         }
+        //     }
+        // )
 
         // const t1 = gsap.timeline()
         // const t2 = gsap.timeline()

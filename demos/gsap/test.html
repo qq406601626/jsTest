@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .carousel {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            transform: rotateX(-20deg) translateY(-70px);
+            transform-style: preserve-3d;
+            perspective: 800px;
+            user-select: none;
+            cursor: grab;
+        }
+
+        .carousel-image {
+            background: red;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -100px 0 0 -100px;
+            width: 200px;
+            height: 200px;
+            transform: translate3d(0, 0, -10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            transform-origin: 50% 50%;
+        }
+
+    </style>
+</head>
+<body>
+<div class="carousel">
+    <div class="carousel-image">1</div>
+    <div class="carousel-image">2</div>
+    <div class="carousel-image">3</div>
+    <div class="carousel-image">4</div>
+    <div class="carousel-image">5</div>
+    <div class="carousel-image">6</div>
+    <div class="carousel-image">7</div>
+    <div class="carousel-image">8</div>
+</div>
+</body>
+<script type="importmap">
+    {
+        "imports":{
+           "gsap":"./lib/gsap/index.js",
+           "motionPathPlugin":"./lib/gsap/MotionPathPlugin.js",
+           "scrollTrigger":"./lib/gsap/ScrollTrigger.js",
+           "scrollSmoother":"./lib/gsap/ScrollSmoother.js",
+           "observer":"./lib/gsap/Observer.js"
+        }
+    }
+</script>
+
+<script type="module">
+    import {gsap} from 'gsap'
+
+    import Observer from 'observer'
+
+    gsap.registerPlugin(Observer)
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const images = document.querySelectorAll('.carousel-image');
+        const radius = 242;
+        const progress = {
+            value: 0
+        };
+
+        const carousel = document.querySelector('.carousel');
+
+        const animate = () => {
+            images.forEach((image, index) => {
+                const theta = index / images.length - progress.value;
+                const x = -Math.sin(theta * Math.PI * 2) * radius;
+                const y = Math.cos(theta * Math.PI * 2) * radius;
+                image.style.transform = `translate3d(${x}px, 0px, ${y}px) rotateY(${360 * -theta}deg)`;
+                const c = Math.floor(index / images.length * 360);
+                image.style.background = `hsla(${c}, 90%, 50%, .5)`;
+            });
+        };
+
+        Observer.create({
+            target: carousel,
+            type: "wheel,pointer",
+            onPress: self => {
+                carousel.style.cursor = 'grabbing';
+            },
+            onRelease: self => {
+                carousel.style.cursor = 'grab';
+            },
+            onChange: self => {
+                gsap.killTweensOf(progress);
+                const p = self.event.type === 'wheel' ? self.deltaY * -.0005 : self.deltaX * .05;
+                gsap.to(progress, {
+                    duration: 2,
+                    ease: 'power4.out',
+                    value: `+=${p}`
+                });
+
+            }
+        });
+        gsap.ticker.add(animate);
+
+    })
+</script>
+
+</html>

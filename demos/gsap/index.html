@@ -31,23 +31,18 @@
             margin-left: 300px;
         }
 
-       .box{
-           font-size: 20px;
-           color: rebeccapurple;
-           overflow: hidden;
-           background: plum;
-       }
+        .box1 {
+            width: 100px;
+            height: 2000px;
+            background: red;
+        }
 
-       .aaa{
-           width: 100px;
-           height: 100px;
-           background: red;
-           transform: perspective(500px) ;
-           transition: transform 0.5s ease;
-       }
-       .aaa:hover{
-           transform: perspective(50px) ;
-       }
+        .box2 {
+            width: 100px;
+            height: 100px;
+            background: green;
+        }
+
     </style>
 </head>
 <body>
@@ -63,40 +58,9 @@
 <!--        <span id="value"></span>-->
 <!--    </div>-->
 <!--</div>-->
-<div class="aaa"></div>
-<div class="box">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-</div>
-<div id="change">change</div>
+
+<div class="box1"></div>
+<div class="box2"></div>
 </body>
 <script type="importmap">
     {
@@ -110,23 +74,16 @@
 
 <script type="module">
     import {gsap} from 'gsap'
+    import scrollTrigger from 'scrollTrigger'
+    gsap.registerPlugin(scrollTrigger)
 
 
     document.addEventListener("DOMContentLoaded", () => {
-        gsap.set('.box',{
-            height:'100'
+        gsap.to('.box1',{
+            scrollTrigger: '.box2', // start the animation when ".box" enters the viewport (once)
+            x: 500
         })
-        gsap.set('.box div',{
-            textContent(index,target,targets){
-                return String(index+1)
-            }
-        })
-        document.querySelector('#change').addEventListener('click',()=>{
-            gsap.to('.box',{
-                height:'auto',
-                duration:3
-            })
-        })
+
         // const mm = gsap.matchMedia()
         // mm.add('(max-width:1500px)', () => {
         //     gsap.fromTo('.box4',

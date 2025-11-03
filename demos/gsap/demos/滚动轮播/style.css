@@ -1,8 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Sora&display=swap");
-@font-face {
-  font-family: "Bandeins Sans & Strange Variable";
-  src: url("https://res.cloudinary.com/dldmpwpcp/raw/upload/v1566406079/BandeinsStrangeVariable_esetvq.ttf");
-}
+/*@import url("https://fonts.googleapis.com/css2?family=Sora&display=swap");*/
+/*@font-face {*/
+/*  font-family: "Bandeins Sans & Strange Variable";*/
+/*  src: url("https://res.cloudinary.com/dldmpwpcp/raw/upload/v1566406079/BandeinsStrangeVariable_esetvq.ttf");*/
+/*}*/
 * {
   box-sizing: border-box;
   user-select: none;
@@ -32,19 +32,6 @@ body {
   font-family: "Sora", sans-serif;
 }
 
-footer {
-  position: fixed;
-  z-index: 999;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2rem;
-  width: 100%;
-  height: 7em;
-  font-family: "Sora", sans-serif;
-  font-size: clamp(1.2rem, 2vw, 1rem);
-}
 
 a {
   color: #fff;

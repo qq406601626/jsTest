@@ -5,7 +5,7 @@ import TextPlugin from 'textPlugin'
 import Observer from 'observer'
 gsap.registerPlugin(ScrollTrigger,SplitText,TextPlugin,Observer)
 
-console.clear();
+// console.clear();
 
 const sections = gsap.utils.toArray(".slide");
 const images = gsap.utils.toArray(".image").reverse();
@@ -27,7 +27,7 @@ function gotoSection(index, direction) {
     index = wrap(index);
 
     let tl = gsap.timeline({
-        defaults: {duration: 1, ease: "expo.inOut"},
+        defaults: {duration: 5, ease: "expo.inOut"},
         onComplete: () => {
             animating = false;
         }
@@ -42,8 +42,7 @@ function gotoSection(index, direction) {
     gsap.set([sections[currentIndex], images[index]], {zIndex: 1, autoAlpha: 1});
     gsap.set([sections[index], images[currentIndex]], {zIndex: 2, autoAlpha: 1});
 
-    tl
-        .set(count, {text: index + 1}, 0.32)
+    tl.set(count, {text: index + 1}, 0.32)
         .fromTo(
             outerWrappers[index],
             {
@@ -130,20 +129,4 @@ Observer.create({
     tolerance: 10
 });
 
-document.addEventListener("keydown", logKey);
 
-function logKey(e) {
-    console.log(e.code);
-    if ((e.code === "ArrowUp" || e.code === "ArrowLeft") && !animating) {
-        gotoSection(currentIndex - 1, -1);
-    }
-    if (
-        (e.code === "ArrowDown" ||
-            e.code === "ArrowRight" ||
-            e.code === "Space" ||
-            e.code === "Enter") &&
-        !animating
-    ) {
-        gotoSection(currentIndex + 1, 1);
-    }
-}

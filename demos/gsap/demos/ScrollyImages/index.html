@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Smooth Scrolly Images</title>
+    <!--<link rel="stylesheet" href="https://use.typekit.net/nyc6jda.css">-->
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+<h1 class="text">Scrolly Images</h1>
+
+
+<div id="wrapper">
+    <section id="content">
+        <section class="images">
+            <img data-speed="0.8" src="./imgs/img-01.png" alt="">
+            <img data-speed="0.9" src="./imgs/img-02.png" alt="">
+            <img data-speed="1" src="./imgs/img-03.png" alt="">
+            <img data-speed="1.1" src="./imgs/img-04.png" alt="">
+            <img data-speed="0.9" src="./imgs/img-01.png" alt="">
+            <img data-speed="1.2" src="./imgs/img-02.png" alt="">
+            <img data-speed="0.8" src="./imgs/img-03.png" alt="">
+            <img data-speed="1" src="./imgs/img-04.png" alt="">
+        </section>
+    </section>
+</div>
+<script type="importmap">
+    {
+        "imports":{
+           "gsap":"../../lib/gsap/index.js",
+           "scrollTrigger":"../../lib/gsap/ScrollTrigger.js",
+           "splitText":"../../lib/gsap/SplitText.js",
+           "textPlugin":"../../lib/gsap/TextPlugin.js",
+           "observer":"../../lib/gsap/Observer.js",
+           "scrollSmoother":"../../lib/gsap/ScrollSmoother.js"
+        }
+    }
+</script>
+<script type="module" src="./script.js"></script>
+
+</body>
+
+</html>

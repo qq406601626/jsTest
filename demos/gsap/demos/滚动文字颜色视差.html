@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            --target: 100%;
+            width: 100%;
+            background: linear-gradient(to right, #000 var(--target), #fff var(--target));
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            color: white;
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            text-align: center;
+            letter-spacing: -0.02em;
+            background: linear-gradient(to right, #fff var(--target), #000 var(--target));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            width: 100%;
+            display: block;
+            line-height: 0.95;
+        }
+
+        h1 span {
+            font-size: 0.5em;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<main id="container">
+    <h1>motiontricks.com <span>is super awesome!</span></h1>
+</main>
+</body>
+<script type="importmap">
+    {
+        "imports":{
+           "gsap":"../lib/gsap/index.js",
+           "scrollTrigger":"../lib/gsap/ScrollTrigger.js"
+        }
+    }
+</script>
+<script type="module">
+    import {gsap} from 'gsap'
+    import scrollTrigger from 'scrollTrigger'
+
+    gsap.registerPlugin(scrollTrigger)
+    gsap.to("#container", {
+        "--target": "0%",
+        ease: "none",
+        scrollTrigger: {
+            trigger: "#container",
+            markers: {
+                startColor: "#ff0000",
+                endColor: "#00ff00",
+                fontSize: "14px"
+            },
+            start: "top top",
+            end: "+=3000",
+            pin: true,
+            scrub: true
+        }
+    });
+</script>
+</html>

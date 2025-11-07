@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #manage{
+            font-size: 30px;
+            color: #42a6e0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="target1"></div>
+<div id="target2"></div>
+</body>
+<script type="importmap">
+    {
+        "imports":{
+           "gsap":"../lib/gsap/index.js",
+           "scrollTrigger":"../lib/gsap/ScrollTrigger.js"
+        }
+    }
+</script>
+
+<script type="module">
+    import {gsap} from 'gsap'
+    import scrollTrigger from 'scrollTrigger'
+    gsap.registerPlugin(scrollTrigger)
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const target1 = document.querySelector("#target1");
+        const target2 = document.querySelector("#target2");
+        const count = 100;
+        const dur = 3;
+
+        const timeLine = gsap.timeline()
+
+        const t1 = gsap.to({}, {
+            duration: count,
+            onUpdate: () => {
+                target1.textContent = t1.time().toFixed();
+            }
+        }).timeScale(count / dur)
+
+
+        const t2 = gsap.to({}, {
+            duration: count,
+            onUpdate: () => {
+                target2.textContent = t2.time().toFixed();
+            }
+        })
+
+        timeLine.add([t1,t2])
+
+    })
+</script>
+
+</html>

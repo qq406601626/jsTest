@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+    </style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0"   viewBox="0 0 16 16">
+    <path id="path"  d="M0,124.37C92.32,27.31,212.27-21.9,310,9.37c59.6,19.07,104.58,66.03,117,79,63.8,66.62,54.56,111.57,94,162,86.58,110.71,318.72,133.96,409,44,34.14-34.02,55.93-92.14,90-183,11.07-29.51,18.96-54.3,24-71" />
+</svg>
+<img class="logo" src="img.png"  />
+</body>
+<script type="importmap">
+    {
+        "imports":{
+           "gsap":"../../lib/gsap/index.js",
+           "scrollTrigger":"../../lib/gsap/ScrollTrigger.js",
+           "motionPathPlugin":"../../lib/gsap/MotionPathPlugin.js"
+        }
+    }
+</script>
+
+<script type="module">
+    import {gsap} from 'gsap'
+    import scrollTrigger from 'scrollTrigger'
+    import MotionPathPlugin from 'motionPathPlugin'
+    gsap.registerPlugin(scrollTrigger,MotionPathPlugin)
+
+    document.addEventListener("DOMContentLoaded", () => {
+        gsap.to(".logo", {
+            duration: 8,
+            motionPath: {
+                path: "#path",
+                align: "#path",
+                autoRotate: true,
+                start: 0.25,
+                end: 0.75
+            }
+        });
+    })
+</script>
+
+</html>

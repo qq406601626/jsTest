@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="text">Text</div>
+</div>
+</body>
+<script type="importmap">
+    {
+        "imports":{
+           "gsap":"../lib/gsap/index.js",
+           "scrollTrigger":"../lib/gsap/ScrollTrigger.js",
+           "splitText":"../lib/gsap/SplitText.js"
+        }
+    }
+</script>
+
+<script type="module">
+    import {gsap} from 'gsap'
+    import scrollTrigger from 'scrollTrigger'
+    import SplitText from 'splitText'
+
+    gsap.registerPlugin(scrollTrigger, SplitText)
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const split = SplitText.create(".text", {type: "chars"});
+        gsap.from(
+            split.chars,
+            {
+                y:32,
+                stagger: {
+                    each: 0.2,
+                    yoyo: true,
+                    repeat: -1
+                },
+            }
+        );
+
+
+    })
+</script>
+
+</html>

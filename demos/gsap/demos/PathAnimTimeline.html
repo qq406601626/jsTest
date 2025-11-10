@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Avenir, sans-serif;
+            background-color: #0e100f;
+            color: #fffce1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: white;
+            margin: 3rem 0;
+            font-size: 3rem;
+        }
+
+        p {
+            max-width: 70ch;
+            font-size: 1.4rem;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        svg {
+            margin: 10rem 0;
+        }
+
+
+        hr {
+            top: 50%;
+            left: 0;
+            width: 100%;
+            position: fixed;
+        }
+    </style>
+</head>
+<body>
+<section style="height:20vh">
+    <h1>Extra space just for demo, remove this</h1>
+</section>
+<hr>
+<h1>Scroll Down </h1>
+<svg preserveAspectRatio="none" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+    <path
+            class="pathSVG"
+            d="m 1835 364 c 0 -56.6667 0 -113.3333 0 -220 c 0 -11 -3 -22 -7 -32 c -8 -19 -20 -33 -46 -50 c -13 -8 -30 -13 -43 -13 l -1005 -3 c -184.6667 0 -369.3333 0 -575 0 c -15 0 -29 5 -41 11 c -19 11 -32 25 -41 41 c -6 10 -13 26 -14 48 l -1 311 c 0 94.3333 0 188.6667 0 287 c 0 11 3 21 8 32 c 7 17 21 33 49 52 c 13 7 27 10 51 12 l 148 0 l 387 0 c 49 0 98 0 145 1 c 12 0 23 2 33 6 c 29 12 65 42 68 95"
+            stroke="white"
+            stroke-width="20"
+            fill="none"
+    />
+    <path
+            class="inner-path"
+            d="m 1835 364 c 0 -56.6667 0 -113.3333 0 -220 c 0 -11 -3 -22 -7 -32 c -8 -19 -20 -33 -46 -50 c -13 -8 -30 -13 -43 -13 l -1005 -3 c -184.6667 0 -369.3333 0 -575 0 c -15 0 -29 5 -41 11 c -19 11 -32 25 -41 41 c -6 10 -13 26 -14 48 l -1 311 c 0 94.3333 0 188.6667 0 287 c 0 11 3 21 8 32 c 7 17 21 33 49 52 c 13 7 27 10 51 12 l 148 0 l 387 0 c 49 0 98 0 145 1 c 12 0 23 2 33 6 c 29 12 65 42 68 95"
+            stroke="red"
+            stroke-width="10"
+            fill="none"
+    />
+</svg>
+<section style="height:500vh">
+    <h1>Extra space just for demo, remove this</h1>
+</section>
+</body>
+<script type="importmap">
+    {
+        "imports":{
+           "gsap":"../lib/gsap/index.js",
+           "scrollTrigger":"../lib/gsap/ScrollTrigger.js",
+           "drawSVGPlugin":"../lib/gsap/DrawSVGPlugin.js"
+        }
+    }
+</script>
+
+<script type="module">
+    import {gsap} from 'gsap'
+    import ScrollTrigger from 'scrollTrigger'
+    import DrawSVGPlugin from 'drawSVGPlugin'
+
+
+    gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin)
+
+    document.addEventListener("DOMContentLoaded", () => {
+        //gsap.to()... infinity and beyond!
+        gsap.registerPlugin(ScrollTrigger);
+
+        const baseLineDuration = 2;
+        const scrollLineDuration = 1;
+
+        //Base Line Initial
+        gsap.from(".pathSVG", {
+            drawSVG: 0,
+            duration: baseLineDuration,
+            ease: "none"
+        });
+
+        gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".pathSVG",
+                    start: "top center",
+                    end: "bottom center",
+                    scrub: 1,
+                    markers: true
+                },
+                defaults: {ease: "none"}
+            }).fromTo(
+                ".inner-path",
+                {drawSVG: 0},
+                {
+                    drawSVG: "0% 10%",
+                    duration: 1
+                }
+            ).to(
+                ".inner-path",
+                {duration: 8, drawSVG: "90% 100%"}
+            ).to(
+                ".inner-path",
+                {duration: 1, drawSVG: "100% 100%"}
+            );
+
+    })
+</script>
+
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .grid-noGutter {
+            display: flex;
+        }
+
+        .col-6 {
+            flex-basis: 50%;
+            max-width: 50%;
+        }
+
+        .block-sticky {
+            display: block;
+        }
+
+        .block-sticky__items {
+        }
+
+        .block-sticky__item {
+            background-color: var(--sticky-item-bg-color);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .block-sticky__content {
+            padding: 2rem;
+        }
+
+        .block-sticky__title {
+            color: white;
+            display: inline-block;
+        }
+
+        .block-sticky__article {
+            color: white;
+        }
+
+        .block-sticky__link {
+            color: yellow;
+            text-decoration: none;
+        }
+
+        .block-sticky__images {
+            position: sticky;
+            top: 0;
+            left: 0;
+            height: 100vh;
+        }
+
+        .block-sticky__image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .block-sticky__image .picture {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+            display: block;
+        }
+
+
+    </style>
+</head>
+<body>
+<section class="block-sticky">
+    <div class="grid-noGutter ">
+        <div class="col-6">
+            <div class="block-sticky__items">
+                <!-- Start : Item-->
+                <div class="block-sticky__item" style="--sticky-item-bg-color:#2e3133">
+                    <div class="block-sticky__content">
+                        <h3 class="block-sticky__title">Lorem ipsum dolor sit amet</h3>
+                        <article class="block-sticky__article">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac purus fringilla,
+                                tristique turpis vitae, pharetra turpis. Vivamus laoreet lacus et nunc pellentesque
+                                maximus. Praesent scelerisque ipsum non efficitur luctus. Vivamus at fringilla erat.
+                                Curabitur id nibh erat. Donec velit lectus, lacinia faucibus efficitur sed, aliquam sed
+                                quam.</p>
+                        </article>
+                        <a href="#/" class="block-sticky__link">Link to another page </a>
+                    </div>
+                </div>
+                <!-- End : Item-->
+                <!-- Start : Item-->
+                <div class="block-sticky__item" style="--sticky-item-bg-color:#2d31d3">
+                    <div class="block-sticky__content">
+                        <h3 class="block-sticky__title">Lorem ipsum dolor sit amet</h3>
+                        <article class="block-sticky__article">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac purus fringilla,
+                                tristique turpis vitae, pharetra turpis. Vivamus laoreet lacus et nunc pellentesque
+                                maximus. Praesent scelerisque ipsum non efficitur luctus. Vivamus at fringilla erat.
+                                Curabitur id nibh erat. Donec velit lectus, lacinia faucibus efficitur sed, aliquam sed
+                                quam.</p>
+                        </article>
+                        <a href="#/" class="block-sticky__link">Link to another page </a>
+                    </div>
+                </div>
+                <!-- End : Item-->
+                <!-- Start : Item-->
+                <div class="block-sticky__item" style="--sticky-item-bg-color:#2eb1b3">
+                    <div class="block-sticky__content">
+                        <h3 class="block-sticky__title">Lorem ipsum dolor sit amet</h3>
+                        <article class="block-sticky__article">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac purus fringilla,
+                                tristique turpis vitae, pharetra turpis. Vivamus laoreet lacus et nunc pellentesque
+                                maximus. Praesent scelerisque ipsum non efficitur luctus. Vivamus at fringilla erat.
+                                Curabitur id nibh erat. Donec velit lectus, lacinia faucibus efficitur sed, aliquam sed
+                                quam.</p>
+                        </article>
+                        <a href="#/" class="block-sticky__link">Link to another page </a>
+                    </div>
+                </div>
+                <!-- End : Item-->
+                <!-- Start : Item-->
+                <div class="block-sticky__item" style="--sticky-item-bg-color:#2e3133">
+                    <div class="block-sticky__content">
+                        <h3 class="block-sticky__title">Lorem ipsum dolor sit amet</h3>
+                        <article class="block-sticky__article">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac purus fringilla,
+                                tristique turpis vitae, pharetra turpis. Vivamus laoreet lacus et nunc pellentesque
+                                maximus. Praesent scelerisque ipsum non efficitur luctus. Vivamus at fringilla erat.
+                                Curabitur id nibh erat. Donec velit lectus, lacinia faucibus efficitur sed, aliquam sed
+                                quam.</p>
+                        </article>
+                        <a href="#/" class="block-sticky__link">Link to another page </a>
+                    </div>
+                </div>
+                <!-- End : Item-->
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="block-sticky__images">
+                <div class="block-sticky__image">
+                    <img class="picture" src="img.png"/>
+                </div>
+                <div class="block-sticky__image">
+                    <img class="picture" src="img_1.png"/>
+                </div>
+                <div class="block-sticky__image">
+                    <img class="picture" src="img_2.png"/>
+                </div>
+                <div class="block-sticky__image">
+                    <img class="picture" src="img_3.png"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+<script type="importmap">
+    {
+        "imports":{
+           "gsap":"../../lib/gsap/index.js",
+           "scrollTrigger":"../../lib/gsap/ScrollTrigger.js"
+        }
+    }
+</script>
+
+<script type="module">
+    import {gsap} from 'gsap'
+    import scrollTrigger from 'scrollTrigger'
+
+    gsap.registerPlugin(scrollTrigger)
+
+    document.addEventListener("DOMContentLoaded", () => {
+        var items = gsap.utils.toArray(".block-sticky__content");
+        var images = gsap.utils.toArray(".block-sticky__image");
+        items.forEach(function (item, i) {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                },
+                opacity: 0,
+                duration: 1,
+                repeat: 1,
+                yoyo: true,
+                repeatDelay: 2,
+                ease: "none"
+            });
+
+            var image = images[i];
+            gsap.from(image, {
+                opacity: 0,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top bottom",
+                    end: "bottom bottom",
+                    toggleActions: "play reverse play reverse",
+
+                    scrub: true
+                }
+            });
+        });
+
+    })
+</script>
+
+</html>

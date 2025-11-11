@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    :root {
+      --base-color: #42a6e0;
+      --accent-color: #412a6a;
+    }
+
+    .section-a {
+      background: var(--base-color);
+      height: 100vh;
+    }
+
+    .section-b {
+      background: var(--accent-color);
+      height: 100vh;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      fill: var(--base-color);
+      transform: scaleY(0);
+      transform-origin: center top;
+    }
+
+    .svg-wrapper {
+      background: var(--accent-color);
+      padding: 0;
+      position: relative;
+      margin-top: -1px;
+      margin-bottom: -1px;
+    }
+  </style>
+</head>
+<body>
+<div class="section-a"></div>
+<div class="svg-wrapper">
+  <svg viewBox="0 0 100 25"  preserveAspectRatio="none" style=""><path d="M0 0 Q 50 49.5 100 0"></path></svg>
+
+</div>
+<div class="section-b"></div>
+</body>
+<script type="importmap">
+  {
+      "imports":{
+         "gsap":"../lib/gsap/index.js",
+         "scrollTrigger":"../lib/gsap/ScrollTrigger.js"
+      }
+  }
+</script>
+
+<script type="module">
+  import {gsap} from 'gsap'
+  import scrollTrigger from 'scrollTrigger'
+  gsap.registerPlugin(scrollTrigger)
+
+  document.addEventListener("DOMContentLoaded", () => {
+    gsap.to("svg", {
+      duration: 1,
+      scaleY: 0.75,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".svg-wrapper",
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+
+  })
+</script>
+
+</html>

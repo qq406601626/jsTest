@@ -90,19 +90,15 @@
     gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin)
 
     document.addEventListener("DOMContentLoaded", () => {
-        //gsap.to()... infinity and beyond!
         gsap.registerPlugin(ScrollTrigger);
 
         const baseLineDuration = 2;
-        const scrollLineDuration = 1;
 
-        //Base Line Initial
         gsap.from(".pathSVG", {
             drawSVG: 0,
             duration: baseLineDuration,
             ease: "none"
         });
-
         gsap.timeline({
                 scrollTrigger: {
                     trigger: ".pathSVG",
@@ -126,6 +122,39 @@
                 ".inner-path",
                 {duration: 1, drawSVG: "100% 100%"}
             );
+
+
+        // const initTimeline = gsap.timeline()
+        // initTimeline.from(".pathSVG", {
+        //     drawSVG: 0,
+        //     duration: baseLineDuration,
+        //     ease: "none"
+        // })
+        // initTimeline.set(".inner-path", {
+        //     drawSVG: 0,
+        //     duration: baseLineDuration,
+        //     ease: "none"
+        // }, 0)
+        //
+        // const scrollTriggerTimeLine = gsap.timeline({
+        //     scrollTrigger: {
+        //         trigger: ".pathSVG",
+        //         start: "top center",
+        //         end: "bottom center",
+        //         scrub: 1,
+        //         markers: true
+        //     },
+        //     defaults: {ease: "none"}
+        // })
+        // scrollTriggerTimeLine.to('.inner-path', {
+        //     keyframes: [
+        //         {drawSVG: "0% 10%", duration: 1},
+        //         {duration: 8, drawSVG: "90% 100%"},
+        //         {duration: 1, drawSVG: "100% 100%"}
+        //     ]
+        // })
+
+
 
     })
 </script>

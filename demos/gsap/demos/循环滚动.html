@@ -7,57 +7,35 @@
         body {
             padding: 0;
             margin: 0;
+            width: 100vw;
+            height: 100vh;
             display: grid;
-            min-height: 100vh;
-            background: #262626;
             place-items: center;
         }
 
-        .target-wrap > div {
+        .wrap {
+            position: relative;
+        }
+
+        .item {
             border-radius: 50%;
-            background: white;
             display: grid;
             place-items: center;
             font-size: 3vw;
             position: absolute;
-            top: 0;
-            font-weight: 600;
         }
-
-        .target-wrap {
-            width: auto;
-            height: auto;
-            position: relative;
-        }
-
 
     </style>
 </head>
 <body>
-<div class="target-wrap">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-</div>
+<div class="wrap"></div>
 </body>
 <script type="importmap">
     {
         "imports":{
            "gsap":"../lib/gsap/index.js",
-           "scrollTrigger":"../lib/gsap/ScrollTrigger.js"
+           "scrollTrigger":"../lib/gsap/ScrollTrigger.js",
+           "gSDevTools":"../lib/gsap/GSDevTools.js"
         }
     }
 </script>
@@ -65,77 +43,87 @@
 <script type="module">
     import {gsap} from 'gsap'
     import scrollTrigger from 'scrollTrigger'
+    import GSDevTools from 'gSDevTools'
 
-    gsap.registerPlugin(scrollTrigger)
+    gsap.registerPlugin(scrollTrigger,GSDevTools)
 
     document.addEventListener("DOMContentLoaded", () => {
-        console.clear();
 
-        // change any of these variables
-        let targetsShown = 5; // how many targets visible on the stage
-        let dur = 1; // actual animation duration
-        let pause = 0.75; // wait time between moves
-        let factor = 11; // vw width/height of targets
-        const colorArray = [
-            "#eeeeee",
-            "#46a4cc",
-            "#94c356",
-            "#eae047",
-            "#e3aa59",
-            "#a63ba0",
-            "#cf5b21"
-        ];
-
-        // main targets (divs, images, whatever)
-        let targets = gsap.utils.toArray(".target-wrap > div");
-
-        // get the correct delay for each nested timeline repeat
-        let rd = (targets.length - targetsShown) * (pause + dur) - dur;
-
-        // get targets into position on the right of the container and set the size
-        gsap.set(targets, {
-            backgroundColor: gsap.utils.wrap(colorArray),
-            width: factor + "vw",
-            height: factor + "vw",
-            right: -factor + "vw",
-            scale: 0
-        });
-
-        // size the parent container
-        gsap.set(".target-wrap", {
-            width: factor * targetsShown + "vw",
-            height: factor + "vw",
-            background:'red'
-        });
-
-        const parentTimeline = gsap.timeline();
-
-        // create the individual timelines for the targets
-        targets.forEach((obj, i) => {
-            obj.innerHTML = i + 1;
-            let tl = gsap.timeline({
-                delay: i * (dur + pause),
-                defaults: {duration: dur, ease: "power3.inOut"},
-                repeat: -1,
-                repeatDelay: rd
+        const $wrap = document.querySelector('.wrap')
+        const shownCount = 5
+        const duration = 1
+        const pause = 0.75
+        const itemWidth = 11
+        const colorArray = ["#eeeeee", "#46a4cc", "#94c356", "#eae047", "#e3aa59", "#a63ba0", "#cf5b21"]
+        const createDomes = () => {
+            const doc = document.createDocumentFragment()
+            const itemList = []
+            Array.from({length: 10}).forEach((item, index) => {
+                const div = document.createElement('div')
+                div.className = 'item'
+                div.textContent = index + 1
+                itemList.push(div)
+                doc.appendChild(div)
+            })
+            $wrap.appendChild(doc)
+            return itemList
+        }
+        const getRepeatDelay = domes => (domes.length - shownCount) * (pause + duration) - duration
+        const setWrapBound = () => {
+            gsap.set($wrap, {
+                width: `${shownCount * itemWidth}vw`,
+                height: `${itemWidth}vw`,
+            })
+        }
+        const setDomesInitBound = domes => {
+            gsap.set(domes, {
+                backgroundColor: gsap.utils.wrap(colorArray),
+                width: `${itemWidth}vw`,
+                height: `${itemWidth}vw`,
+                right: `${-itemWidth}vw`,
+                scale: 0
+            })
+        }
+        const animateDom = (dom,repeatDelay) => {
+            const timeLine = gsap.timeline({
+                // repeat: -1,
+                repeat: 1,
+                repeatDelay,
+                defaults: {
+                    duration,
+                    ease: "power3.inOut"
+                }
+            })
+            timeLine.to(dom, {
+                scale: 1,
+                transformOrigin: "left center",
+                xPercent: "-=100"
             });
-            tl.to(obj, {scale: 1, transformOrigin: "left center", xPercent: "-=100"});
-            for (let i = 1; i < targetsShown; i++) {
-                tl.to(obj, {xPercent: "-=100"}, "+=" + pause);
+            for (let i = 1; i < shownCount; i++) {
+                timeLine.to(dom, {xPercent: "-=100"}, `+=${pause}`);
             }
-            tl.to(
-                obj,
-                {scale: 0, transformOrigin: "right center", xPercent: "-=100"},
-                "+=" + pause
-            );
-
-            parentTimeline.add(tl, 0);
+            timeLine.to(dom, {
+                scale: 0,
+                transformOrigin: "right center",
+                xPercent: "-=100"
+            },`+=${pause}`);
+            return timeLine
+        }
+        setWrapBound()
+        const domes = createDomes()
+        setDomesInitBound(domes)
+        const repeatDelay = getRepeatDelay(domes)
+        const parentTimeLine = gsap.timeline({
+            id:'parentTimeLine'
+        })
+        domes.forEach(dom=>{
+            const domTimeLine = animateDom(dom,repeatDelay)
+            parentTimeLine.add(domTimeLine,`<+${duration+pause}`)
+        })
+        parentTimeLine.time((shownCount+1) * (duration + pause) - pause)
+        GSDevTools.create({
+            animation: parentTimeLine
         });
-
-        // put everything on parent timeline and fill the stage at the beginning
-        let prep = targetsShown * (dur + pause) - pause;
-        parentTimeline.time(prep);
-
     })
 </script>
 

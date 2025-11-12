@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            display: grid;
+            min-height: 100vh;
+            background: #262626;
+            place-items: center;
+        }
+
+        .target-wrap > div {
+            border-radius: 50%;
+            background: white;
+            display: grid;
+            place-items: center;
+            font-size: 3vw;
+            position: absolute;
+            top: 0;
+            font-weight: 600;
+        }
+
+        .target-wrap {
+            width: auto;
+            height: auto;
+            position: relative;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="target-wrap">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+</body>
+<script type="importmap">
+    {
+        "imports":{
+           "gsap":"../lib/gsap/index.js",
+           "scrollTrigger":"../lib/gsap/ScrollTrigger.js"
+        }
+    }
+</script>
+
+<script type="module">
+    import {gsap} from 'gsap'
+    import scrollTrigger from 'scrollTrigger'
+
+    gsap.registerPlugin(scrollTrigger)
+
+    document.addEventListener("DOMContentLoaded", () => {
+        console.clear();
+
+        // change any of these variables
+        let targetsShown = 5; // how many targets visible on the stage
+        let dur = 1; // actual animation duration
+        let pause = 0.75; // wait time between moves
+        let factor = 11; // vw width/height of targets
+        const colorArray = [
+            "#eeeeee",
+            "#46a4cc",
+            "#94c356",
+            "#eae047",
+            "#e3aa59",
+            "#a63ba0",
+            "#cf5b21"
+        ];
+
+        // main targets (divs, images, whatever)
+        let targets = gsap.utils.toArray(".target-wrap > div");
+
+        // get the correct delay for each nested timeline repeat
+        let rd = (targets.length - targetsShown) * (pause + dur) - dur;
+
+        // get targets into position on the right of the container and set the size
+        gsap.set(targets, {
+            backgroundColor: gsap.utils.wrap(colorArray),
+            width: factor + "vw",
+            height: factor + "vw",
+            right: -factor + "vw",
+            scale: 0
+        });
+
+        // size the parent container
+        gsap.set(".target-wrap", {
+            width: factor * targetsShown + "vw",
+            height: factor + "vw",
+            background:'red'
+        });
+
+        const parentTimeline = gsap.timeline();
+
+        // create the individual timelines for the targets
+        targets.forEach((obj, i) => {
+            obj.innerHTML = i + 1;
+            let tl = gsap.timeline({
+                delay: i * (dur + pause),
+                defaults: {duration: dur, ease: "power3.inOut"},
+                repeat: -1,
+                repeatDelay: rd
+            });
+            tl.to(obj, {scale: 1, transformOrigin: "left center", xPercent: "-=100"});
+            for (let i = 1; i < targetsShown; i++) {
+                tl.to(obj, {xPercent: "-=100"}, "+=" + pause);
+            }
+            tl.to(
+                obj,
+                {scale: 0, transformOrigin: "right center", xPercent: "-=100"},
+                "+=" + pause
+            );
+
+            parentTimeline.add(tl, 0);
+        });
+
+        // put everything on parent timeline and fill the stage at the beginning
+        let prep = targetsShown * (dur + pause) - pause;
+        parentTimeline.time(prep);
+
+    })
+</script>
+
+</html>

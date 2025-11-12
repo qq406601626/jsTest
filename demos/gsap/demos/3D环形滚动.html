@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+
+        }
+
+        svg {
+            overflow: visible;
+            width: 80vw;
+            aspect-ratio: 100/29;
+            opacity: 0;
+        }
+
+    </style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" width="1002" height="295" viewBox="0 0 1002 295">
+    <path id="motion-path" d="M501,290.5C226.79,290.5,4.5,226.48,4.5,147.5S226.79,4.5,501,4.5s496.5,64.02,496.5,143-222.29,143-496.5,143Z" fill="none" stroke="#67d0b9" stroke-width="9" />
+    <circle cx="80" cy="80" r="80" fill="#164b3f" stroke-width="0" />
+    <circle cx="80" cy="80" r="80" fill="#164b3f" stroke-width="0" />
+    <circle cx="80" cy="80" r="80" fill="#164b3f" stroke-width="0" />
+    <circle cx="80" cy="80" r="80" fill="#164b3f" stroke-width="0" />
+
+</svg>
+</body>
+<script type="importmap">
+    {
+        "imports":{
+           "gsap":"../lib/gsap/index.js",
+           "scrollTrigger":"../lib/gsap/ScrollTrigger.js",
+           "motionPathPlugin":"../lib/gsap/MotionPathPlugin.js"
+        }
+    }
+</script>
+
+<script type="module">
+    import {gsap} from 'gsap'
+    import scrollTrigger from 'scrollTrigger'
+    import MotionPathPlugin from 'motionPathPlugin'
+
+
+    gsap.registerPlugin(scrollTrigger,MotionPathPlugin)
+
+    document.addEventListener("DOMContentLoaded", () => {
+        console.clear();
+        const targets = gsap.utils.toArray("circle");
+        const dur = 6;
+        const parent = gsap.timeline();
+        targets.forEach((obj, i) => {
+            let tl = gsap.timeline({ repeat: -1, delay: i * (dur / targets.length) });
+            tl.to(obj, {
+                duration: dur,
+                motionPath: {
+                    path: "#motion-path",
+                    align: "#motion-path",
+                    alignOrigin: [0.5, 0.5]
+                },
+                ease: "none"
+            });
+            tl.to(
+                obj,
+                {
+                    scale: 0.5,
+                    duration: dur / 2,
+                    repeat: 1,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                },
+                0
+            );
+            parent.add(tl, 0);
+        });
+        parent.time(dur);
+        gsap.set("svg", {opacity:1})
+
+    })
+</script>
+
+</html>

@@ -9,48 +9,21 @@
             padding: 0;
         }
 
-        .carousel {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            transform: rotateX(-20deg) translateY(-70px);
-            transform-style: preserve-3d;
-            perspective: 800px;
-            user-select: none;
-            cursor: grab;
-        }
-
-        .carousel-image {
+        .box {
+            width: 100px;
+            height: 100px;
             background: red;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin: -100px 0 0 -100px;
-            width: 200px;
-            height: 200px;
-            transform: translate3d(0, 0, -10px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            transform-origin: 50% 50%;
+            visibility: hidden;
+            /*opacity: 0;*/
         }
 
     </style>
 </head>
 <body>
-<div class="carousel">
-    <div class="carousel-image">1</div>
-    <div class="carousel-image">2</div>
-    <div class="carousel-image">3</div>
-    <div class="carousel-image">4</div>
-    <div class="carousel-image">5</div>
-    <div class="carousel-image">6</div>
-    <div class="carousel-image">7</div>
-    <div class="carousel-image">8</div>
-</div>
+<div class="box"></div>
+<div class="box2"></div>
+<button id="btn">reverse</button>
+<button id="revert">revert</button>
 </body>
 <script type="importmap">
     {
@@ -72,46 +45,30 @@
     gsap.registerPlugin(Observer)
 
     document.addEventListener("DOMContentLoaded", () => {
-        const images = document.querySelectorAll('.carousel-image');
-        const radius = 242;
-        const progress = {
-            value: 0
-        };
+        setTimeout(() => {
+            console.log('1111')
+            gsap.from('.box', {
+                autoAlpha:0,
+                duration: 2,
+            })
+        }, 2000)
 
-        const carousel = document.querySelector('.carousel');
 
-        const animate = () => {
-            images.forEach((image, index) => {
-                const theta = index / images.length - progress.value;
-                const x = -Math.sin(theta * Math.PI * 2) * radius;
-                const y = Math.cos(theta * Math.PI * 2) * radius;
-                image.style.transform = `translate3d(${x}px, 0px, ${y}px) rotateY(${360 * -theta}deg)`;
-                const c = Math.floor(index / images.length * 360);
-                image.style.background = `hsla(${c}, 90%, 50%, .5)`;
-            });
-        };
-
-        Observer.create({
-            target: carousel,
-            type: "wheel,pointer",
-            onPress: self => {
-                carousel.style.cursor = 'grabbing';
-            },
-            onRelease: self => {
-                carousel.style.cursor = 'grab';
-            },
-            onChange: self => {
-                gsap.killTweensOf(progress);
-                const p = self.event.type === 'wheel' ? self.deltaY * -.0005 : self.deltaX * .05;
-                gsap.to(progress, {
-                    duration: 2,
-                    ease: 'power4.out',
-                    value: `+=${p}`
-                });
-
-            }
-        });
-        gsap.ticker.add(animate);
+        // gsap.delayedCall()
+        // const ctx = gsap.context((self) => {
+        //     self.ignore(()=>{
+        //         gsap.to('.box', {
+        //             x: 100,
+        //             duration: 2,
+        //             repeat:-1
+        //         })
+        //     })
+        //     gsap.to('.box2', {
+        //         x: 100,
+        //         duration: 2
+        //     })
+        // })
+        // revert.addEventListener('click', e => ctx.revert())
 
     })
 </script>

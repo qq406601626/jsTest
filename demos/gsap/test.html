@@ -15,10 +15,10 @@
             background: red;
         }
 
-        .container{
+        .container {
             display: grid;
-            grid-template-columns: repeat(6,50px);
-            grid-template-rows: repeat(6,50px);
+            grid-template-columns: repeat(10, 50px);
+            grid-template-rows: repeat(10, 50px);
             position: absolute;
             left: 0;
             top: 0;
@@ -28,10 +28,7 @@
 </head>
 <body>
 <div class="box"></div>
-<!--<div class="box2"></div>-->
-<!--<button id="btn">reverse</button>-->
-<!--<button id="revert">revert</button>-->
-<div class="container"></div>
+<button id="move">move</button>
 </body>
 <script type="importmap">
     {
@@ -53,19 +50,18 @@
     gsap.registerPlugin(Observer)
 
     document.addEventListener("DOMContentLoaded", () => {
-        const tl = gsap.timeline({
-            defaults:{
-                duration:10
+        let counter = 1
+        const tween = gsap.to('.box',{
+            x:()=>{
+                return counter*100
             },
-            // delay:2
-            // paused:true
+
+            duration:2,
+            paused:true
         })
-        tl.to(".box", {x: 100,y:100});
-        tl.from(".box", {x: 50,y:150,immediateRender:false});
-
-        // 50，150 => 100,100 =>50,150 => 0,0
-
-        // 0,0 => 100,100 => 50,150=> 100,100
+        move.addEventListener('click', () => {
+            tween.paused() && tween.play()
+        })
 
     })
 </script>

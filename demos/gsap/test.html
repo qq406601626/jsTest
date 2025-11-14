@@ -13,16 +13,25 @@
             width: 100px;
             height: 100px;
             background: red;
-            visibility: hidden;
+        }
+
+        .container{
+            display: grid;
+            grid-template-columns: repeat(6,50px);
+            grid-template-rows: repeat(6,50px);
+            position: absolute;
+            left: 0;
+            top: 0;
         }
 
     </style>
 </head>
 <body>
 <div class="box"></div>
-<div class="box2"></div>
-<button id="btn">reverse</button>
-<button id="revert">revert</button>
+<!--<div class="box2"></div>-->
+<!--<button id="btn">reverse</button>-->
+<!--<button id="revert">revert</button>-->
+<div class="container"></div>
 </body>
 <script type="importmap">
     {
@@ -44,30 +53,19 @@
     gsap.registerPlugin(Observer)
 
     document.addEventListener("DOMContentLoaded", () => {
-        setTimeout(() => {
-            console.log('js加载完毕')
-            gsap.from('.box', {
-                autoAlpha:0,
-                duration: 4,
-            })
-        }, 2000)
+        const tl = gsap.timeline({
+            defaults:{
+                duration:10
+            },
+            // delay:2
+            // paused:true
+        })
+        tl.to(".box", {x: 100,y:100});
+        tl.from(".box", {x: 50,y:150,immediateRender:false});
 
+        // 50，150 => 100,100 =>50,150 => 0,0
 
-        // gsap.delayedCall()
-        // const ctx = gsap.context((self) => {
-        //     self.ignore(()=>{
-        //         gsap.to('.box', {
-        //             x: 100,
-        //             duration: 2,
-        //             repeat:-1
-        //         })
-        //     })
-        //     gsap.to('.box2', {
-        //         x: 100,
-        //         duration: 2
-        //     })
-        // })
-        // revert.addEventListener('click', e => ctx.revert())
+        // 0,0 => 100,100 => 50,150=> 100,100
 
     })
 </script>

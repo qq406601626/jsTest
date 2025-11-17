@@ -15,20 +15,11 @@
             background: red;
         }
 
-        .container {
-            display: grid;
-            grid-template-columns: repeat(10, 50px);
-            grid-template-rows: repeat(10, 50px);
-            position: absolute;
-            left: 0;
-            top: 0;
-        }
 
     </style>
 </head>
 <body>
 <div class="box"></div>
-<button id="move">move</button>
 </body>
 <script type="importmap">
     {
@@ -50,19 +41,11 @@
     gsap.registerPlugin(Observer)
 
     document.addEventListener("DOMContentLoaded", () => {
-        let counter = 1
-        const tween = gsap.to('.box',{
-            x:()=>{
-                return counter*100
-            },
-
-            duration:2,
-            paused:true
+        gsap.to('.box', {
+            duration: 1,
+            x: 'random(100,800)',
+            delay: 1
         })
-        move.addEventListener('click', () => {
-            tween.paused() && tween.play()
-        })
-
     })
 </script>
 

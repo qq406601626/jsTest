@@ -9,18 +9,33 @@
             padding: 0;
         }
 
-        .box {
-            width: 100px;
-            height: 100px;
-            background: red;
+        .container{
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
         }
 
+        .box{
+            width: 2px;
+            transform-origin: center center;
+            height: 10px;
+            background: red;
+        }
 
     </style>
 </head>
 <body>
-<div class="box"></div>
-<div class="box2"></div>
+<div class="container">
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+</div>
+
 </body>
 <script type="importmap">
     {
@@ -42,37 +57,17 @@
     gsap.registerPlugin(Observer)
 
     document.addEventListener("DOMContentLoaded", () => {
-        ①：字符串
-        // 将逗号分隔列表中的所有属性（在本例中为“x，y”）捕捉到最接近的整数：
-        gsap.to(".class", {
-            x: 1000,
-            y: 250,
-            snap: "x,y",
-        });
-        ②：对象
-        // 成倍增加:
-        gsap.to(".class", {
-            x: 1000,
-            snap: {
-                x: 20, // 捕捉到最接近的增量20（0、20、40、60等）
-            },
-        });
+            gsap.to('.box',
+                {
+                    scaleY:'random(0,1)',
+                    duration:0.2,
+                    repeat:-1,
+                    ease:'sine',
+                    repeatRefresh:true,
+                    stagger
+                }
+            )
 
-        // 捕捉到数组中最接近的值:
-        gsap.to(".class", {
-            x: 1000,
-            snap: {
-                x: [0, 50, 150, 500], // 捕捉到此数组中最接近的值
-            },
-        });
-
-        // 捕捉到数组中的一个值，但仅当它在这些值之一的特定距离/半径内时：
-        gsap.to(".class", {
-            x: 1000,
-            snap: {
-                x: {values: [0, 50, 150, 500], radius: 20}, // 捕捉到阵列中最接近的值，但仅当它在阵列的20像素以内时.
-            },
-        });
     })
 </script>
 

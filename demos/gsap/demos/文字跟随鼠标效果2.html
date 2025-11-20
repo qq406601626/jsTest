@@ -64,21 +64,13 @@
 <script type="importmap">
     {
         "imports":{
-           "gsap":"./lib/gsap/index.js",
-           "motionPathPlugin":"./lib/gsap/MotionPathPlugin.js",
-           "scrollTrigger":"./lib/gsap/ScrollTrigger.js",
-           "scrollSmoother":"./lib/gsap/ScrollSmoother.js",
-           "observer":"./lib/gsap/Observer.js"
+           "gsap":"../lib/gsap/index.js"
         }
     }
 </script>
 
 <script type="module">
     import {gsap} from 'gsap'
-
-    import Observer from 'observer'
-
-    gsap.registerPlugin(Observer)
 
     document.addEventListener("DOMContentLoaded", async () => {
         const elements = gsap.utils.toArray('.box')

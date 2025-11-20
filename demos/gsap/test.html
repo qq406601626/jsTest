@@ -10,7 +10,6 @@
         }
 
 
-
         .box {
             width: 50px;
             height: 50px;
@@ -21,14 +20,8 @@
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-</div>
-
+<div class="box"></div>
+<button id="restart">restart</button>
 </body>
 <script type="importmap">
     {
@@ -50,19 +43,18 @@
     gsap.registerPlugin(Observer)
 
     document.addEventListener("DOMContentLoaded", () => {
-        gsap.to('.box',
-            {
-                x: 500,
-                duration:2,
-                delay:1,
-                stagger: {
-                    amount:1,
-                    yoyo: true,
-                    repeat: -1
-                },
-            }
-        )
+        const tween = gsap.to(".box", {
+            x:500,
+            duration: 5,
+            ease:'none'
+        });
 
+        restart.addEventListener('click', () => {
+            tween.pause(2.5)
+            setTimeout(()=>{
+                tween.play(1)
+            },1000)
+        })
     })
 </script>
 

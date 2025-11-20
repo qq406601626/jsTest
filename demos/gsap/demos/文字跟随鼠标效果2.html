@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: black;
+            font-size: 2rem;
+        }
+
+
+        .box {
+            position: absolute;
+            /*top: -50px;*/
+            left: 0;
+            font-family: "DotGothic16", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            color: aqua;
+            text-shadow: 0 0 15px aqua, 0 0 50px aqua;
+            /*transition: transform 0.1s, color 0.3s;*/
+        }
+        .box:nth-child(1){
+            left: 0;
+            filter: hue-rotate(0deg);
+        }
+        .box:nth-child(2){
+            left: 35px;
+            filter: hue-rotate(30deg);
+        }
+        .box:nth-child(3){
+            left: 70px;
+            filter: hue-rotate(60deg);
+        }
+        .box:nth-child(4){
+            left: 105px;
+            filter: hue-rotate(90deg);
+        }
+        .box:nth-child(5){
+            left: 140px;
+            filter: hue-rotate(120deg);
+        }
+        .box:nth-child(6){
+            left: 175px;
+            filter: hue-rotate(150deg);
+        }
+
+    </style>
+</head>
+<body>
+<div id="textContainer">
+    <span class="box">鼠</span>
+    <span class="box">标</span>
+    <span class="box">跟</span>
+    <span class="box">随</span>
+    <span class="box">特</span>
+    <span class="box">效</span>
+</div>
+</body>
+<script type="importmap">
+    {
+        "imports":{
+           "gsap":"./lib/gsap/index.js",
+           "motionPathPlugin":"./lib/gsap/MotionPathPlugin.js",
+           "scrollTrigger":"./lib/gsap/ScrollTrigger.js",
+           "scrollSmoother":"./lib/gsap/ScrollSmoother.js",
+           "observer":"./lib/gsap/Observer.js"
+        }
+    }
+</script>
+
+<script type="module">
+    import {gsap} from 'gsap'
+
+    import Observer from 'observer'
+
+    gsap.registerPlugin(Observer)
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        const elements = gsap.utils.toArray('.box')
+        const map = new Map()
+        elements.forEach(item=>{
+            map.set(item,{
+                moveX:gsap.quickTo(item,'x',{ duration: 0.5,ease:'power2'}),
+                moveY:gsap.quickTo(item,'y',{ duration: 0.5,ease:'power2'})
+            })
+        })
+        document.addEventListener("mousemove", (e) => {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+            elements.forEach((item,index)=>{
+                const {moveX,moveY} = map.get(item)
+                gsap.delayedCall(index*0.05,()=>{
+                    moveX(mouseX)
+                    moveY(mouseY)
+                })
+            })
+        });
+    })
+</script>
+
+</html>

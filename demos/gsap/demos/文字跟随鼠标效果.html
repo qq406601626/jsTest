@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: black;
+            font-size: 2rem;
+        }
+        #textContainer span {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            font-family: "DotGothic16", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            color: aqua;
+            text-shadow: 0 0 15px aqua, 0 0 50px aqua;
+            transition: transform 0.1s, color 0.3s;
+        }
+
+    </style>
+</head>
+<body>
+<div id="textContainer"></div>
+</body>
+<script type="importmap">
+    {
+        "imports":{
+           "gsap":"./lib/gsap/index.js",
+           "motionPathPlugin":"./lib/gsap/MotionPathPlugin.js",
+           "scrollTrigger":"./lib/gsap/ScrollTrigger.js",
+           "scrollSmoother":"./lib/gsap/ScrollSmoother.js",
+           "observer":"./lib/gsap/Observer.js"
+        }
+    }
+</script>
+
+<script type="module">
+    import {gsap} from 'gsap'
+
+    import Observer from 'observer'
+
+    gsap.registerPlugin(Observer)
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        const text = "鼠标跟随特效";
+        const container = document.getElementById("textContainer");
+        const fragment = document.createDocumentFragment();
+
+        const chars = text.split("").map((char, index) => {
+            const span = document.createElement("span");
+            span.textContent = char;
+            span.style.left = `${index * 35}px`;
+            span.style.filter = `hue-rotate(${index * 30}deg)`;
+
+            fragment.appendChild(span);
+            return span;
+        });
+
+        container.appendChild(fragment);
+
+        document.addEventListener("mousemove", (e) => {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            gsap.to("#textContainer span", {
+                x: mouseX,
+                y: mouseY,
+                stagger: 0.05
+            });
+        });
+
+    })
+</script>
+
+</html>

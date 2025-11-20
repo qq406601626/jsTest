@@ -42,19 +42,20 @@
 
     gsap.registerPlugin(Observer)
 
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", async () => {
         const tween = gsap.to(".box", {
             x:500,
-            duration: 5,
+            duration: 1,
+            repeat:1,
+            yoyo:true,
             ease:'none'
+            // delay:3
         });
 
-        restart.addEventListener('click', () => {
-            tween.pause(2.5)
-            setTimeout(()=>{
-                tween.play(1)
-            },1000)
+        restart.addEventListener('click',()=>{
+            tween.seek(1.5)
         })
+
     })
 </script>
 

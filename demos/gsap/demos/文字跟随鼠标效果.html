@@ -19,7 +19,6 @@
             font-style: normal;
             color: aqua;
             text-shadow: 0 0 15px aqua, 0 0 50px aqua;
-            transition: transform 0.1s, color 0.3s;
         }
 
     </style>
@@ -30,21 +29,13 @@
 <script type="importmap">
     {
         "imports":{
-           "gsap":"./lib/gsap/index.js",
-           "motionPathPlugin":"./lib/gsap/MotionPathPlugin.js",
-           "scrollTrigger":"./lib/gsap/ScrollTrigger.js",
-           "scrollSmoother":"./lib/gsap/ScrollSmoother.js",
-           "observer":"./lib/gsap/Observer.js"
+           "gsap":"../lib/gsap/index.js"
         }
     }
 </script>
 
 <script type="module">
     import {gsap} from 'gsap'
-
-    import Observer from 'observer'
-
-    gsap.registerPlugin(Observer)
 
     document.addEventListener("DOMContentLoaded", async () => {
         const text = "鼠标跟随特效";

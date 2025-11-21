@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+            overflow: hidden;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-image: radial-gradient(
+                    circle at center center,
+                    rgb(93, 60, 152),
+                    rgb(10, 3, 9)
+            );
+        }
+
+        svg {
+            max-width: 90vw;
+            max-height: 60vh;
+        }
+
+        #dragger {
+            fill: #42a6e0;
+            stroke: #fff;
+            stroke-width: 4px;
+        }
+        #curve {
+            stroke-width: 2px;
+            stroke: #fff;
+            fill: none;
+        }
+        #drawMe {
+            stroke-width: 6px;
+            stroke: yellow;
+            fill: none;
+        }
+
+    </style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500">
+    <path id="curve" d="M100,450c0-220.9,179.1-400,400-400 s400,179.1,400,400" stroke-dasharray="20,10"/>
+    <path id="drawMe" d="M100,450c0-220.9,179.1-400,400-400 s400,179.1,400,400"/>
+    <circle id="dragger" cx="100" cy="450" r="24" />
+</svg>
+</body>
+<script type="importmap">
+    {
+        "imports":{
+           "gsap":"../lib/gsap/index.js",
+           "draggable":"../lib/gsap/Draggable.js",
+           "drawSVGPlugin":"../lib/gsap/DrawSVGPlugin.js",
+           "inertiaPlugin":"../lib/gsap/InertiaPlugin.js"
+        }
+    }
+</script>
+
+<script type="module">
+    import {gsap} from 'gsap'
+    import Draggable from 'draggable'
+    import DrawSVGPlugin from 'drawSVGPlugin'
+    import InertiaPlugin from 'inertiaPlugin'
+
+    gsap.registerPlugin(Draggable, DrawSVGPlugin, InertiaPlugin);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const tl = gsap.from("#drawMe", { drawSVG: 0, ease: "none", paused: true });
+
+        gsap.set("#dragger", { svgOrigin: "500 450" });
+
+        Draggable.create("#dragger", {
+            type: "rotation",
+            bounds: {
+                minRotation: 0,
+                maxRotation: 180
+            },
+            inertia: true,
+            overshootTolerance: 0,
+            onDrag: playAnim,
+            onThrowUpdate: playAnim
+        });
+
+        function playAnim() {
+            let prog = gsap.utils.mapRange(0, 180, 0, 1, this.rotation);
+            tl.progress(prog);
+        }
+
+    })
+</script>
+
+</html>

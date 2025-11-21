@@ -43,18 +43,19 @@
     gsap.registerPlugin(Observer)
 
     document.addEventListener("DOMContentLoaded", async () => {
-        const tween = gsap.to(".box", {
+        // const tween = gsap.to(".box", {
+        //     x:500,
+        // });
+        // tween.duration(5).delay(5)
+        // setTimeout(()=>{
+        //     console.log('1111111')
+        // },5*1000)
+        const timeLine = gsap.timeline()
+        timeLine.delay(5).to('.box',{
             x:500,
-            duration: 1,
-            repeat:1,
-            yoyo:true,
-            ease:'none'
-            // delay:3
-        });
-
-        restart.addEventListener('click',()=>{
-            tween.seek(1.5)
-        })
+            duration:5
+        }).timeScale(5)
+        console.log(timeLine.duration())
 
     })
 </script>

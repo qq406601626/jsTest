@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+            background: #262626;
+            line-height: 1;
+        }
+
+        .stage {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: clamp(2rem, 9vw + 1rem, 5rem);
+
+        }
+
+        h1 {
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        h1 > div {
+            overflow: hidden;
+        }
+
+        .cloneText {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+    </style>
+</head>
+<body>
+<div class="stage">
+    <h1>rolling</h1>
+</div>
+</body>
+<script type="importmap">
+    {
+        "imports":{
+           "gsap":"../lib/gsap/index.js",
+           "splitText":"../lib/gsap/SplitText.js"
+        }
+    }
+</script>
+
+<script type="module">
+    import {gsap} from 'gsap'
+    import SplitText from 'splitText'
+    gsap.registerPlugin(SplitText);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const repeatCount = 8;
+        const tl = gsap.timeline({ paused: true });
+        const split = new SplitText("h1", { type: "chars" });
+        split.chars.forEach((obj, i) => {
+            let txt = obj.innerText;
+            let clone = `<div class="cloneText"> ${txt} </div>`;
+            let newHTML = `<div class="originalText"> ${txt} </div>${clone}`;
+            obj.innerHTML = newHTML;
+            gsap.set(obj.childNodes[1], {
+                yPercent: i % 2 === 0 ? -100 : 100
+            });
+            let tween = gsap.to(obj.childNodes, {
+                repeat: repeatCount,
+                ease: "none",
+                yPercent: i % 2 === 0 ? "+=100" : "-=100"
+            });
+            tl.add(tween, 0);
+        });
+        gsap.to(tl, { progress: 1, duration: 4, ease: "power4.inOut" });
+        // 区分下方两种写法效果的区别
+
+
+        // split.chars.forEach((obj, i) => {
+        //     let txt = obj.innerText;
+        //     let clone = `<div class="cloneText"> ${txt} </div>`;
+        //     let newHTML = `<div class="originalText"> ${txt} </div>${clone}`;
+        //     obj.innerHTML = newHTML;
+        //     gsap.set(obj.childNodes[1], {
+        //         yPercent: i % 2 === 0 ? -100 : 100
+        //     });
+        //     let tween = gsap.to(obj.childNodes, {
+        //         repeat: repeatCount,
+        //         ease: "power4.inOut",
+        //         yPercent: i % 2 === 0 ? "+=100" : "-=100",
+        //         duration: 4
+        //     });
+        //     tl.add(tween, 0);
+        // });
+        // tl.play()
+
+    })
+</script>
+
+</html>

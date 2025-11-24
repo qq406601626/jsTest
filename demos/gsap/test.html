@@ -7,8 +7,6 @@
         body {
             margin: 0;
             padding: 0;
-            height: 300vh;
-            overflow-y: auto;
         }
 
 
@@ -42,19 +40,16 @@
     gsap.registerPlugin(ScrollTrigger)
 
     document.addEventListener("DOMContentLoaded", async () => {
-        // gsap.to('.box', {
-        //     scrollTrigger: '.box', // start the animation when ".box" enters the viewport (once)
-        //     x: 500
-        // });
+
         gsap.to('.box',{
             x:500,
-            // duration:5,
             scrollTrigger:{
                 trigger:'.box',
                 start:'top top',
-                end:'+=500',
+                end:'+=5000',
                 scrub: 1,
-                pin:true
+                pin:true,
+                horizontal:true
             },
         })
 

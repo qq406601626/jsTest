@@ -7,6 +7,8 @@
         body {
             margin: 0;
             padding: 0;
+            height: 300vh;
+            overflow-y: auto;
         }
 
 
@@ -14,14 +16,12 @@
             width: 50px;
             height: 50px;
             background: red;
-            margin-bottom: 10px;
         }
 
     </style>
 </head>
 <body>
 <div class="box"></div>
-<button id="restart">restart</button>
 </body>
 <script type="importmap">
     {
@@ -37,25 +37,26 @@
 
 <script type="module">
     import {gsap} from 'gsap'
+    import {ScrollTrigger} from 'scrollTrigger'
 
-    import Observer from 'observer'
-
-    gsap.registerPlugin(Observer)
+    gsap.registerPlugin(ScrollTrigger)
 
     document.addEventListener("DOMContentLoaded", async () => {
-        // const tween = gsap.to(".box", {
-        //     x:500,
+        // gsap.to('.box', {
+        //     scrollTrigger: '.box', // start the animation when ".box" enters the viewport (once)
+        //     x: 500
         // });
-        // tween.duration(5).delay(5)
-        // setTimeout(()=>{
-        //     console.log('1111111')
-        // },5*1000)
-        const timeLine = gsap.timeline()
-        timeLine.delay(5).to('.box',{
+        gsap.to('.box',{
             x:500,
-            duration:5
-        }).timeScale(5)
-        console.log(timeLine.duration())
+            // duration:5,
+            scrollTrigger:{
+                trigger:'.box',
+                start:'top top',
+                end:'+=500',
+                scrub: 1,
+                pin:true
+            },
+        })
 
     })
 </script>

@@ -11,15 +11,20 @@
 
 
         .box {
-            width: 50px;
-            height: 50px;
-            background: red;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(to bottom,red 50%,green 50%);
+        }
+        .placeholder{
+            height: 300vh;
+            background: #00bae2;
         }
 
     </style>
 </head>
 <body>
 <div class="box"></div>
+<div class="placeholder"></div>
 </body>
 <script type="importmap">
     {
@@ -40,20 +45,22 @@
     gsap.registerPlugin(ScrollTrigger)
 
     document.addEventListener("DOMContentLoaded", async () => {
-
         gsap.to('.box',{
             x:500,
+            duration:5,
             scrollTrigger:{
                 trigger:'.box',
-                start:'top top',
-                end:'+=5000',
-                scrub: 1,
+                start:'center top',
                 pin:true,
-                horizontal:true
-            },
+                pinSpacer:true,
+                scrub:true,
+                pinSpacing: false
+            }
         })
-
     })
+
+
+
 </script>
 
 </html>

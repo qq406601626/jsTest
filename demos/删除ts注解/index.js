@@ -16,7 +16,8 @@ function stripTypes(code, fileName) {
             presets: [
                 ['@babel/preset-typescript', {
                     isTSX: false,
-                    allExtensions: true
+                    allExtensions: true,
+                    onlyRemoveTypeImports: true
                 }]
             ],
             // 顺便把代码中的 import './file.ts' 替换为 './file.js'

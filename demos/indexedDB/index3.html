@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>indexDB练习</title>
+</head>
+<body>
+<button id="createBtn">创建数据库</button>
+</body>
+<script>
+    const connectDb = () => new Promise((resolve, reject) => {
+        const connectionRequest = indexedDB.open('JOZO')
+        connectionRequest.onsuccess = (event) => {
+            resolve(event.target.result)
+        }
+        connectionRequest.onerror = reject
+        connectionRequest.onupgradeneeded = (event) => {
+            const db = event.target.result
+            const objectStore = db.createObjectStore("userList", {keyPath: "id"});
+            objectStore.createIndex('userId', 'id', {unique: true})
+            objectStore.createIndex('userName', 'name', {unique: true})
+        }
+    })
+
+    const getStoreOperation = (db, storeName) => {
+        let r = null
+        const dbTransaction = db.transaction(db.objectStoreNames, 'readwrite')
+        dbTransaction.oncomplete = () => r && r()
+        const dbTransactionStore = dbTransaction.objectStore(storeName)
+        dbTransactionStore.do = (cb) => new Promise(resolve => {
+            r = resolve
+            cb(dbTransactionStore)
+        })
+        return dbTransactionStore
+    }
+
+    const timer = (time) => new Promise(resolve => setTimeout(resolve,time))
+
+    const insertData = async (db) => {
+        console.log('begin insert data 1')
+        const operation1 = getStoreOperation(db, 'userList')
+        await operation1.do(store=>{
+            const data = [
+                {
+                    "id": "2013884376886202368",
+                    "name": "134445@163.com"
+                },
+                {
+                    "id": "2013807541657669632",
+                    "name": "13345@163.com"
+                },
+                {
+                    "id": "2013807305329610752",
+                    "name": "885858@163.com"
+                },
+                {
+                    "id": "2013548994667614208",
+                    "name": "222222@163.com"
+                },
+                {
+                    "id": "2011692011756867584",
+                    "name": "4574548745@163.com"
+                },
+                {
+                    "id": "2011247230702534656",
+                    "name": "13452@163.com"
+                },
+                {
+                    "id": "2011246992369598464",
+                    "name": "457859555238@163.com"
+                },
+                {
+                    "id": "2011246479162949632",
+                    "name": "4578595552228@163.com"
+                },
+                {
+                    "id": "2011244452869521408",
+                    "name": "173201975@qq.com"
+                },
+                {
+                    "id": "2011239908429217792",
+                    "name": "12233@163.com"
+                },
+                {
+                    "id": "2011239296564150272",
+                    "name": "457859552528@163.com"
+                },
+                {
+                    "id": "2011238769017176064",
+                    "name": "13453@163.com"
+                },
+                {
+                    "id": "2011238335250644992",
+                    "name": "15037589589@163.com"
+                },
+                {
+                    "id": "2011007336658976768",
+                    "name": "2353245@qq.com"
+                },
+                {
+                    "id": "2011007160888279040",
+                    "name": "79494@qq.com"
+                },
+                {
+                    "id": "2011003553631649792",
+                    "name": "18978895@163.com"
+                },
+                {
+                    "id": "2010988287979884544",
+                    "name": "7894564@163.com"
+                },
+                {
+                    "id": "2010979638196760576",
+                    "name": "558899@163.com"
+                },
+                {
+                    "id": "2010978176473427968",
+                    "name": "45784841@163.com"
+                },
+                {
+                    "id": "2008504164539305984",
+                    "name": "78447@163.com"
+                },
+                {
+                    "id": "2008503832652419072",
+                    "name": "52585814@163.com"
+                },
+                {
+                    "id": "2006260250185003008",
+                    "name": "13425@163.com"
+                },
+                {
+                    "id": "1994318319913766912",
+                    "name": "8597859@163.com"
+                },
+                {
+                    "id": "1987803979001819136",
+                    "name": "54718181@163.com"
+                },
+                {
+                    "id": "1987789904305917952",
+                    "name": "150378595@163.com"
+                },
+                {
+                    "id": "1959058492715388928",
+                    "name": "2578485@163.com"
+                },
+                {
+                    "id": "1982772370930339840",
+                    "name": "46758218@163.com"
+                },
+                {
+                    "id": "1982725640784367616",
+                    "name": "12313123@163.com"
+                },
+                {
+                    "id": "1982765424001097728",
+                    "name": "test1027@muye.com"
+                },
+                {
+                    "id": "1956515482987266048",
+                    "name": "kengnidian@kengni.com"
+                }
+            ]
+            data.forEach(item=>{
+                store.add(item)
+            })
+        })
+        console.log('end insert data 1')
+        await timer(3000)
+        console.log('begin insert data 2')
+        const operation2 = getStoreOperation(db, 'userList')
+        await operation2.do(store=>{
+            store.add({
+                id:'00000',
+                name:'00000'
+            })
+        })
+        console.log('end insert data 2')
+    }
+    const createDb = async () => {
+        try {
+            const db = await connectDb()
+            insertData(db)
+        } catch (e) {
+
+        }
+    }
+
+    const createBtn = document.getElementById('createBtn')
+    createBtn.addEventListener('click', createDb)
+</script>
+</html>

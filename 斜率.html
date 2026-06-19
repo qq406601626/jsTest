@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    const endValue = 55.31
+    const endDate = '2025-07-17'
+    const startValue = 23.87
+    const startDate = '2025-04-21'
+    const holidayNum = 0
+
+    function countWeekends() {
+        let start = new Date(startDate);
+        let end = new Date(endDate);
+
+        let dateNum = 0;
+        let saturdayCount = 0;
+        let sundayCount = 0;
+
+        // 循环遍历每一天
+        while (start <= end) {
+            dateNum += 1
+            let day = start.getDay(); // 0 代表周日，6 代表周六
+
+            if (day === 6) {
+                saturdayCount++;
+            } else if (day === 0) {
+                sundayCount++;
+            }
+
+            // 日期往后推一天
+            start.setDate(start.getDate() + 1);
+        }
+
+        return dateNum - saturdayCount - sundayCount - holidayNum
+    }
+
+    function rate() {
+        const percent = (endValue - startValue) / startValue * 100
+        return percent / countWeekends(startDate, endDate, holidayNum)
+    }
+
+    console.log(rate())
+</script>
+</html>

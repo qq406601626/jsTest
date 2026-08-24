@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>Canvas 鼠标文字拖尾效果</title>
+    <title>Canvas 霓虹文字拖尾效果</title>
     <style>
         * {
             margin: 0;
@@ -11,7 +11,7 @@
         }
         body {
             overflow: hidden;
-            background-color: #0f172a; /* 深色背景效果更好 */
+            background-color: #05050a; /* 近乎全黑的暗色背景，霓虹发光对比度更强 */
         }
         canvas {
             display: block;
@@ -26,7 +26,6 @@
     const canvas = document.getElementById('trailCanvas');
     const ctx = canvas.getContext('2d');
 
-    // 1. 初始化 Canvas 尺寸
     function resizeCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -34,70 +33,77 @@
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // 2. 配置参数
-    const text = "Hello World! 欢迎来到 Canvas 拖尾世界";
-    const fontSize = 20;
-    const letterSpacing = 16; // 字符之间的间距
-    const mouseOffset = 15;   // 第一个字符距离鼠标光标右侧的偏移量
-    const followSpeed = 0.18; // 跟随速度 (0-1 之间，越小延迟感越强)
+    // 配置参数
+    const text = "NEON TRAIL 霓虹彩虹拖尾";
+    const fontSize = 24;
+    const letterSpacing = 20;
+    const mouseOffset = 20;
+    const followSpeed = 0.25;
 
-    // 鼠标目标位置
+    let hue = 0;
+
     const mouse = {
         x: canvas.width / 2,
         y: canvas.height / 2
     };
 
-    // 监听鼠标移动
     window.addEventListener('mousemove', (e) => {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
     });
 
-    // 3. 构建每个字符的初始物理节点
     const chars = text.split('').map((char, index) => ({
         char: char,
-        // 初始排列在屏幕中央
         x: canvas.width / 2 + index * letterSpacing,
         y: canvas.height / 2
     }));
 
-    // 4. 动画循环
     function animate() {
-        // 清空画布
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // 1. 使用带有微小透明度的黑色覆盖画布，制造运动残影/光轨效果
+        ctx.fillStyle = 'rgba(5, 5, 10, 0.25)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // 绘制设置
-        ctx.font = `bold ${fontSize}px sans-serif`;
-        ctx.fillStyle = '#38bdf8'; // 天蓝色文字
+        ctx.font = `bold ${fontSize}px "Segoe UI", sans-serif`;
         ctx.textBaseline = 'middle';
 
-        // 依次更新和绘制每个字符
+        hue = (hue + 1.8) % 360;
+
         chars.forEach((node, i) => {
             let targetX, targetY;
 
             if (i === 0) {
-                // 第一个字符：紧跟鼠标光标右侧
                 targetX = mouse.x + mouseOffset;
                 targetY = mouse.y;
             } else {
-                // 后续字符：跟随前一个字符，并在 X 轴方向保持水平间距（从左向右排列）
                 const prevNode = chars[i - 1];
                 targetX = prevNode.x + letterSpacing;
                 targetY = prevNode.y;
             }
 
-            // 使用缓动公式 (Lerp) 实现平滑拖尾运动
             node.x += (targetX - node.x) * followSpeed;
             node.y += (targetY - node.y) * followSpeed;
 
-            // 绘制字符
+            const charHue = (hue + i * 10) % 360;
+            const color = `hsl(${charHue}, 100%, 65%)`;
+
+            // 2. 核心：开启 Canvas 阴影发光效果
+            ctx.shadowColor = color;
+            ctx.shadowBlur = 20; // 模糊半径，数值越大发光范围越广
+
+            // 3. 第一次绘制：绘制发光底色（文字本身）
+            ctx.fillStyle = color;
+            ctx.fillText(node.char, node.x, node.y);
+
+            // 4. 第二次绘制：在中心叠加白色文字，模拟霓虹灯管内部发白的真实质感
+            ctx.shadowBlur = 5; // 缩小高光模糊
+            ctx.shadowColor = '#ffffff';
+            ctx.fillStyle = '#ffffff';
             ctx.fillText(node.char, node.x, node.y);
         });
 
         requestAnimationFrame(animate);
     }
 
-    // 启动动画
     animate();
 </script>
 

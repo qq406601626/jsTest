@@ -51,6 +51,7 @@
     gsap.registerPlugin(scrollTrigger, MotionPathPlugin)
 
     document.addEventListener("DOMContentLoaded", () => {
+        // 创建一个tween（tween其实就是一个属性动态设置器）
         const anim = gsap.to('#target', {
             duration: 1,
             ease: 'none',
@@ -62,6 +63,8 @@
             },
             paused: true,
         })
+        // anim是一个tween，tween本质上也是一个对象，该对象包含很多属性。然后使用gasp.to动态设置该tween的各种属性。
+        // 下方的keyframes的progress，该progress属性就是tween对象的属性。
         gsap.to(anim,{
             keyframes: {
                 progress: [0, 0.5, 0.3, 0.9, 0.2, 0],

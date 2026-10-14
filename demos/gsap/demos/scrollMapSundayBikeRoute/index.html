@@ -66,6 +66,9 @@
 
     document.addEventListener("DOMContentLoaded", () => {
         // tween the svg path + circle
+        const xTo = gsap.quickTo('#container', 'x', {duration: 0.7})
+        const yTo = gsap.quickTo('#container', 'y', {duration: 0.7})
+        const {clientWidth,clientHeight} = document.body
         gsap.timeline({
             defaults: {ease: 'none'},
             scrollTrigger: {
@@ -73,6 +76,10 @@
                 start: '0 0',
                 end: '100% 100%',
                 scrub: 1
+            },
+            onUpdate(){
+                xTo(-(gsap.getProperty('#c', 'x') - clientWidth / 2))
+                yTo(-(gsap.getProperty('#c', 'y') - clientHeight / 2))
             }
         }).to('#c', {
             motionPath: '#p',
@@ -80,18 +87,15 @@
         }, 0).from('#p', {
             drawSVG: '0 0'
         }, 0)
-
+        gsap.set('#container', {
+            x: -(gsap.getProperty('#c', 'x') - clientWidth / 2),
+            y: -(gsap.getProperty('#c', 'y') - clientHeight / 2)
+        });
         // move container's x/y to follow the red circle
-        const xTo = gsap.quickTo('#container', 'x', {duration: 0.7})
-        const yTo = gsap.quickTo('#container', 'y', {duration: 0.7})
-        gsap.ticker.add(() => {
-            xTo(-gsap.getProperty('#c', 'x'))
-            yTo(-gsap.getProperty('#c', 'y'))
-        })
-
-        // center the container's left/top position
-        window.onload = window.onresize = () => gsap.set('#container', {left: innerWidth / 2, top: innerHeight / 2})
-
+        // gsap.ticker.add(() => {
+        //     xTo(-(gsap.getProperty('#c', 'x') - clientWidth / 2))
+        //     yTo(-(gsap.getProperty('#c', 'y') - clientHeight / 2))
+        // })
         // fade in
         gsap.to('#container', {duration: 1, opacity: 1, ease: 'power2.inOut', delay: 0.3})
     })
